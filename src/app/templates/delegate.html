@@ -77,14 +77,6 @@
                         {% for node in nodes %}
                             <li class="delegate-page__node">
                                 <div class="delegate-page__node-spec">
-                                    Provider:
-                                    {% if node.provider %}
-                                        {{ node.provider }}
-                                    {% else %}
-                                        No data
-                                    {% endif %}
-                                </div>
-                                <div class="delegate-page__node-spec">
                                     CPU:
                                     {% if node.cpu %}
                                         {{ node.cpu }}
@@ -96,22 +88,6 @@
                                     Memory:
                                     {% if node.memory %}
                                         {{ node.memory }}
-                                    {% else %}
-                                        No data
-                                    {% endif %}
-                                </div>
-                                <div class="delegate-page__node-spec">
-                                    Disk:
-                                    {% if node.disk %}
-                                        {{ node.disk }}
-                                    {% else %}
-                                        No data
-                                    {% endif %}
-                                </div>
-                                <div class="delegate-page__node-spec">
-                                    Location:
-                                    {% if node.location %}
-                                        {{ node.location }}
                                     {% else %}
                                         No data
                                     {% endif %}
