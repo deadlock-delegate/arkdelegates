@@ -45,15 +45,11 @@ class History(models.Model):
 
 
 class Node(models.Model):
-    network = models.CharField(max_length=10, default=MAINNET, choices=NETWORK_CHOICES)
     delegate = models.ForeignKey('Delegate', related_name='nodes', on_delete=models.CASCADE)
-    provider = models.CharField(max_length=256, null=True, blank=True)
-    os = models.CharField(max_length=256, null=True, blank=True)
+    network = models.CharField(max_length=10, default=MAINNET, choices=NETWORK_CHOICES)
     cpu = models.CharField(max_length=256, null=True, blank=True)
     memory = models.CharField(max_length=256, null=True, blank=True)
-    disk = models.CharField(max_length=256, null=True, blank=True)
-    location = models.CharField(max_length=256, null=True, blank=True)
-    timezone = models.CharField(max_length=256, null=True, blank=True)
+    is_dedicated = models.BooleanField(default=False)
     is_backup = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     has_arkstats = models.BooleanField(default=False)
