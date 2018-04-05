@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+    command: uwsgi --http-socket 0.0.0.0:5000 --honour-stdin --ini etc/uwsgi.ini --python-autoreload 1
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      - db
+    environment:
+      DEBUG: '1'
+      PORT: '5000'
+      DATABASE_URL: 'postgres://postgres:postgres@db:5432/postgres'
+    volumes:
+      - .:/usr/src/code
+    expose:
+      - "5000"
+    ports:
+      - "5000:5000"
+
+  db:
+    image: postgres:9.6
+    networks:
+      - backend
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/data/db
+
+volumes:
+  db-data:
+
+networks:
+  frontend:
+  backend:

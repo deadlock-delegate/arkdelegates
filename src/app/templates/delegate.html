@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% load math %}
+{% load humanize %}
+{% load markdown %}
+
+{% block content %}
+    <div class="grid-container">
+        <div class="grid-x grid-padding-x align-middle">
+            <div class="cell small-1">
+                <div class="delegate-page__rank">
+                    <div class="delegate-page__rank-nr">{{ delegate.rank }}</div>
+                    <div class="delegate-page__rank-text">Rank</div>
+                </div>
+            </div>
+            <div class="cell small-4 delegate-page__title">
+                <h1>{{ delegate.name }}</h1>
+                {% if can_edit %}
+                    <a href="{% url 'admin:app_delegate_change' delegate.id %}" class="delegate-page__edit">edit delegate</a>
+                {% endif %}
+            </div>
+            <div class="cell small-3">
+                <ul class="delegate-item__list">
+                    <li class="delegate-item__list-item">
+                        <i class="fas fa-stopwatch"></i> Uptime: {{delegate.uptime}}%
+                    </li>
+                    <li class="delegate-item__list-item">
+                        <i class="fas fa-percent"></i> Approval: {{delegate.approval}}%
+                    </li>
+                </ul>
+            </div>
+            <div class="cell small-3">
+                <ul class="delegate-item__list">
+                    <li class="delegate-item__list-item">
+                        <i class="fas fa-users"></i>
+                        Voters: {{delegate.voters}}
+                        ({{ delegate.voters_not_zero_balance }} <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" tabindex="1" title="This number excludes all voters with 0 ARK in their wallet"><i class="fas fa-info-circle"></i></span>)
+                    </li>
+                    <li class="delegate-item__list-item">
+                        <i class="fas fa-bolt"></i> Voting power: {{delegate.voting_power|divide_by:"100000000"|floatformat:"1"|intcomma}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <hr>
+
+        {% include 'modules/message_notice.html' %}
+
+        <hr>
+
+        <div class="grid-x grid-padding-x">
+            <div class="cell small-8 delegate-page__proposal">
+                {{ delegate.proposal|markdown|safe }}
+
+                <hr>
+                <h2>Contributions:</h2>
+                {% if contributions %}
+                    <ul>
+                        {% for contribution in contributions %}
+                            <li>
+                                <b>{{ contribution.title }}</b><br/>
+                                {% if contribution.description %}
+                                    <p>{{ contribution.description }}</p>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>We aren't able to find any contributions to ARK from this delegate.</p>
+                {% endif %}
+            </div>
+            <div class="cell small-4 delegate-page__nodes">
+                <h3>Nodes</h3>
+                <ul>
+                    {% if nodes %}
+                        {% for node in nodes %}
+                            <li class="delegate-page__node">
+                                <div class="delegate-page__node-spec">
+                                    Provider:
+                                    {% if node.provider %}
+                                        {{ node.provider }}
+                                    {% else %}
+                                        No data
+                                    {% endif %}
+                                </div>
+                                <div class="delegate-page__node-spec">
+                                    CPU:
+                                    {% if node.cpu %}
+                                        {{ node.cpu }}
+                                    {% else %}
+                                        No data
+                                    {% endif %}
+                                </div>
+                                <div class="delegate-page__node-spec">
+                                    Memory:
+                                    {% if node.memory %}
+                                        {{ node.memory }}
+                                    {% else %}
+                                        No data
+                                    {% endif %}
+                                </div>
+                                <div class="delegate-page__node-spec">
+                                    Disk:
+                                    {% if node.disk %}
+                                        {{ node.disk }}
+                                    {% else %}
+                                        No data
+                                    {% endif %}
+                                </div>
+                                <div class="delegate-page__node-spec">
+                                    Location:
+                                    {% if node.location %}
+                                        {{ node.location }}
+                                    {% else %}
+                                        No data
+                                    {% endif %}
+                                </div>
+                                <div class="tag tag--{{ node.network }}">
+                                    {{ node.network }}
+                                </div>
+                                {% if node.is_backup%}
+                                    <div class="tag">
+                                        <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" tabindex="1" title="This relay node is also used as a backup node if the forging node goes offline">
+                                            backup
+                                        </span>
+                                    </div>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <p>Couldn't not find any data about this delegate's nodes.</p>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
