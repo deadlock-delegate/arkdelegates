@@ -51,7 +51,11 @@
 
         <div class="grid-x grid-padding-x">
             <div class="cell small-8 delegate-page__proposal">
-                {{ delegate.proposal|markdown|safe }}
+                {% if delegate.proposal %}
+                    {{ delegate.proposal|markdown|safe }}
+                {% else %}
+                    <p>Not proposal has been added for this delegate yet.</p>
+                {% endif %}
 
                 <hr>
                 <h2>Contributions:</h2>
