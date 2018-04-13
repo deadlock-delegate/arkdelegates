@@ -29,7 +29,17 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-
+        {% if logged_in_delegate %}
+            <div class="delegate-navigation">
+                <div class="delegate-navigation__left">
+                    Hi {{ logged_in_delegate.name }}!
+                </div>
+                <div class="delegate-navigation__right">
+                    <a href="{% url 'delegate' logged_in_delegate.slug %}">Edit account</a> |
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+        {% endif %}
         <div class="header">
             <div class="grid-container delegates-list">
                 <div class="grid-x grid-padding-x align-middle">

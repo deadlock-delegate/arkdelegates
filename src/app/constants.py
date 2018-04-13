@@ -1,0 +1,1 @@
+PIN_LENGTH = 12

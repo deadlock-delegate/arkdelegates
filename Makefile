@@ -21,3 +21,6 @@ syncdelegates:
 
 collectstatic:
 	docker-compose run web django-admin collectstatic
+
+shell:
+	docker-compose run web django-admin shell

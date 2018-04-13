@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="grid-container">
+        <div class="grid-x grid-padding-x">
+            <div class="cell small-12 large-8 large-offset-2">
+                <h3 class="text-center">
+                    Claim <b>{{ delegate.name }}</b> delegate on arkdelegates.io!
+                </h3>
+            </div>
+        </div>
+        <div class="grid-x grid-padding-x">
+            <div class="cell small-12 large-6 large-offset-3">
+                <hr>
+                {% if account_already_claimed %}
+                    <p class="text-center">This delegates account has already been claimed!</p>
+                {% else %}
+                    {% if pin %}
+                        <div class="claim-acount__pincode">
+                            <b>PIN code:</b><br>{{ pin }}
+                        </div>
+                        <div class="claim-acount__pincode-guide">
+                            <p>
+                                1. Copy the above pin code and sign it in your delegate's wallet.<br>
+                                2. After it's signed, copy the whole JSON by clicking on the blue icon.<br>
+                                3. Paste the copied JSON into the "Message json:" field.<br>
+                            </p>
+                            <p>Please note that the <b>PIN code expires after 3 minutes</b>.</p>
+                        </div>
+                    {% endif %}
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{ form }}
+                        <input type="submit" value="Submit" />
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

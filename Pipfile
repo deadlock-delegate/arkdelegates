@@ -18,6 +18,7 @@ pytz = "*"
 serpy = "*"
 gevent = "*"
 markdown = "*"
+ecdsa = "*"
 
 
 [dev-packages]

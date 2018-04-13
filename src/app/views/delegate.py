@@ -1,8 +1,9 @@
 from django.http import Http404
 from django.views.generic.base import TemplateView
 from app.models import Delegate
-from app.utils import has_edit_permissions
+from app.utils import is_staff
 from app.sql import sql_delegate_all_info
+from app.forms import ContributionForm, NodeForm, ProposalForm
 
 
 class DelegateView(TemplateView):
@@ -31,6 +32,13 @@ class DelegateView(TemplateView):
             logged_in_delegate = None
             can_edit_delegate = None
 
+        if can_edit_delegate:
+            context.update({
+                'contributionForm': ContributionForm(),
+                'nodeForm': NodeForm(),
+                'proposalForm': ProposalForm(),
+            })
+
         context.update({
             'seo': {
                 'title': '{} @ ARKdelegates.io'.format(delegate.name),
@@ -42,7 +50,7 @@ class DelegateView(TemplateView):
             'delegate': delegate,
             'nodes': nodes,
             'contributions': contributions,
-            'can_edit': has_edit_permissions(self.request.user),
+            'is_staff': is_staff(self.request.user),
             'can_edit_delegate': can_edit_delegate,
             'logged_in_delegate': logged_in_delegate
         })
