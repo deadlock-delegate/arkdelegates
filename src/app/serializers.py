@@ -20,6 +20,7 @@ class StringField(serpy.Field):
             raise ValidationError('Value must be of type string')
         return value
 
+
 class IntegerField(serpy.Field):
     def to_value(self, value):
         if not value:
@@ -32,6 +33,7 @@ class FloatField(serpy.Field):
         if not value:
             return
         return value
+
 
 class DelegateSerializer(serpy.Serializer):
     id = IntegerField()
@@ -53,3 +55,16 @@ class DelegateSerializer(serpy.Serializer):
     voting_power = StringField()
     voters_zero_balance = IntegerField()
     voters_not_zero_balance = IntegerField()
+
+
+class ContributionSerializer(serpy.Serializer):
+    title = StringField()
+    description = StringField()
+
+
+class NodeSerializer(serpy.Serializer):
+    network = StringField()
+    cpu = StringField()
+    memory = StringField()
+    is_dedicated = serpy.BoolField()
+    is_backup = serpy.BoolField()

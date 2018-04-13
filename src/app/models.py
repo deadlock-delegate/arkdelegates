@@ -1,6 +1,9 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import JSONField
 from django.utils.text import slugify
+
+from app.constants import PIN_LENGTH
 
 MAINNET = 'mainnet'
 DEVNET = 'devnet'
@@ -11,6 +14,7 @@ NETWORK_CHOICES = (
 
 
 class Delegate(models.Model):
+    user = models.OneToOneField(get_user_model(), blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256)
     address = models.CharField(max_length=34, db_index=True)
@@ -59,3 +63,17 @@ class Contribution(models.Model):
     delegate = models.ForeignKey('Delegate', related_name='contributions', on_delete=models.CASCADE)
     title = models.CharField(max_length=256)
     description = models.TextField(null=True, blank=True)
+
+
+class ClaimAccointPin(models.Model):
+    delegate = models.ForeignKey('Delegate', related_name='claim_account', on_delete=models.CASCADE)
+    pin = models.CharField(max_length=PIN_LENGTH)
+    generated_at = models.DateTimeField(blank=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<ClaimAccointPin "{}">'.format(self.delegate.name)

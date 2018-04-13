@@ -14,8 +14,15 @@
                 </div>
             </div>
             <div class="cell small-4 delegate-page__title">
-                <h1>{{ delegate.name }}</h1>
-                {% if can_edit %}
+                <h1>
+                    {{ delegate.name }}
+                    {% if delegate.user_id %}
+                        <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" tabindex="1" title="This account has been claimed">
+                            <i class="fas fa-certificate delegate-verified"></i>
+                        </span>
+                    {% endif %}
+                </h1>
+                {% if is_staff %}
                     <a href="{% url 'admin:app_delegate_change' delegate.id %}" class="delegate-page__edit">edit delegate</a>
                 {% endif %}
             </div>
@@ -51,6 +58,13 @@
 
         <div class="grid-x grid-padding-x">
             <div class="cell small-8 delegate-page__proposal">
+                {% if can_edit_delegate %}
+                    <i class="far fa-edit delegate-edit"
+                       data-toggle="proposal"
+                       data-type="proposal"
+                       data-action="edit"
+                       style="float: right;"></i>
+                {% endif %}
                 {% if delegate.proposal %}
                     {{ delegate.proposal|markdown|safe }}
                 {% else %}
@@ -63,7 +77,21 @@
                     <ul>
                         {% for contribution in contributions %}
                             <li>
-                                <b>{{ contribution.title }}</b><br/>
+                                <b>
+                                    {{ contribution.title }}
+                                    {% if can_edit_delegate %}
+                                        <i class="far fa-edit delegate-edit"
+                                           data-toggle="editCreateContribution"
+                                           data-type="contribution"
+                                           data-action="edit"
+                                           data-id="{{ contribution.id }}"></i>
+                                        <i class="fas fa-trash-alt delegate-edit"
+                                           data-toggle="deleteContribution"
+                                           data-type="contribution"
+                                           data-action="delete"
+                                           data-id="{{ contribution.id }}"></i>
+                                    {% endif %}
+                                </b><br/>
                                 {% if contribution.description %}
                                     <p>{{ contribution.description }}</p>
                                 {% endif %}
@@ -73,6 +101,14 @@
                 {% else %}
                     <p>We aren't able to find any contributions to ARK from this delegate.</p>
                 {% endif %}
+                {% if can_edit_delegate %}
+                    <div class="delegate-edit"
+                         data-toggle="editCreateContribution"
+                         data-type="contribution"
+                         data-action="create">
+                        <i class="fas fa-plus-circle"></i> Add new contribution
+                    </div>
+                {% endif %}
             </div>
             <div class="cell small-4 delegate-page__nodes">
                 <h3>Nodes</h3>
@@ -80,6 +116,20 @@
                     {% if nodes %}
                         {% for node in nodes %}
                             <li class="delegate-page__node">
+                                {% if can_edit_delegate %}
+                                    <div class="delegate-page__node-edit">
+                                        <i class="far fa-edit delegate-edit"
+                                           data-toggle="editCreateNode"
+                                           data-type="node"
+                                           data-action="edit"
+                                           data-id="{{ node.id }}"></i>
+                                        <i class="fas fa-trash-alt delegate-edit"
+                                           data-toggle="deleteNode"
+                                           data-type="node"
+                                           data-action="delete"
+                                           data-id="{{ node.id }}"></i>
+                                    </div>
+                                {% endif %}
                                 <div class="delegate-page__node-spec">
                                     CPU:
                                     {% if node.cpu %}
@@ -112,7 +162,76 @@
                         <p>Couldn't not find any data about this delegate's nodes.</p>
                     {% endif %}
                 </ul>
+                {% if can_edit_delegate %}
+                    <div class="delegate-edit"
+                         data-toggle="editCreateNode"
+                         data-type="node"
+                         data-action="create">
+                        <i class="fas fa-plus-circle"></i> Add new node
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
+
+    {% if can_edit_delegate %}
+        {# Modals yo #}
+
+        <div class="reveal" id="proposal" data-reveal data-close-on-click="true">
+            <h3>Your proposal</h3>
+            <p>You can format your proposal using <a href="https://www.markdownguide.org/basic-syntax" target="blank">Markdown</a></p>
+            <form action="/edit/proposal/" method="post" id="editProposalForm">
+                {% csrf_token %}
+                {{ proposalForm }}
+                <input type="submit" value="Save" />
+            </form>
+            <button class="close-button" data-close aria-label="Close reveal" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="reveal" id="editCreateContribution" data-reveal data-close-on-click="true">
+            <h3>Edit/Create contribution </h3>
+            <form action="/edit/contribution/" method="post" id="editCreateContributionForm">
+                {% csrf_token %}
+                {{ contributionForm }}
+                <input type="submit" value="Save" />
+            </form>
+            <button class="close-button" data-close aria-label="Close reveal" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="reveal" id="deleteContribution" data-reveal data-close-on-click="true">
+            <h3>Delete contribution</h3>
+            <p>Are you sure you want to delete this contribution? It will be lost forever.</p>
+            <button type="button" class="alert button delete-no">No!</button>
+            <button type="button" class="success button float-right delete-yes">Yes!</button>
+            <button class="close-button" data-close aria-label="Close reveal" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="reveal" id="editCreateNode" data-reveal data-close-on-click="true">
+            <h3>Edit/Create node</h3>
+            <form action="/edit/node/" method="post" id="editCreateNodeForm">
+                {% csrf_token %}
+                {{ nodeForm }}
+                <input type="submit" value="Save" />
+            </form>
+            <button class="close-button" data-close aria-label="Close reveal" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="reveal" id="deleteNode" data-reveal data-close-on-click="true">
+            <h3>Delete node</h3>
+            <p>Are you sure you want to delete this node? It will be lost forever.</p>
+            <button type="button" class="alert button delete-no">No!</button>
+            <button type="button" class="success button float-right delete-yes">Yes!</button>
+            <button class="close-button" data-close aria-label="Close reveal" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
 {% endblock %}

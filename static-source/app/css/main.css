@@ -34,6 +34,9 @@ body {
 .delegate-item__name {
 
 }
+.delegate-item__name .has-tip {
+    display: inline;
+}
 .delegate-item__list {
     padding: 0;
     margin: 0;
@@ -105,6 +108,9 @@ body {
 .delegate-page__title h1 {
     font-size: 2.5em;
 }
+.delegate-page__title .has-tip {
+    display: inline;
+}
 .delegate-page__rank {
     line-height: 1.2em;
     text-align: center;
@@ -158,6 +164,7 @@ body {
     padding: 0.5em;
     border-radius: 5px;
     display: table;
+    position: relative;
 }
 .delegate-page__node-spec {
     width: 100%;
@@ -170,11 +177,24 @@ body {
     border-bottom: 0;
     display: block;
 }
+.delegate-page__node-edit {
+    position: absolute;
+    top: 7px;
+    right: 8px;
+}
 .delegate-page__edit {
     font-size: 0.8em;
     position: absolute;
     bottom: -10px;
     color: #ef192d;
+}
+
+.delegate-verified {
+    font-size: 9px;
+    position: absolute;
+    top: 0;
+    color: #ef1a2e;
+    left: 4px;
 }
 
 .tag {
@@ -199,3 +219,52 @@ body {
 .has-tip {
     border-bottom: 0;
 }
+
+.delegate-navigation {
+    width: 100%;
+    display: table;
+    background: #333;
+    color: #fff;
+    padding: 0.3em 1em;
+}
+.delegate-navigation a {
+    color: #fff;
+}
+.delegate-navigation__left {
+    float: left;
+    text-align: left;
+}
+.delegate-navigation__right {
+    float: right;
+    text-align: right;
+}
+.delegate-edit {
+    cursor: pointer;
+}
+
+.claim-acount__pincode {
+    padding: 0.7em;
+    width: 220px;
+    margin: auto;
+    background: #FFF;
+    border: 1px solid #cacaca;
+    text-align: center;
+    margin-bottom: 0.7em;
+}
+.claim-acount__pincode-guide {
+    margin-bottom: 1em;
+}
+.claim-acount__pincode-guide p {
+    font-size: 0.75em;
+    margin-bottom: 0.7em;
+    color: #0a0a0a;
+    text-align: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+div:focus {outline:0;}
+button:focus {outline:0;}
+i:focus {outline:0;}
