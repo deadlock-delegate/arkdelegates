@@ -3,6 +3,7 @@ SELECT
     app_delegate.id,
     app_delegate.name,
     app_delegate.address,
+    app_delegate.is_private,
     latest_history.*,
     node_coude.count as total_nodes_count,
     has_backup.count as backup_nodes_count,
@@ -51,6 +52,7 @@ SELECT
     app_delegate.id,
     app_delegate.name,
     app_delegate.address,
+    app_delegate.is_private,
     latest_history.*
 FROM
     app_delegate

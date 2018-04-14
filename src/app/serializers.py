@@ -55,6 +55,7 @@ class DelegateSerializer(serpy.Serializer):
     voting_power = StringField()
     voters_zero_balance = IntegerField()
     voters_not_zero_balance = IntegerField()
+    is_private = serpy.BoolField()
 
 
 class ContributionSerializer(serpy.Serializer):

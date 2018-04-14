@@ -23,6 +23,7 @@ class Delegate(models.Model):
     updated = models.DateTimeField(blank=True, null=True, auto_now=True)
     website = models.URLField(max_length=200, blank=True, null=True)
     proposal = models.TextField(blank=True, null=True)
+    is_private = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

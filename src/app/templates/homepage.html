@@ -67,6 +67,14 @@
                                 <i class="fas fa-question"></i>
                             {% endif %}
                         </li>
+                        <li class="delegate-item__list-item">
+                            Is public delegate?
+                            {% if delegate.is_private %}
+                                <i class="fas fa-times text-red"></i>
+                            {% else %}
+                                <i class="fas fa-check text-green"></i>
+                            {% endif %}
+                        </li>
                     </ul>
                 </div>
                 <div class="cell small-12 medium-3">

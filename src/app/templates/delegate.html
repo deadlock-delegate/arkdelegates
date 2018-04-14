@@ -29,6 +29,15 @@
             <div class="cell small-3">
                 <ul class="delegate-item__list">
                     <li class="delegate-item__list-item">
+                        <i class="fas fa-user-secret"></i>
+                        Is public delegate?
+                        {% if delegate.is_private %}
+                            <i class="fas fa-times text-red"></i>
+                        {% else %}
+                            <i class="fas fa-check text-green"></i>
+                        {% endif %}
+                    </li>
+                    <li class="delegate-item__list-item">
                         <i class="fas fa-stopwatch"></i> Uptime: {{delegate.uptime}}%
                     </li>
                     <li class="delegate-item__list-item">
