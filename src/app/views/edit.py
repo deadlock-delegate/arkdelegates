@@ -31,7 +31,7 @@ class EditProposalView(LoginRequiredMixin, View):
             data.update({'updated': True})
         else:
             data.update({
-                'created': False,
+                'updated': False,
                 'errors': form.errors
             })
         return JsonResponse(data)

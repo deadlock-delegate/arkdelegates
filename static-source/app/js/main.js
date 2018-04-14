@@ -96,8 +96,13 @@ function saveContribution(form) {
         }
     })
     .done(function(data) {
-        $('#editCreateContribution').foundation('close');
-        window.location.reload(true);
+        if (data.errors) {
+            handleErrors(data.errors);
+            initFormSubmitListener(form, saveContribution);
+        } else {
+            $('#editCreateContribution').foundation('close');
+            window.location.reload(true);
+        }
     })
     .fail(function(error) {
         alert('There was an error updating a contribution.');
@@ -128,8 +133,12 @@ function createContribution(form) {
         }
     })
     .done(function(data) {
-        $('#editCreateContribution').foundation('close');
-        window.location.reload(true);
+        if (data.errors) {
+            handleErrors(data.errors);
+        } else {
+            $('#editCreateContribution').foundation('close');
+            window.location.reload(true);
+        }
     })
     .fail(function(error) {
         alert('There was an error creating a contribution.');
@@ -158,9 +167,13 @@ function deleteContribution(contributionId) {
                 withCredentials: true
             }
         })
-        .done(function( data ) {
-            $('#deleteContribution').foundation('close');
-            window.location.reload(true);
+        .done(function(data) {
+            if (data.errors) {
+                handleErrors(data.errors);
+            } else {
+                $('#deleteContribution').foundation('close');
+                window.location.reload(true);
+            }
         })
         .fail(function(error) {
             alert('There was an error deleting a contribution.');
@@ -189,7 +202,7 @@ function editNode(nodeId) {
             withCredentials: true
         }
     })
-    .done(function (data) {
+    .done(function(data) {
         var form = document.querySelector('#editCreateNodeForm');
 
         var networkEl = form.querySelector('select[name="network"]');
@@ -237,8 +250,12 @@ function saveNode(form) {
         }
     })
     .done(function(data) {
-        $('#editCreateContribution').foundation('close');
-        window.location.reload(true);
+        if (data.errors) {
+            handleErrors(data.errors);
+        } else {
+            $('#editCreateContribution').foundation('close');
+            window.location.reload(true);
+        }
     })
     .fail(function(error) {
         alert('There was an error updating a contribution.');
@@ -274,8 +291,12 @@ function createNode(form) {
         }
     })
     .done(function(data) {
-        $('#editCreateNode').foundation('close');
-        window.location.reload(true);
+        if (data.errors) {
+            handleErrors(data.errors);
+        } else {
+            $('#editCreateNode').foundation('close');
+            window.location.reload(true);
+        }
     })
     .fail(function(error) {
         alert('There was an error creating a node.');
@@ -304,7 +325,7 @@ function deleteNode(nodeId) {
                 withCredentials: true
             }
         })
-        .done(function( data ) {
+        .done(function(data) {
             $('#deleteNode').foundation('close');
             window.location.reload(true);
         })
@@ -372,8 +393,12 @@ function saveProposal(form) {
         }
     })
     .done(function(data) {
-        $('#editCreateContribution').foundation('close');
-        window.location.reload(true);
+        if (data.errors) {
+            handleErrors(data.errors)
+        } else {
+            $('#editCreateContribution').foundation('close');
+            window.location.reload(true);
+        }
     })
     .fail(function(error) {
         alert('There was an error updating your proposal.');
@@ -390,4 +415,17 @@ function initFormSubmitListener(form, actionHandler) {
         actionHandler(form);
         e.target.removeEventListener(e.type, arguments.callee);
     });
+}
+
+function handleErrors(errors) {
+    for (var error in errors) {
+        var errorMsg = errors[error].join(' ');
+        for (var item of document.querySelectorAll('.error-msg')){
+            if ($(item).data('type') == error) {
+                return;
+            }
+        }
+        document.querySelector('#id_' + error).outerHTML += '<div class="error-msg" data-type="' + error + '">' + errorMsg + '</div>';
+    }
+
 }
