@@ -20,6 +20,7 @@ gevent = "*"
 markdown = "*"
 ecdsa = "*"
 django-redis = "*"
+raven = "*"
 
 
 [dev-packages]

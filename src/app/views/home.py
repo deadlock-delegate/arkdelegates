@@ -31,7 +31,7 @@ class Homepage(TemplateView):
         paginator = Paginator(delegates_list, 60)
         delegates_paginated = paginator.get_page(page)
 
-        if self.request.user.is_authenticated:
+        if self.request.user.is_authenticated and hasattr(self.request.user, 'delegate'):
             logged_in_delegate = self.request.user.delegate
         else:
             logged_in_delegate = None

@@ -22,7 +22,7 @@ class DelegateView(TemplateView):
         nodes = delegate_qs.nodes.filter(is_active=True)
         contributions = delegate_qs.contributions.all()
 
-        if self.request.user.is_authenticated:
+        if self.request.user.is_authenticated and hasattr(self.request.user, 'delegate'):
             logged_in_delegate = Delegate.objects.get(user_id=self.request.user.id)
             can_edit_delegate = Delegate.objects.filter(
                 user_id=self.request.user.id,
