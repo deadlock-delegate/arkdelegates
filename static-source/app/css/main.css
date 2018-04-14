@@ -78,6 +78,11 @@ body {
     margin: 0;
     font-size: 0.85em;
 }
+.message__content a {
+    color: #FFF;
+    font-weight: bold;
+    font-style: underline;
+}
 
 
 .pagination {

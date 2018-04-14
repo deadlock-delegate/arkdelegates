@@ -4,6 +4,10 @@
             Do you see <b>incorrect or missing data?</b> Apologize. It's
             difficult to cover all delegates and get all the necessary information.
             Please <b>contact @roks0n in ARK's Slack</b> and he will correct it.
+
+            {% if show_claim_account %}
+                If you're the owner of this delegate you can <a href="{% url 'claim-delegate' delegate.slug  %}">claim this account!</a>
+            {% endif %}
         </p>
     </div>
 </div>

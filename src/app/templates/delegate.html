@@ -52,9 +52,12 @@
 
         <hr>
 
-        {% include 'modules/message_notice.html' %}
-
-        <hr>
+        {% if not delegate.user_id %}
+            {% with True as show_claim_account %}
+                {% include 'modules/message_notice.html' %}
+            {% endwith %}
+            <hr>
+        {% endif %}
 
         <div class="grid-x grid-padding-x">
             <div class="cell small-8 delegate-page__proposal">
