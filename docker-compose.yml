@@ -10,6 +10,7 @@ services:
       - backend
     depends_on:
       - db
+      - redis
     environment:
       DEBUG: '1'
       PORT: '5000'
@@ -29,6 +30,11 @@ services:
       - "5432:5432"
     volumes:
       - db-data:/data/db
+
+  redis:
+    image: redis:alpine
+    networks:
+      - backend
 
 volumes:
   db-data:

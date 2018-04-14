@@ -19,6 +19,7 @@ serpy = "*"
 gevent = "*"
 markdown = "*"
 ecdsa = "*"
+django-redis = "*"
 
 
 [dev-packages]
