@@ -1,6 +1,9 @@
 build:
 	docker-compose build
 
+up:
+	docker-compose up
+
 start:
 	docker-compose run --rm --service-ports web
 
