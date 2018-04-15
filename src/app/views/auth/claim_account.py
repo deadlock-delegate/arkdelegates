@@ -12,9 +12,9 @@ class ClaimAccount(TemplateView):
     template_name = 'auth/claim_account.html'
 
     def dispatch(self, request, delegate_slug, *args, **kwargs):
-        self.pin = generate_pin()
         self.form = None
         self.delegate = get_object_or_404(Delegate, slug=delegate_slug)
+        self.pin = self._generated_and_store_pin()
         self.account_already_claimed = False
         return super().dispatch(request, delegate_slug, *args, **kwargs)
 
@@ -23,7 +23,6 @@ class ClaimAccount(TemplateView):
             self.account_already_claimed = True
         else:
             self.form = ClaimAccountForm()
-            self._store_generated_pin()
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -32,16 +31,15 @@ class ClaimAccount(TemplateView):
             self.form.add_error(None, 'This account has already been claimed!')
         elif self.form.is_valid():
             data = self.form.cleaned_data['message_json']
-            public_key = self.delegate.public_key
-            claim_account_data = ClaimAccointPin.objects.get(delegate=self.delegate)
 
-            if claim_account_data.generated_at <= datetime.utcnow() - timedelta(seconds=180):
-                self._store_generated_pin()
+            claim_account_data = ClaimAccointPin.objects.get(delegate=self.delegate)
+            if not claim_account_data.pin == data['message']:
                 self.form.add_error(
                     'message_json',
                     'Your signed pin code has expired. Please try again with a fresh pin code.'
                 )
             else:
+                public_key = self.delegate.public_key
                 is_valid = verify_signature(claim_account_data.pin, public_key, data['signature'])
                 if is_valid:
                     password = self.form.cleaned_data['password']
@@ -71,8 +69,17 @@ class ClaimAccount(TemplateView):
 
         return context
 
-    def _store_generated_pin(self):
-        delegate, created = ClaimAccointPin.objects.get_or_create(delegate=self.delegate)
-        delegate.pin = self.pin
-        delegate.generated_at = datetime.utcnow()
-        delegate.save()
+    def _generated_and_store_pin(self):
+        """
+        Generates and stores a pin code. If `ClaimAccointPin` code already exist and it was created
+        less than 180sec ago use it, otherwise generate a new one.
+        """
+        delegate_pin, created = ClaimAccointPin.objects.get_or_create(delegate=self.delegate)
+        if not created and delegate_pin.generated_at >= datetime.utcnow() - timedelta(seconds=180):
+            pin = delegate_pin.pin
+        else:
+            pin = generate_pin()
+            delegate_pin.pin = pin
+            delegate_pin.generated_at = datetime.utcnow()
+            delegate_pin.save()
+        return pin
