@@ -17,7 +17,7 @@
                 {% endif %}
                 <div class="cell small-12 medium-3 delegate-item__name">
                     <span style="font-size: 1.1em">{{delegate.rank}}.</span>
-                    {{delegate.name}}
+                    <a href="{% url 'delegate' delegate.slug %}">{{delegate.name}}</a>
                     {% if delegate.user_id %}
                         <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" tabindex="1" title="This account has been claimed">
                             <i class="fas fa-certificate delegate-verified"></i>
@@ -82,11 +82,6 @@
                         <li class="delegate-item__list-item">
                             <a href="{% url 'delegate' delegate.slug %}">View Delegate</a>
                         </li>
-                        {% if delegate.website %}
-                            <li class="delegate-item__list-item">
-                                <a href="{{ delegate.website }}" target="_blank">Visit Website</a>
-                            </li>
-                        {% endif %}
                     </ul>
                 </div>
             </div>

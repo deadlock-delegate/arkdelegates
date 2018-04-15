@@ -155,14 +155,17 @@ body {
 .delegate-page__proposal a {
     color: #ef192d;
 }
-.delegate-page__nodes ul {
+
+.delegate-page__nodes {
     list-style: none;
     margin: 0;
 }
-.delegate-page__nodes ul li {
+.delegate-page__nodes p {
+    font-size: 0.9em;
+}
+.delegate-page__nodes li {
     width: 100%;
 }
-
 .delegate-page__node {
     font-size: 0.8em;
     border: 1px solid #ddd;
@@ -188,6 +191,16 @@ body {
     top: 7px;
     right: 8px;
 }
+
+.delegate-page__other {
+    list-style: none;
+    margin: 0;
+    font-size: 0.9em;
+}
+.delegate-page__other li {
+    margin-bottom: 0.5em;
+}
+
 .delegate-page__edit {
     font-size: 0.8em;
     position: absolute;
