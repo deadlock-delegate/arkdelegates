@@ -66,6 +66,15 @@ class Contribution(models.Model):
     description = models.TextField(null=True, blank=True)
 
 
+class StatusUpdate(models.Model):
+    delegate = models.ForeignKey(
+        'Delegate', related_name='status_updates', on_delete=models.CASCADE
+    )
+    message = models.TextField()
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+
 class ClaimAccointPin(models.Model):
     delegate = models.ForeignKey('Delegate', related_name='claim_account', on_delete=models.CASCADE)
     pin = models.CharField(max_length=PIN_LENGTH)

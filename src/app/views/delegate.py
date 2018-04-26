@@ -3,7 +3,7 @@ from django.views.generic.base import TemplateView
 from app.models import Delegate
 from app.utils import is_staff
 from app.sql import sql_delegate_all_info
-from app.forms import ContributionForm, NodeForm, ProposalForm
+from app.forms import ContributionForm, NodeForm, ProposalForm, StatusUpdateForm
 
 
 class DelegateView(TemplateView):
@@ -21,6 +21,7 @@ class DelegateView(TemplateView):
         delegate_qs = Delegate.objects.get(slug=delegate_slug)
         nodes = delegate_qs.nodes.filter(is_active=True)
         contributions = delegate_qs.contributions.all()
+        updates = delegate_qs.status_updates.order_by('-created')
 
         if self.request.user.is_authenticated and hasattr(self.request.user, 'delegate'):
             logged_in_delegate = Delegate.objects.get(user_id=self.request.user.id)
@@ -37,19 +38,21 @@ class DelegateView(TemplateView):
                 'contributionForm': ContributionForm(),
                 'nodeForm': NodeForm(),
                 'proposalForm': ProposalForm(),
+                'updateForm': StatusUpdateForm(),
             })
 
         context.update({
             'seo': {
                 'title': '{} @ ARKdelegates.io'.format(delegate.name),
                 'description': (
-                    'Check what {} delegate has done for the ark community, how many nodes it runs '
-                    'and what proposal have they written.'.format(delegate.name)
+                    "Check what {} delegate has done for the ark community, how many nodes it runs "
+                    "and what's the proposal.".format(delegate.name)
                 )
             },
             'delegate': delegate,
             'nodes': nodes,
             'contributions': contributions,
+            'updates': updates,
             'is_staff': is_staff(self.request.user),
             'can_edit_delegate': can_edit_delegate,
             'logged_in_delegate': logged_in_delegate

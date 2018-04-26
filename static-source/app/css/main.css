@@ -280,6 +280,16 @@ body {
     text-align: center;
 }
 
+.updates {}
+.updates__datetime {
+    width: 100%;
+    font-size: 0.85em;
+    color: #9c9c9c;
+}
+.updates__status p {
+    font-size: 1.1em;
+}
+
 .text-center {
     text-align: center;
 }
