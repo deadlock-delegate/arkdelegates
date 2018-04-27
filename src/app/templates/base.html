@@ -20,7 +20,7 @@
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'UA-116691464-1');
+          gtag('config', 'UA-116691464-1', { 'anonymize_ip': true });
         </script>
     </head>
     <body>
@@ -55,7 +55,7 @@
         {% endblock %}
 
         <script src="{% static 'app/js/vendor/modernizr-3.5.0.min.js' %}"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="{% static 'app/js/vendor/jquery-3.2.1.min.js' %}" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script src="{% static 'app/js/vendor/foundation.min.js' %}"></script>
         <script src="{% static 'app/js/plugins.js' %}"></script>
         <script src="{% static 'app/js/vendor/what-input.js' %}"></script>

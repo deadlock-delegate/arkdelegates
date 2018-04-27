@@ -2,7 +2,7 @@ import json
 from django import forms
 from django.contrib.auth import password_validation
 from django.core.validators import validate_email
-from app.models import Contribution, Delegate, Node
+from app.models import Contribution, Delegate, Node, StatusUpdate
 
 
 class ClaimAccountForm(forms.Form):
@@ -59,3 +59,9 @@ class ProposalForm(forms.ModelForm):
     class Meta:
         model = Delegate
         fields = ['proposal']
+
+
+class StatusUpdateForm(forms.ModelForm):
+    class Meta:
+        model = StatusUpdate
+        fields = ['message']

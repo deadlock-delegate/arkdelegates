@@ -46,6 +46,21 @@ $('[data-toggle]').on('click', function () {
                 throw Error('Unknown action');
             }
             break;
+
+         case 'update':
+            if (action === 'edit') {
+                var updateId = $(this).data('id');
+                editUpdate(updateId);
+            } else if (action == 'create') {
+                triggerCreateUpdate();
+            } else if (action == 'delete') {
+                var updateId = $(this).data('id');
+                deleteUpdate(updateId);
+            } else {
+                throw Error('Unknown action');
+            }
+            break;
+
         default:
             console.log('do nothing yo');
     }
@@ -428,4 +443,138 @@ function handleErrors(errors) {
         document.querySelector('#id_' + error).outerHTML += '<div class="error-msg" data-type="' + error + '">' + errorMsg + '</div>';
     }
 
+}
+
+
+/**
+ * Updates
+ */
+
+function editUpdate(updateId) {
+    var actionUrl = '/edit/update/?id=' + updateId;
+    $.ajax({
+        url: actionUrl,
+        dataType: 'json',
+        contentType: 'application/json',
+        xhrFields: {
+            withCredentials: true
+        }
+    })
+    .done(function(data) {
+        var form = document.querySelector('#editCreateUpdateForm');
+        var messageEl = form.querySelector('textarea[name="message"]');
+        messageEl.value = data.message;
+        form.action = actionUrl;
+        initFormSubmitListener(form, saveUpdate);
+    });
+}
+
+function saveUpdate(form) {
+    var actionUrl = form.action;
+    var messageEl = form.querySelector('textarea[name="message"]');
+
+    $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+        jqXHR.setRequestHeader('X-CSRFToken', csrfmiddlewaretoken);
+    });
+    $.ajax({
+        method: 'PUT',
+        url: actionUrl,
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            message: messageEl.value,
+        }),
+        xhrFields: {
+            withCredentials: true
+        }
+    })
+    .done(function(data) {
+        if (data.errors) {
+            handleErrors(data.errors);
+        } else {
+            $('#editCreateUpdate').foundation('close');
+            window.location.reload(true);
+        }
+    })
+    .fail(function(error) {
+        alert('There was an error updating an update.');
+        console.log('There was an error updating an update:', error);
+    });
+};
+
+function createUpdate(form) {
+    var actionUrl = form.action;
+    var messageEl = form.querySelector('textarea[name="message"]');
+
+    $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+        jqXHR.setRequestHeader('X-CSRFToken', csrfmiddlewaretoken);
+    });
+    $.ajax({
+        method: 'POST',
+        url: actionUrl,
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            message: messageEl.value,
+        }),
+        xhrFields: {
+            withCredentials: true
+        }
+    })
+    .done(function(data) {
+        if (data.errors) {
+            handleErrors(data.errors);
+        } else {
+            $('#editCreateUpdate').foundation('close');
+            window.location.reload(true);
+        }
+    })
+    .fail(function(error) {
+        alert('There was an error creating an update.');
+        console.log('There was an error creating an update:', error);
+    });
+}
+
+function deleteUpdate(updateId) {
+    var form = document.querySelector('#deleteUpdate');
+    var actionUrl = '/edit/update/?id=' + updateId;
+    var deleteYes = form.querySelector('.delete-yes');
+    var deleteNo = form.querySelector('.delete-no');
+
+    $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+        jqXHR.setRequestHeader('X-CSRFToken', csrfmiddlewaretoken);
+    });
+
+    deleteYes.addEventListener('click', function (e) {
+        e.preventDefault();
+        $.ajax({
+            method: 'DELETE',
+            url: actionUrl,
+            dataType: 'json',
+            contentType: 'application/json',
+            xhrFields: {
+                withCredentials: true
+            }
+        })
+        .done(function(data) {
+            $('#deleteUpdate').foundation('close');
+            window.location.reload(true);
+        })
+        .fail(function(error) {
+            alert('There was an error deleting a node.');
+            console.log('There was an error deleting a node:', error);
+        }).always(function() {
+            // remove event listener?
+        });
+    });
+
+    deleteNo.addEventListener('click', function(e) {
+        e.preventDefault();
+        $('#deleteUpdate').foundation('close');
+    });
+}
+
+function triggerCreateUpdate() {
+    var form = document.querySelector('#editCreateUpdateForm');
+    initFormSubmitListener(form, createUpdate);
 }

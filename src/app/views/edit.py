@@ -3,9 +3,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import TemplateView, View
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from app.models import Contribution, Delegate, Node
-from app.serializers import ContributionSerializer, NodeSerializer
-from app.forms import ContributionForm, NodeForm, ProposalForm
+from app.models import Contribution, StatusUpdate, Node
+from app.serializers import ContributionSerializer, NodeSerializer, StatusUpdateSerializer
+from app.forms import ContributionForm, NodeForm, ProposalForm, StatusUpdateForm
 
 
 class EditProposalView(LoginRequiredMixin, View):
@@ -160,4 +160,62 @@ class EditNodeView(LoginRequiredMixin, View):
             Node, id=request.GET.get('id'), delegate_id=self.delegate.id
         )
         node.delete()
+        return JsonResponse({'deleted': True})
+
+
+class StatusUpdateView(LoginRequiredMixin, View):
+    login_url = '/auth/login/'
+    redirect_field_name = 'next'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.delegate = self.request.user.delegate
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        status = get_object_or_404(
+            StatusUpdate, id=request.GET.get('id'), delegate_id=self.delegate.id
+        )
+        data = StatusUpdateSerializer(status).data
+        return JsonResponse(data)
+
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        form = StatusUpdateForm(data)
+        data = {}
+        if form.is_valid():
+            StatusUpdate.objects.create(
+                delegate=self.delegate,
+                message=form.cleaned_data['message'],
+            )
+            data.update({'created': True})
+        else:
+            data.update({
+                'created': False,
+                'errors': form.errors
+            })
+        return JsonResponse(data)
+
+    def put(self, request, *args, **kwargs):
+        update = get_object_or_404(
+            StatusUpdate, id=request.GET.get('id'), delegate_id=self.delegate.id
+        )
+        data = json.loads(request.body)
+        form = StatusUpdateForm(data)
+        data = {}
+        if form.is_valid():
+            update.message = form.cleaned_data['message']
+            update.save()
+            data.update({'updated': True})
+        else:
+            data.update({
+                'updated': False,
+                'errors': form.errors
+            })
+        return JsonResponse(data)
+
+    def delete(self, request, *args, **kwargs):
+        update = get_object_or_404(
+            StatusUpdate, id=request.GET.get('id'), delegate_id=self.delegate.id
+        )
+        update.delete()
         return JsonResponse({'deleted': True})

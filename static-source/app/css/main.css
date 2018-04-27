@@ -280,6 +280,16 @@ body {
     text-align: center;
 }
 
+.updates {}
+.updates__datetime {
+    width: 100%;
+    font-size: 0.85em;
+    color: #9c9c9c;
+}
+.updates__status p {
+    font-size: 1.1em;
+}
+
 .text-center {
     text-align: center;
 }
@@ -289,6 +299,26 @@ body {
     margin-bottom: 0.7em;
     position: relative;
     top: -0.7em;
+}
+
+.status-update {
+
+}
+.status-update h2 {
+    font-size: 1.5em;
+    margin: 0;
+}
+.status-update__datetime {
+    width: 100%;
+    font-size: 0.85em;
+    color: #9c9c9c;
+}
+.status-update__message {
+    font-size: 1.2em;
+    margin: 1em auto;
+    padding: 1em 2em;
+    background: #e8eaef;
+    border-radius: 5px;
 }
 
 ul.form {

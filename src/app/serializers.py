@@ -69,3 +69,7 @@ class NodeSerializer(serpy.Serializer):
     memory = StringField()
     is_dedicated = serpy.BoolField()
     is_backup = serpy.BoolField()
+
+
+class StatusUpdateSerializer(serpy.Serializer):
+    message = StringField()
