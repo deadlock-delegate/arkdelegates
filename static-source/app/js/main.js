@@ -492,7 +492,7 @@ function saveUpdate(form) {
         if (data.errors) {
             handleErrors(data.errors);
         } else {
-            $('#editCreateContribution').foundation('close');
+            $('#editCreateUpdate').foundation('close');
             window.location.reload(true);
         }
     })

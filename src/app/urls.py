@@ -9,6 +9,7 @@ from app.views.delegate import DelegateView
 from app.views.home import health, Homepage
 from app.views.api import Delegates
 from app.views.edit import EditProposalView, EditContributionView, EditNodeView, StatusUpdateView
+from app.views.update import UpdateView
 
 
 urlpatterns = [
@@ -18,6 +19,11 @@ urlpatterns = [
     # pages
     path('', Homepage.as_view(), name='homepage'),
     path('delegate/<slug:delegate_slug>/', DelegateView.as_view(), name='delegate'),
+    path(
+        'delegate/<slug:delegate_slug>/update/<int:update_id>',
+        UpdateView.as_view(),
+        name='update'
+    ),
 
     # auth
     path('auth/', include('app.views.auth.urls')),

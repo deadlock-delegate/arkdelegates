@@ -142,7 +142,8 @@
                                        data-id="{{ update.id }}"></i>
                                 {% endif %}
                                 <div class="updates__datetime">
-                                    {{ update.created|date:"d. M. Y @ H:i" }}
+                                    {{ update.created|date:"d. M. Y @ H:i" }} |
+                                    <a href="{% url 'update' delegate.slug update.id %}">visit update page</a>
                                 </div>
                                 <p>
                                     {{ update.message }}
