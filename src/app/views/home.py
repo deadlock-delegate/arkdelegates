@@ -38,9 +38,9 @@ class Homepage(TemplateView):
 
         context.update({
             'seo': {
-                'title': 'ARK Delegates - Find and follow ARK delegates',
+                'title': 'ARK delegates - Find and follow ARK delegates',
                 'description': (
-                    'Find ARK delegates that you want to support and follow their progress.'
+                    'Find ARK delegates you want to support, see what are they doing, what have they done and follow their progress.'
                 )
             },
             'delegates': delegates_paginated,

@@ -1,7 +1,7 @@
 {% if paginator.paginator.num_pages > 1 %}
     <ul class="pagination text-center" role="navigation" aria-label="Pagination">
         {% if paginator.has_previous %}
-            <li>
+            <li class="hide-for-small-only">
                 <a href="?page=1">First</a>
             </li>
             <li class="pagination-previous">
@@ -15,7 +15,7 @@
             </li>
         {% endif%}
 
-        <li class="current">
+        <li class="current hide-for-small-only">
             <span class="show-for-sr">You're on </span> page {{ paginator.number }} out of {{ paginator.paginator.num_pages }}
         </li>
 
@@ -25,7 +25,7 @@
                     Next
                 </a>
             </li>
-            <li>
+            <li class="hide-for-small-only">
                 <a href="?page={{ paginator.paginator.num_pages }}" aria-label="Last page">
                     Last
                 </a>

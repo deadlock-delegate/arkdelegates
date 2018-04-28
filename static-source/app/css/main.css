@@ -321,6 +321,19 @@ body {
     border-radius: 5px;
 }
 
+.footer {
+    margin-top: 1.5em;
+    background: #333;
+    width: 100%;
+    padding: 1em 0;
+    text-align: right;
+    color: #FFF;
+    font-size: 0.75em;
+}
+.footer a {
+    color: #FFF;
+}
+
 ul.form {
     list-style: none;
     margin: 0;

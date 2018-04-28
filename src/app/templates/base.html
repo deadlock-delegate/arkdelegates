@@ -8,6 +8,23 @@
         <meta name="description" content="{{ seo.description }}">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+        <!-- Twitter Card data -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@deadlock_ark">
+        <meta name="twitter:title" content="{{ seo.title }}">
+        <meta name="twitter:description" content="{{ seo.description }}">
+        {# <meta name="twitter:creator" content="@author_handle"> #}
+        {# <-- Twitter Summary card images must be at least 120x120px --> #}
+        {# <meta name="twitter:image" content="http://www.example.com/image.jpg"> #}
+
+        <!-- Open Graph data -->
+        <meta property="og:title" content="{{ seo.title }}" />
+        <meta property="og:type" content="website" />
+        {# <meta property="og:url" content="http://www.example.com/" /> #}
+        {# <meta property="og:image" content="http://example.com/image.jpg" /> #}
+        <meta property="og:description" content="{{ seo.description }}" />
+        {# <meta property="og:site_name" content="ARKdelegates" /> #}
+
         <link rel="apple-touch-icon" href="icon.png">
         <!-- Place favicon.ico in the root directory -->
 
@@ -53,6 +70,16 @@
 
         {% block content %}
         {% endblock %}
+
+        <div class="footer">
+            <div class="grid-container">
+                <div class="grid-x grid-padding-x align-middle">
+                    <div class="cell small-12">
+                        <a href="{% url 'login' %}">Login</a> | ARKdelegates v0.3
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script src="{% static 'app/js/vendor/modernizr-3.5.0.min.js' %}"></script>
         <script src="{% static 'app/js/vendor/jquery-3.2.1.min.js' %}" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
