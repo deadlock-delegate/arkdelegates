@@ -7,7 +7,7 @@
 {% block content %}
     <div class="grid-container">
         <div class="grid-x grid-padding-x align-middle">
-            <div class="cell small-8 large-offset-2 text-center status-update">
+            <div class="cell small-12 medium-8 medium-offset-2 text-center status-update">
                 <h2>Status update from {{ delegate.name }}</h2>
                 <div class="status-update__datetime">{{ update.created|date:"d. M. Y @ H:i" }}</div>
                 {% if can_edit_delegate %}
