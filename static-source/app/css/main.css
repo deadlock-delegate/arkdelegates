@@ -332,6 +332,19 @@ body {
 }
 .footer a {
     color: #FFF;
+
+}
+.faq-page {
+
+}
+.faq-page h1 {
+    font-size: 1.5em;
+}
+.faq-page h2 {
+    font-size: 1.3em;
+}
+.faq-page h3 {
+    font-size: 1.1em;
 }
 
 ul.form {
