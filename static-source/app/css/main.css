@@ -330,6 +330,9 @@ body {
     color: #FFF;
     font-size: 0.75em;
 }
+.footer a {
+    color: #FFF;
+}
 
 ul.form {
     list-style: none;
