@@ -17,3 +17,5 @@ requirements.txt.bak
 !.dockerignore
 docker-compose.prod.yml
 static
+node_modules/
+build/

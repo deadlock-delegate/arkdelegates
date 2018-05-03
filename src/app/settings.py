@@ -158,7 +158,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = root('static')
 
 STATICFILES_DIRS = (
-    root('static-source/'),
+    root('build/'),
 )
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
@@ -166,11 +166,7 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 # Logging
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': True,
-    'root': {
-        'level': 'WARNING',
-        'handlers': ['sentry'],
-    },
+    'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
             'format': '%(levelname)s %(asctime)s %(module)s '
@@ -205,6 +201,10 @@ LOGGING = {
             'handlers': ['console'],
             'propagate': False,
         },
+        '': {
+            'handlers': ['console', 'sentry'],
+            'level': 'ERROR',
+        }
     },
 }
 

@@ -1,0 +1,18 @@
+.status-update {
+    h2 {
+        font-size: 1.5em;
+        margin: 0;
+    }
+    &__datetime {
+        width: 100%;
+        font-size: 0.85em;
+        color: #9c9c9c;
+    }
+    &__message {
+        font-size: 1.2em;
+        margin: 1em auto;
+        padding: 1em 2em;
+        background: #e8eaef;
+        border-radius: 5px;
+    }
+}

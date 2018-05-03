@@ -1,3 +1,10 @@
+import $ from './vendor/jquery-3.2.1.js';
+import './vendor/modernizr-3.5.0.min.js';
+import './vendor/what-input.js';
+
+import './vendor/foundation.js';
+import './plugins.js';
+
 $(document).foundation();
 
 if (document.querySelector('input[name="csrfmiddlewaretoken"')) {
