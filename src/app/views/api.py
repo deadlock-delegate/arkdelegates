@@ -31,10 +31,14 @@ class Delegates(View):
         Raises:
             Http404: if delegate with given delegate slug does not exist
         """
-        delegate_query = Delegate.objects.raw(sql_select_all_info_for_delegate, [delegate_slug])
+        delegates_list = cache.get('app.sql.get_delegate.{}'.format(delegate_slug))
+        if not delegates_list:
+            delegates = Delegate.objects.raw(sql_select_all_info_for_delegate, [delegate_slug])
+            delegates_list = list(delegates)
+            cache.set('app.sql.get_delegate.{}'.format(delegate_slug), delegates_list, 5 * 60)
 
         try:
-            delegate = delegate_query[0]
+            delegate = delegates_list[0]
         except IndexError:
             raise Http404('Delegate %s does not exist', delegate_slug)
 
