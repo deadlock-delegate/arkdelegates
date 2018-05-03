@@ -1,5 +1,6 @@
 from django.http import Http404
 from django.views.generic.base import TemplateView
+
 from app.models import Delegate
 from app.utils import is_staff
 from app.sql import sql_delegate_all_info
