@@ -25,7 +25,7 @@ class Homepage(TemplateView):
         if not delegates_list:
             delegates = Delegate.objects.raw(sql_delegates)  # todo: optimize this raw sql yo
             delegates_list = list(delegates)
-            cache.set('app.sql.get_delegates', delegates_list, 5)  # expire cache in 5min
+            cache.set('app.sql.get_delegates', delegates_list, 5 * 60)  # expire cache in 5min
 
         page = int(self.request.GET.get('page', 1))
         paginator = Paginator(delegates_list, 60)
