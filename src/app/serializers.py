@@ -1,5 +1,7 @@
-import serpy
 from datetime import datetime
+
+import serpy
+
 from django.core.exceptions import ValidationError
 
 

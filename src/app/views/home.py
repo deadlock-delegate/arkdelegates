@@ -21,11 +21,11 @@ class Homepage(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        delegates_list = cache.get('app.views.home.get_delegates')
+        delegates_list = cache.get('app.sql.get_delegates')
         if not delegates_list:
             delegates = Delegate.objects.raw(sql_delegates)  # todo: optimize this raw sql yo
             delegates_list = list(delegates)
-            cache.set('app.views.home.get_delegates', delegates_list, 5)  # expire cache in 5min
+            cache.set('app.sql.get_delegates', delegates_list, 5)  # expire cache in 5min
 
         page = int(self.request.GET.get('page', 1))
         paginator = Paginator(delegates_list, 60)
@@ -40,7 +40,8 @@ class Homepage(TemplateView):
             'seo': {
                 'title': 'ARK delegates - Find and follow ARK delegates',
                 'description': (
-                    'Find ARK delegates you want to support, see what are they doing, what have they done and follow their progress.'
+                    'Find ARK delegates you want to support. See what they are doing, what have '
+                    'they done and follow their progress.'
                 )
             },
             'delegates': delegates_paginated,
