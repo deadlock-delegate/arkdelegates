@@ -25,6 +25,14 @@ class Delegate(models.Model):
     proposal = models.TextField(blank=True, null=True)
     is_private = models.BooleanField(default=False)
 
+    payout_covering_fee = models.NullBooleanField(default=False)
+    payout_percent = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)  # 0.00 - 100.00
+    payout_interval = models.IntegerField(default=0)
+    payout_minimum = models.CharField(max_length=20, null=True, blank=True)
+    payout_maximum = models.CharField(max_length=20, null=True, blank=True)
+    payout_minimum_vote_amount = models.CharField(max_length=20, null=True, blank=True)
+    payout_maximum_vote_amount = models.CharField(max_length=20, null=True, blank=True)
+
     def __str__(self):
         return self.name
 

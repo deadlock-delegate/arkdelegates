@@ -21,6 +21,8 @@ markdown = "*"
 ecdsa = "*"
 django-redis = "*"
 raven = "*"
+django-rest-framework = "*"
+django-cors-headers = "*"
 
 
 [dev-packages]

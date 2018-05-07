@@ -8,7 +8,7 @@ from app.forms import ContributionForm, NodeForm, ProposalForm, StatusUpdateForm
 
 
 class DelegateView(TemplateView):
-    template_name = "delegate.html"
+    template_name = 'delegate.html'
 
     def get_context_data(self, delegate_slug, **kwargs):
         context = super().get_context_data(**kwargs)

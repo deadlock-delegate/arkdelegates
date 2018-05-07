@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import raven
 import environ
 
 root = environ.Path(__file__) - 3
@@ -45,11 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 
     'raven.contrib.django.raven_compat',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
 
     'app',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -93,6 +96,16 @@ AUTHENTICATION_BACKENDS = [
     'app.backends.CustomModelBackend',
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True  # from corsheaders lib (not ideal to allow all)
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+}
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
