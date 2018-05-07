@@ -59,6 +59,14 @@ class DelegateSerializer(serpy.Serializer):
     voters_not_zero_balance = IntegerField()
     is_private = serpy.BoolField()
 
+    payout_covering_fee = serpy.BoolField()
+    payout_percent = FloatField()
+    payout_interval = IntegerField()
+    payout_minimum = StringField()
+    payout_maximum = StringField()
+    payout_minimum_vote_amount = StringField()
+    payout_maximum_vote_amount = StringField()
+
 
 class ContributionSerializer(serpy.Serializer):
     title = StringField()

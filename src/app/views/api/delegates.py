@@ -22,15 +22,20 @@ class Delegates(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsOwnerOrReadOnly,)
 
-    def get(self, request, delegate_slug=None, *args, **kwargs):
-        if delegate_slug:
+    def get(self, request, delegate_slug=None, wallet_address=None, *args, **kwargs):
+        if wallet_address:
+            raise Http404
+        elif delegate_slug:
             data = self._get_delegate(delegate_slug)
         else:
             data = self._get_delegates()
         return Response(data)
 
-    def put(self, request, delegate_slug=None, **kwargs):
-        delegate = get_object_or_404(Delegate, slug=delegate_slug)
+    def put(self, request, delegate_slug=None, wallet_address=None, **kwargs):
+        if wallet_address:
+            delegate = get_object_or_404(Delegate, address=wallet_address)
+        else:
+            delegate = get_object_or_404(Delegate, slug=delegate_slug)
 
         # Check permissions, if user has permissions to change data for a delegate
         self.check_object_permissions(self.request, delegate)
