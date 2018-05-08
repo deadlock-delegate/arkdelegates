@@ -96,7 +96,8 @@ AUTHENTICATION_BACKENDS = [
     'app.backends.CustomModelBackend',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True  # from corsheaders lib (not ideal to allow all)
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/api/.*$'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
