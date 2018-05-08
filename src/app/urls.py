@@ -8,7 +8,6 @@ from django.urls import include, path
 
 from app.views.delegate import DelegateView
 from app.views.home import health, Homepage
-from app.views.api import Delegates
 from app.views.edit import EditProposalView, EditContributionView, EditNodeView, StatusUpdateView
 from app.views.update import UpdateView
 
@@ -19,7 +18,6 @@ urlpatterns = [
 
     # pages
     path('', Homepage.as_view(), name='homepage'),
-    # path('faq/', FAQ.as_view(), name='faq'),
     path('delegate/<slug:delegate_slug>/', DelegateView.as_view(), name='delegate'),
     path(
         'delegate/<slug:delegate_slug>/update/<int:update_id>',
@@ -37,6 +35,5 @@ urlpatterns = [
     path('edit/update/', StatusUpdateView.as_view(), name='status'),
 
     # api
-    path('api/delegates/', Delegates.as_view(), name='api-delegates'),
-    path('api/delegates/<slug:delegate_slug>/', Delegates.as_view(), name='api-delegate'),
+    path('api/', include('app.views.api.urls')),
 ]

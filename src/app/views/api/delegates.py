@@ -1,22 +1,49 @@
 from django.core.cache import cache
 from django.core.paginator import Paginator
-from django.http import Http404, JsonResponse
-from django.views import View
+from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+from django.http import Http404
 
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from app.permissions import IsOwnerOrReadOnly
 from app.models import Delegate
 from app.serializers import DelegateSerializer
 from app.sql import sql_delegates, sql_select_all_info_for_delegate
+from app.views.api.serializers import DelegateModelSerializer
 
 
-class Delegates(View):
-    def get(self, request, delegate_slug=None, **kwargs):
+class Delegates(APIView):
 
-        if delegate_slug:
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsOwnerOrReadOnly,)
+
+    def get(self, request, delegate_slug=None, wallet_address=None, *args, **kwargs):
+        if wallet_address:
+            raise Http404
+        elif delegate_slug:
             data = self._get_delegate(delegate_slug)
         else:
             data = self._get_delegates()
+        return Response(data)
 
-        return JsonResponse(data, safe=False)
+    def put(self, request, delegate_slug=None, wallet_address=None, **kwargs):
+        if wallet_address:
+            delegate = get_object_or_404(Delegate, address=wallet_address)
+        else:
+            delegate = get_object_or_404(Delegate, slug=delegate_slug)
+
+        # Check permissions, if user has permissions to change data for a delegate
+        self.check_object_permissions(self.request, delegate)
+
+        serializer = DelegateModelSerializer(delegate, request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=204)
 
     def _get_delegate(self, delegate_slug):
         """
@@ -44,9 +71,7 @@ class Delegates(View):
 
         delegate_result = DelegateSerializer(delegate).data
 
-        return {
-            'delegate': delegate_result,
-        }
+        return delegate_result
 
     def _get_delegates(self):
         """
