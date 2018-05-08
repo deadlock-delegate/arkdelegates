@@ -1,13 +1,10 @@
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
 from django.http import Http404
 
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from app.permissions import IsOwnerOrReadOnly
@@ -24,6 +21,7 @@ class Delegates(APIView):
 
     def get(self, request, delegate_slug=None, wallet_address=None, *args, **kwargs):
         if wallet_address:
+            # todo: support fetching delegate via wallet address
             raise Http404
         elif delegate_slug:
             data = self._get_delegate(delegate_slug)
