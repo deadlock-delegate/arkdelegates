@@ -23,6 +23,7 @@ django-redis = "*"
 raven = "*"
 django-rest-framework = "*"
 django-cors-headers = "*"
+newrelic = "*"
 
 
 [dev-packages]
