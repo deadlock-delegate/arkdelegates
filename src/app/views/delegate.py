@@ -3,7 +3,7 @@ from django.views.generic.base import TemplateView
 
 from app.models import Delegate
 from app.utils import is_staff
-from app.sql import sql_delegate_all_info
+from app.sql import sql_delegate_all_info_via_slug
 from app.forms import ContributionForm, NodeForm, ProposalForm, StatusUpdateForm
 
 
@@ -13,7 +13,9 @@ class DelegateView(TemplateView):
     def get_context_data(self, delegate_slug, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        delegate_query = Delegate.objects.raw(sql_delegate_all_info, [delegate_slug])
+        delegate_query = Delegate.objects.raw(
+            sql_delegate_all_info_via_slug, [delegate_slug, delegate_slug, delegate_slug]
+        )
         try:
             delegate = delegate_query[0]
         except IndexError:
