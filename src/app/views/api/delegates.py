@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from app.permissions import IsOwnerOrReadOnly
 from app.models import Delegate
 from app.serializers import DelegateSerializer
-from app.sql import sql_delegates, sql_select_all_info_for_delegate
+from app.sql import sql_delegates, sql_select_all_info_for_delegate_via_slug
 from app.views.api.serializers import DelegateModelSerializer
 
 
@@ -58,7 +58,9 @@ class Delegates(APIView):
         """
         delegates_list = cache.get('app.sql.get_delegate.{}'.format(delegate_slug))
         if not delegates_list:
-            delegates = Delegate.objects.raw(sql_select_all_info_for_delegate, [delegate_slug])
+            delegates = Delegate.objects.raw(
+                sql_select_all_info_for_delegate_via_slug, [delegate_slug, delegate_slug]
+            )
             delegates_list = list(delegates)
             cache.set('app.sql.get_delegate.{}'.format(delegate_slug), delegates_list, 5 * 60)
 
