@@ -59,7 +59,8 @@ class Delegates(APIView):
         delegates_list = cache.get('app.sql.get_delegate.{}'.format(delegate_slug))
         if not delegates_list:
             delegates = Delegate.objects.raw(
-                sql_select_all_info_for_delegate_via_slug, [delegate_slug, delegate_slug]
+                sql_select_all_info_for_delegate_via_slug,
+                [delegate_slug, delegate_slug, delegate_slug]
             )
             delegates_list = list(delegates)
             cache.set('app.sql.get_delegate.{}'.format(delegate_slug), delegates_list, 5 * 60)
