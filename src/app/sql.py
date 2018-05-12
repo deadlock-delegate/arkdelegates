@@ -33,7 +33,7 @@ INNER JOIN
         app_history_delegate, app_history
     WHERE
         app_history_delegate.history_id = app_history.id AND
-        app_history.created >= now() - interval '24 hours'
+        app_history.created >= now() - interval '12 hours'
     ORDER BY app_history_delegate.delegate_id, app_history.created DESC
 ) as latest_history ON latest_history.delegate_id = app_delegate.id
 LEFT OUTER JOIN
