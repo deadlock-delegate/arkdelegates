@@ -27,16 +27,27 @@
                 <div class="cell small-6 medium-3">
                     <ul class="delegate-item__list">
                         <li class="delegate-item__list-item">
-                            <i class="fas fa-stopwatch"></i> Uptime: {{delegate.uptime}}%
-                        </li>
-                        <li class="delegate-item__list-item">
-                            <i class="fas fa-percent"></i> Approval: {{delegate.approval}}%
+                            <i class="fas fa-stopwatch"></i> Uptime:
+                            {% if delegate.uptime %}
+                                {{delegate.uptime}}%
+                            {% else %}
+                                Hasn't forged
+                            {% endif %}
                         </li>
                         <li class="delegate-item__list-item">
                             <i class="fas fa-users"></i> Voters: {{delegate.voters}}
                         </li>
                         <li class="delegate-item__list-item">
                             <i class="fas fa-bolt"></i> Voting power: {{delegate.voting_power|divide_by:"100000000"|floatformat:"1"|intcomma}}
+                        </li>
+                        <li class="delegate-item__list-item">
+                            <i class="fas fa-percent"></i> Payout percent:
+                            {% if delegate.payout_percent %}
+                                {{delegate.payout_percent}}%
+                                <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" tabindex="1" title="Make sure to check this delegates profile if there are any limitations for his/her payouts!"><i class="fas fa-info-circle"></i></span>
+                            {% else %}
+                                <i class="fas fa-question"></i>
+                            {% endif %}
                         </li>
                     </ul>
                 </div>
