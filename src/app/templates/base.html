@@ -60,9 +60,14 @@
         <div class="header">
             <div class="grid-container delegates-list">
                 <div class="grid-x grid-padding-x align-middle">
-                    <div class="cell small-12">
+                    <div class="cell small-4">
                         <a href="/"><h1>ARK delegates</h1></a>
                         <h2>Discover and follow ARK delegates</h2>
+                    </div>
+                    <div class="cell small-6">
+                        <form type="get" action="/" style="margin: 0">
+                            <input  id="search" type="text" name="search"  placeholder="Search...", value="{{ search }}" >
+                        </form>
                     </div>
                 </div>
             </div>
