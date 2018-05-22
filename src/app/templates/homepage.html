@@ -93,7 +93,21 @@
                         </li>
                     </ul>
                 </div>
-                <div class="cell small-12 medium-3">
+                <div class="cell small-12 medium-1">
+                    <ul class="delegate-item__list">
+                        <li class="delegate-item__list-item text-center">
+                            {% if delegate.rank_change > 0 %}
+                                <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                            {% elif delegate.rank_change < 0 %}
+                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                            {% else %}
+                                <i class="fa fa-minus" aria-hidden="true"></i>
+                            {% endif %}
+                            <p>{{delegate.rank_changed}}</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="cell small-12 medium-2">
                     <ul class="delegate-item__list">
                         <li class="delegate-item__list-item text-center">
                             <a href="{% url 'delegate' delegate.slug %}">View Delegate</a>

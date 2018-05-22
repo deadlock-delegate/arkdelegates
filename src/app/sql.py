@@ -23,6 +23,7 @@ INNER JOIN
         app_history.uptime,
         app_history.approval,
         app_history.rank,
+        app_history.rank_changed,
         app_history.forged,
         app_history.missed,
         app_history.created,

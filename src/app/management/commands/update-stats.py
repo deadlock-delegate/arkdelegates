@@ -32,12 +32,16 @@ class Command(BaseCommand):
             with transaction.atomic():
                 delegate_data = delegate_data.get('delegate')
                 if delegate_data:
+                    old_rank = delegate.history.last().rank
+                    rank = delegate_data['rate']
+                    rank_changed = old_rank - rank
                     history = History.objects.create(
                         voters=voters,
                         voting_power=voting_power,
                         uptime=delegate_data['productivity'],
                         approval=delegate_data['approval'],
                         rank=delegate_data['rate'],
+                        rank_changed=rank_changed,
                         forged=delegate_data['producedblocks'],
                         missed=delegate_data['missedblocks'],
                         payload={
