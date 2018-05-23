@@ -356,3 +356,23 @@ ul.form {
 div:focus {outline:0;}
 button:focus {outline:0;}
 i:focus {outline:0;}
+
+
+.search {
+    margin: 1em 0 0 0;
+    padding: 0;
+}
+.search_wrapper {
+    margin: 0;
+    padding: 0;
+}
+.search__input {
+    margin: 0;
+}
+
+@media print, screen and (min-width: 40em) {
+    .search {
+        margin: 0;
+        padding: 0;
+    }
+}

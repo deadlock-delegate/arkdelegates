@@ -5,6 +5,11 @@
 
 {% block content %}
     <div class="grid-container delegates-list">
+        {% if search %}
+            <p>Search results for: <b>{{search}}</b></p>
+            <hr style="margin-top: 0em; border-color: #DDD;">
+        {% endif %}
+
         {% for delegate in delegates %}
             {% if forloop.counter|divisibleby:"30" or forloop.counter == 2 %}
                 {% include 'modules/message_notice.html' %}

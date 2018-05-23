@@ -21,10 +21,12 @@ class Homepage(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        page = int(self.request.GET.get('page', 1))
         search_query = self.request.GET.get('search', '')
+
         if search_query:
             delegates_list = []
-            delegates = Delegate.objects.filter(Q(name__icontains=search_query) | Q(address__icontains=search_query))
+            delegates = Delegate.objects.filter(Q(name__icontains=search_query) | Q(address=search_query))
             for delegate in delegates:
                 delegate_list = cache.get('app.sql.get_delegate.{}'.format(delegate.slug))
                 if not delegate_list:
@@ -36,14 +38,12 @@ class Homepage(TemplateView):
                     cache.set('app.sql.get_delegate.{}'.format(delegate.slug), delegate_list, 5 * 60)
                 delegates_list += list(delegate_list)
         else:
-
             delegates_list = cache.get('app.sql.get_delegates')
             if not delegates_list:
                 delegates = Delegate.objects.raw(sql_delegates)  # todo: optimize this raw sql yo
                 delegates_list = list(delegates)
                 cache.set('app.sql.get_delegates', delegates_list, 5 * 60)  # expire cache in 5min
 
-        page = int(self.request.GET.get('page', 1))
         paginator = Paginator(delegates_list, 60)
         delegates_paginated = paginator.get_page(page)
 
