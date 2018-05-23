@@ -1,8 +1,8 @@
-import os
-import string
-import random
 import binascii
 import hashlib
+import random
+import string
+
 from ecdsa import BadSignatureError
 from ecdsa.curves import SECP256k1
 from ecdsa.der import UnexpectedDER

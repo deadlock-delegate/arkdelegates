@@ -1,11 +1,12 @@
-from django.http import HttpResponse
 from django.core.cache import cache
-from django.db.models import Q
-from django.views.generic.base import TemplateView
-from app.models import Delegate
-from app.utils import is_staff
-from app.sql import sql_delegates, sql_select_all_info_for_delegate_via_slug
 from django.core.paginator import Paginator
+from django.db.models import Q
+from django.http import HttpResponse
+from django.views.generic.base import TemplateView
+
+from app.models import Delegate
+from app.sql import sql_delegates, sql_select_all_info_for_delegate_via_slug
+from app.utils import is_staff
 
 
 def health(request):
@@ -26,7 +27,9 @@ class Homepage(TemplateView):
 
         if search_query:
             delegates_list = []
-            delegates = Delegate.objects.filter(Q(name__icontains=search_query) | Q(address=search_query))
+            delegates = Delegate.objects.filter(
+                Q(name__icontains=search_query) | Q(address=search_query)
+            )
             for delegate in delegates:
                 delegate_list = cache.get('app.sql.get_delegate.{}'.format(delegate.slug))
                 if not delegate_list:
@@ -35,7 +38,11 @@ class Homepage(TemplateView):
                         [delegate.slug, delegate.slug, delegate.slug]
                     )
                     delegate_list = list(delegate_data)
-                    cache.set('app.sql.get_delegate.{}'.format(delegate.slug), delegate_list, 5 * 60)
+                    cache.set(
+                        'app.sql.get_delegate.{}'.format(delegate.slug),
+                        delegate_list,
+                        5 * 60
+                    )
                 delegates_list += list(delegate_list)
         else:
             delegates_list = cache.get('app.sql.get_delegates')

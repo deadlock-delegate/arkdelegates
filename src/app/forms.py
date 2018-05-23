@@ -1,7 +1,9 @@
 import json
+
 from django import forms
 from django.contrib.auth import password_validation
 from django.core.validators import validate_email
+
 from app.models import Contribution, Delegate, Node, StatusUpdate
 
 
@@ -24,7 +26,7 @@ class ClaimAccountForm(forms.Form):
         data = self.cleaned_data['message_json']
         try:
             json_data = json.loads(data)
-        except:
+        except:  # noqa
             raise forms.ValidationError('Invalid data')
 
         if not (json_data.get('message') and json_data.get('signature')):

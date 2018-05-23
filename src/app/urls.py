@@ -7,8 +7,8 @@ from django.contrib import admin
 from django.urls import include, path
 
 from app.views.delegate import DelegateView
-from app.views.home import health, Homepage
-from app.views.edit import EditProposalView, EditContributionView, EditNodeView, StatusUpdateView
+from app.views.edit import EditContributionView, EditNodeView, EditProposalView, StatusUpdateView
+from app.views.home import Homepage, health
 from app.views.update import UpdateView
 
 

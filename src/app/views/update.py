@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateView
+
+from app.forms import StatusUpdateForm
 from app.models import Delegate, StatusUpdate
 from app.utils import is_staff
-from app.forms import StatusUpdateForm
 
 
 class UpdateView(TemplateView):

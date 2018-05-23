@@ -1,6 +1,6 @@
-from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import JSONField
+from django.db import models
 from django.utils.text import slugify
 
 from app.constants import PIN_LENGTH
@@ -26,7 +26,8 @@ class Delegate(models.Model):
     is_private = models.BooleanField(default=False)
 
     payout_covering_fee = models.NullBooleanField(default=False)
-    payout_percent = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)  # 0.00 - 100.00
+    # Percent is represented as: 0.00 - 100.00
+    payout_percent = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     payout_interval = models.IntegerField(default=0)
     payout_minimum = models.CharField(max_length=20, null=True, blank=True)
     payout_maximum = models.CharField(max_length=20, null=True, blank=True)

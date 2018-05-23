@@ -1,11 +1,12 @@
 from datetime import datetime, timedelta
 
-from django.contrib.auth import login, get_user_model
-from django.views.generic.base import TemplateView
+from django.contrib.auth import get_user_model, login
 from django.shortcuts import get_object_or_404, redirect
-from app.models import Delegate, ClaimAccointPin
+from django.views.generic.base import TemplateView
+
 from app.forms import ClaimAccountForm
-from app.utils import verify_signature, generate_pin
+from app.models import ClaimAccointPin, Delegate
+from app.utils import generate_pin, verify_signature
 
 
 class ClaimAccount(TemplateView):
