@@ -1200,12 +1200,12 @@ select {
   line-height: 1;
   text-align: center;
   cursor: pointer;
-  background-color: #412b40;
+  background-color: #272727;
   color: #fefefe; }
   [data-whatinput='mouse'] .button {
     outline: 0; }
   .button:hover, .button:focus {
-    background-color: #13b7e9;
+    background-color: #000;
     color: #fefefe; }
   .button.tiny {
     font-size: 0.6rem; }

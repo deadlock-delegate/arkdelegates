@@ -5,7 +5,7 @@
                 <a href="?page=1">First</a>
             </li>
             <li class="pagination-previous">
-                <a href="?page={{ paginator.previous_page_number }}" arial-label="Previous page">
+                <a href="?page={{ paginator.previous_page_number }}{% if search %}&search={{search}}{% endif %}" arial-label="Previous page">
                     Back
                 </a>
             </li>
@@ -21,12 +21,12 @@
 
         {% if paginator.has_next %}
             <li class="pagination-next">
-                <a href="?page={{ paginator.next_page_number }}" aria-label="Next page">
+                <a href="?page={{ paginator.next_page_number }}{% if search %}&search={{search}}{% endif %}" aria-label="Next page">
                     Next
                 </a>
             </li>
             <li class="hide-for-small-only">
-                <a href="?page={{ paginator.paginator.num_pages }}" aria-label="Last page">
+                <a href="?page={{ paginator.paginator.num_pages }}{% if search %}&search={{search}}{% endif %}" aria-label="Last page">
                     Last
                 </a>
             </li>
