@@ -8,11 +8,10 @@ ENV DJANGO_SETTINGS_MODULE=app.settings \
 RUN apt-get update && \
     apt-get install -y postgresql
 
-COPY Pipfile ./
-COPY Pipfile.lock ./
+COPY requirements.txt ./
 
-RUN pip install pipenv
-RUN pipenv install --system
+RUN pip install pip-tools
+RUN pip-sync requirements.txt
 
 ADD . /usr/src/code
 WORKDIR /usr/src/code
