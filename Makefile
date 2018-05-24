@@ -31,8 +31,5 @@ shell:
 bash:
 	docker-compose run web bash
 
-pipcompile:
-	docker-compose run web pip-compile requirements.in
-
 lint:
 	docker-compose run web flake8 .
