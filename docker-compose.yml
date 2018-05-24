@@ -4,7 +4,7 @@ services:
   web:
     build:
       context: .
-    command: uwsgi --http-socket 0.0.0.0:5000 --honour-stdin --ini etc/uwsgi.ini --python-autoreload 1
+    command: uwsgi --http-socket 0.0.0.0:5000 --honour-stdin --ini etc/uwsgi.ini --python-autoreload 1 --processes 1
     networks:
       - frontend
       - backend

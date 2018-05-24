@@ -39,11 +39,17 @@ INNER JOIN
 ) as latest_history ON latest_history.delegate_id = app_delegate.id
 LEFT OUTER JOIN
 (
-    SELECT count(id) as count, delegate_id FROM app_node WHERE is_active = True GROUP BY app_node.delegate_id
+    SELECT count(id) as count, delegate_id
+    FROM app_node
+    WHERE is_active = True
+    GROUP BY app_node.delegate_id
 ) as node_coude ON node_coude.delegate_id = app_delegate.id
 LEFT OUTER JOIN
 (
-    SELECT count(id) as count, delegate_id FROM app_node WHERE is_active = True AND is_backup = True GROUP BY delegate_id
+    SELECT count(id) as count, delegate_id
+    FROM app_node
+    WHERE is_active = True AND is_backup = True
+    GROUP BY delegate_id
 ) as has_backup ON has_backup.delegate_id = app_delegate.id
 LEFT OUTER JOIN
 (
@@ -85,11 +91,17 @@ LEFT OUTER JOIN (
 ) as delegate ON delegate.id = delegate_history.delegate_id
 LEFT OUTER JOIN
 (
-    SELECT count(id) as count, delegate_id FROM app_node WHERE is_active = True GROUP BY app_node.delegate_id
+    SELECT count(id) as count, delegate_id
+    FROM app_node
+    WHERE is_active = True
+    GROUP BY app_node.delegate_id
 ) as node_coude ON node_coude.delegate_id = delegate.id
 LEFT OUTER JOIN
 (
-    SELECT count(id) as count, delegate_id FROM app_node WHERE is_active = True AND is_backup = True GROUP BY delegate_id
+    SELECT count(id) as count, delegate_id
+    FROM app_node
+    WHERE is_active = True AND is_backup = True
+    GROUP BY delegate_id
 ) as has_backup ON has_backup.delegate_id = delegate.id
 LEFT OUTER JOIN
 (
