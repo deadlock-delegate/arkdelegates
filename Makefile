@@ -27,3 +27,15 @@ collectstatic:
 
 shell:
 	docker-compose run web django-admin shell
+
+bash:
+	docker-compose run web bash
+
+pipcompile:
+	docker-compose run web pip-compile --generate-hashes requirements.in
+
+pipcompile-local:
+	pip-compile --generate-hashes requirements.in
+
+lint:
+	docker-compose run web flake8 .
