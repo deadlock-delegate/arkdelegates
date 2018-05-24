@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
-from django.views.generic.base import TemplateView
 from django.shortcuts import redirect
+from django.views.generic.base import TemplateView
+
 from app.forms import LoginForm
 
 

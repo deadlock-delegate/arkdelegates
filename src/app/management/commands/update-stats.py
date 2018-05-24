@@ -1,8 +1,8 @@
-import requests
-from datetime import datetime, timedelta
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from django.db.models import Q
+
+import requests
+
 from app.models import Delegate, History
 
 

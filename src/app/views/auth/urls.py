@@ -1,5 +1,6 @@
-from django.urls import path
 from django.contrib.auth.views import LogoutView
+from django.urls import path
+
 from app.views.auth.claim_account import ClaimAccount
 from app.views.auth.login import Login
 

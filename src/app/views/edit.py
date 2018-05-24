@@ -1,11 +1,13 @@
 import json
+
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.base import TemplateView, View
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from app.models import Contribution, StatusUpdate, Node
-from app.serializers import ContributionSerializer, NodeSerializer, StatusUpdateSerializer
+from django.views.generic.base import View
+
 from app.forms import ContributionForm, NodeForm, ProposalForm, StatusUpdateForm
+from app.models import Contribution, Node, StatusUpdate
+from app.serializers import ContributionSerializer, NodeSerializer, StatusUpdateSerializer
 
 
 class EditProposalView(LoginRequiredMixin, View):

@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.views.generic.base import TemplateView
 
 faq_content = """
@@ -27,8 +26,9 @@ faq_content = """
 [How to vote for an ARK delegate (video)](https://www.youtube.com/watch?v=GJHhTA78QQQ){target="_blank"}
 """
 
+
 class FAQ(TemplateView):
-    template_name = "faq.html"
+    template_name = 'faq.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

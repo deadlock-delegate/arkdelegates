@@ -1,4 +1,5 @@
 from django import template
+
 from markdown import markdown as markdown_fn
 
 register = template.Library()

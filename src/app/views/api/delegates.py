@@ -1,14 +1,14 @@
 from django.core.cache import cache
 from django.core.paginator import Paginator
-from django.shortcuts import get_object_or_404
 from django.http import Http404
+from django.shortcuts import get_object_or_404
 
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from app.permissions import IsOwnerOrReadOnly
 from app.models import Delegate
+from app.permissions import IsOwnerOrReadOnly
 from app.serializers import DelegateSerializer
 from app.sql import sql_delegates, sql_select_all_info_for_delegate_via_slug
 from app.views.api.serializers import DelegateModelSerializer
