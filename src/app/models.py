@@ -56,6 +56,7 @@ class History(models.Model):
     created = models.DateTimeField(auto_now_add=True, db_index=True)
     voting_power = models.CharField(max_length=20, null=True, blank=True)
     payload = JSONField(default=dict)
+    rank_changed = models.IntegerField(null=True, blank=True)
 
 
 class Node(models.Model):

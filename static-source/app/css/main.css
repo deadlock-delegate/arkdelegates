@@ -32,7 +32,7 @@ body {
     background: #edeef3;
 }
 .delegate-item__name {
-
+    margin: 0.5em 0;
 }
 .delegate-item__name .has-tip {
     display: inline;
@@ -52,14 +52,6 @@ body {
     top: 10px;
     right: 10px;
     color: #ef192d;
-}
-
-
-.text-red {
-    color: #ef192d;
-}
-.text-green {
-    color: #46b02e;
 }
 
 .message {
@@ -375,4 +367,36 @@ i:focus {outline:0;}
         margin: 0;
         padding: 0;
     }
+}
+
+.rank-changer {
+    display: inline-block;
+    position: relative;
+    width: 15px;
+    font-size: 0.8em;
+}
+.rank-changer__up {
+    position: absolute;
+    top: -16px;
+    color: #e0e0e0;
+}
+.rank-changer__down {
+    position: absolute;
+    top: -4px;
+    color: #e0e0e0;
+}
+.rank-changer__extra {
+    position: absolute;
+    bottom: -7px;
+    width: 12px;
+    height: 22px;
+    z-index: 9;
+}
+
+
+.text-red {
+    color: #ef192d;
+}
+.text-green {
+    color: #46b02e;
 }

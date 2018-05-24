@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
@@ -32,12 +34,24 @@ class Command(BaseCommand):
             with transaction.atomic():
                 delegate_data = delegate_data.get('delegate')
                 if delegate_data:
+                    rank_changed = 0
+                    rank_history = delegate.history.filter(
+                        created__gt=datetime.now() - timedelta(hours=25),
+                        created__lt=datetime.now() - timedelta(hours=23)
+                    ).last()
+
+                    if rank_history:
+                        old_rank = rank_history.rank
+                        rank = delegate_data['rate']
+                        rank_changed = old_rank - rank
+
                     history = History.objects.create(
                         voters=voters,
                         voting_power=voting_power,
                         uptime=delegate_data['productivity'],
                         approval=delegate_data['approval'],
                         rank=delegate_data['rate'],
+                        rank_changed=rank_changed,
                         forged=delegate_data['producedblocks'],
                         missed=delegate_data['missedblocks'],
                         payload={
