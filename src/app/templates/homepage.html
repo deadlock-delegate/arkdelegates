@@ -21,7 +21,19 @@
                     <a href="{% url 'admin:app_delegate_change' delegate.id %}" class="delegate-item__edit">edit delegate</a>
                 {% endif %}
                 <div class="cell small-6 medium-2 delegate-item__name">
-                    <span style="font-size: 1.1em">{{delegate.rank}}.</span>
+                    <div class="rank-changer" style="display: inline-block;position: relative;width: 25px;">
+                        <i class="fa fa-chevron-up {% if delegate.rank_changed > 0 %}green{% endif %}" aria-hidden="true" style="
+                            position: absolute;
+                            top: -21px;
+                            color: #e0e0e0;"></i>
+                        <i class="fa fa-chevron-down {% if delegate.rank_changed < 0 %}red{% endif %}" aria-hidden="true" style="
+                            position: absolute;
+                            top: -7px;
+                            color: #e0e0e0;"></i>
+                    </div>
+                    <span style="font-size: 1.1em;">
+                        {{delegate.rank}}.
+                    </span>
                     <a href="{% url 'delegate' delegate.slug %}">{{delegate.name}}</a>
                     {% if delegate.user_id %}
                         <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" tabindex="1" title="This account has been claimed">
@@ -34,12 +46,11 @@
                         <li class="delegate-item__list-item text-center">
                             {% if delegate.rank_changed > 0 %}
                                 <i class="fa fa-chevron-up green" aria-hidden="true"></i>
+                                <p>{{delegate.rank_changed}}</p>
                             {% elif delegate.rank_changed < 0 %}
                                 <i class="fa fa-chevron-down red" aria-hidden="true"></i>
-                            {% else %}
-                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                <p>{{delegate.rank_changed}}</p>
                             {% endif %}
-                            <p>{{delegate.rank_changed}}</p>
                         </li>
                     </ul>
                 </div>
