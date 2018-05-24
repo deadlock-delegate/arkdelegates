@@ -2,20 +2,19 @@ FROM python:3.6-jessie
 
 RUN useradd -ms /bin/bash ark
 
-ADD . /usr/src/code
-WORKDIR /usr/src/code
-
 ENV DJANGO_SETTINGS_MODULE=app.settings \
     PYTHONPATH=/usr/src/code/src
-
-COPY Pipfile ./
-COPY Pipfile.lock ./
 
 RUN apt-get update && \
     apt-get install -y postgresql
 
-RUN pip install pipenv
-RUN pipenv install --system
+COPY requirements.txt .
+
+RUN pip install pip-tools==2.0.2
+RUN pip-sync requirements.txt
+
+ADD . /usr/src/code
+WORKDIR /usr/src/code
 
 RUN django-admin collectstatic --no-input
 

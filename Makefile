@@ -27,3 +27,9 @@ collectstatic:
 
 shell:
 	docker-compose run web django-admin shell
+
+bash:
+	docker-compose run web bash
+
+lint:
+	docker-compose run web flake8 .
