@@ -1,6 +1,7 @@
 django
 django-cors-headers
 django-environ
+django-extensions
 django-redis
 django-rest-framework
 ecdsa
@@ -9,6 +10,7 @@ flake8-debugger
 flake8-import-order
 flake8-quotes
 gevent
+ipython
 markdown
 newrelic 
 psycogreen
