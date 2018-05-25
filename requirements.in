@@ -5,7 +5,9 @@ django-redis
 django-rest-framework
 ecdsa
 flake8
+flake8-debugger
 flake8-import-order
+flake8-quotes
 gevent
 markdown
 newrelic 
