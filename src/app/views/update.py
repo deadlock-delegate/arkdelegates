@@ -7,7 +7,7 @@ from app.utils import is_staff
 
 
 class UpdateView(TemplateView):
-    template_name = "update.html"
+    template_name = 'update.html'
 
     def get_context_data(self, delegate_slug, update_id, **kwargs):
         context = super().get_context_data(**kwargs)

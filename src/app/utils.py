@@ -29,7 +29,7 @@ def verify_signature(message, public_key, signature):
 
 def unhexlify(data):
     if len(data) % 2:
-        data = "0" + data
+        data = '0' + data
     result = binascii.unhexlify(data)
     return result
 
