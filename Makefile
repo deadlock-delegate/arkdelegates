@@ -1,5 +1,9 @@
+.PHONY: build
 build:
 	docker-compose build
+	make migrate
+	make setup-static
+	make build-static
 
 up:
 	docker-compose up
@@ -33,3 +37,12 @@ bash:
 
 lint:
 	docker-compose run web flake8 .
+
+setup-static:
+	yarn
+
+build-static:
+	yarn build
+
+watch:
+	yarn watch
