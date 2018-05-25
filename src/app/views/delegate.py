@@ -48,7 +48,7 @@ class DelegateView(TemplateView):
             'seo': {
                 'title': '{} @ ARKdelegates.io'.format(delegate.name),
                 'description': (
-                    "Check what {} delegate has done for the ark community, how many nodes it runs "
+                    'Check what {} delegate has done for the ark community, how many nodes it runs '
                     "and what's the proposal.".format(delegate.name)
                 )
             },

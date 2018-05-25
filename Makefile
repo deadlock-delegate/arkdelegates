@@ -32,6 +32,9 @@ collectstatic:
 shell:
 	docker-compose run web django-admin shell
 
+data-shell:
+	docker-compose run web django-admin shell_plus
+
 bash:
 	docker-compose run web bash
 
@@ -46,3 +49,6 @@ build-static:
 
 watch:
 	npm run-script watch
+
+pip-compile:
+	docker-compose run web pip-compile requirements.in
