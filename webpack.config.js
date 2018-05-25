@@ -2,7 +2,7 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  context: path.resolve(__dirname, "static-source/app"),
+  context: path.resolve(__dirname, 'static-source/app'),
   entry: ['./js/main.js', './css/main.scss'],
   output: {
     path: path.resolve(__dirname, 'build'),

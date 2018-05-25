@@ -39,10 +39,10 @@ lint:
 	docker-compose run web flake8 .
 
 setup-static:
-	yarn
+	npm install
 
 build-static:
-	yarn build
+	npm run-script build
 
 watch:
-	yarn watch
+	npm run-script watch
