@@ -28,8 +28,14 @@ collectstatic:
 shell:
 	docker-compose run web django-admin shell
 
+data-shell:
+	docker-compose run web django-admin shell_plus
+
 bash:
 	docker-compose run web bash
 
 lint:
 	docker-compose run web flake8 .
+
+pip-compile:
+	docker-compose run web pip-compile requirements.in
