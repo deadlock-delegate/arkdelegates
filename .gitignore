@@ -5,7 +5,7 @@
 .*
 \#*#
 coverage.xml
-!.circle
+!.travis
 !.editorconfig
 !.gitignore
 !.coveragerc
