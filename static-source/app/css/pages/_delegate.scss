@@ -1,0 +1,115 @@
+.delegate-page {
+    &__title {
+        position: relative;
+
+        h1 {
+            font-size: 2.2em;
+            margin: 0;
+        }
+
+        .has-tip {
+            display: inline;
+        }
+    }
+
+    &__rank {
+        line-height: 1.2em;
+        text-align: center;
+        margin: 0;
+        display: table;
+        background: #edeef3;
+        padding: 0.5em 0.9em;
+        border-radius: 7px;
+    }
+
+    &__rank-nr {
+        font-size: 2em;
+        font-weight: bold;
+        width: 100%;
+        display: table;
+        line-height: 1em;
+    }
+
+    &__rank-text {
+        display: table;
+        font-size: 0.75em;
+        width: 100%;
+    }
+
+    &__proposal {
+        h1 {
+            font-size: 1.6em;
+        }
+        h2 {
+            font-size: 1.4em;
+        }
+        h3 {
+            font-size: 1.2em;
+        }
+        p, ul li {
+            font-size: 0.9em;
+        }
+        a {
+            color: #ef192d;
+        }
+    }
+
+    &__nodes {
+        list-style: none;
+        margin: 0;
+
+        p {
+            font-size: 0.9em;
+        }
+        li {
+            width: 100%;
+        }
+    }
+
+    &__node {
+        font-size: 0.8em;
+        border: 1px solid #ddd;
+        margin-bottom: 1em;
+        padding: 0.5em;
+        border-radius: 5px;
+        display: table;
+        position: relative;
+    }
+
+    &__node-spec {
+        width: 100%;
+    }
+
+    &__node .tag {
+        margin-top: 1em;
+        margin-right: 1em;
+    }
+
+    &__node .has-tip {
+        border-bottom: 0;
+        display: block;
+    }
+
+    &__node-edit {
+        position: absolute;
+        top: 7px;
+        right: 8px;
+    }
+
+    &__other {
+        list-style: none;
+        margin: 0;
+        font-size: 0.9em;
+
+        li {
+            margin-bottom: 0.5em;
+        }
+    }
+
+    &__edit {
+        font-size: 0.8em;
+        position: absolute;
+        bottom: -10px;
+        color: #ef192d;
+    }
+}
