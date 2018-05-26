@@ -18,7 +18,7 @@ services:
       NEW_RELIC_DEVELOPER_MODE: 1
       NEW_RELIC_LICENSE_KEY: '123456789'
     volumes:
-      - .:/usr/src/code
+      - .:/app
     expose:
       - "5000"
     ports:
