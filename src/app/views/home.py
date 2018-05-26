@@ -20,13 +20,9 @@ def health(request):
 class Homepage(TemplateView):
     template_name = 'homepage.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        page = int(self.request.GET.get('page', 1))
-        search_query = self.request.GET.get('search', '')
-
+    def _fetch_delegates_list(self, search_query):
+        delegates_list = []
         if search_query:
-            delegates_list = []
             delegates = Delegate.objects.filter(
                 Q(name__icontains=search_query) | Q(address=search_query)
             )
@@ -50,6 +46,15 @@ class Homepage(TemplateView):
                 delegates = Delegate.objects.raw(sql_delegates)  # todo: optimize this raw sql yo
                 delegates_list = list(delegates)
                 cache.set('app.sql.get_delegates', delegates_list, 5 * 60)  # expire cache in 5min
+
+        return delegates_list
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        page = int(self.request.GET.get('page', 1))
+        search_query = self.request.GET.get('search', '')
+
+        delegates_list = self._fetch_delegates_list(search_query)
 
         paginator = Paginator(delegates_list, 60)
         delegates_paginated = paginator.get_page(page)

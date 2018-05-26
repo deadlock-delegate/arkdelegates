@@ -12,7 +12,7 @@ class Command(BaseCommand):
     help = 'Update delegates data'
 
     def handle(self, **options):
-        self.stderr.write('Updating delegates data')
+        self.stdout.write('Updating delegates data')
 
         created_count = 0
         delegate_url = 'https://explorer.ark.io:8443/api/delegates/get?publicKey={}'
@@ -23,6 +23,7 @@ class Command(BaseCommand):
             delegate_response = requests.get(delegate_url.format(delegate.public_key))
             voters_response = requests.get(voters_url.format(delegate.public_key))
             if delegate_response.status_code != 200 or voters_response.status_code != 200:
+                self.stderr.write(f'Was not able to get delegate data for {delegate.name}')
                 continue
 
             delegate_data = delegate_response.json()
@@ -46,6 +47,7 @@ class Command(BaseCommand):
                         rank_changed = old_rank - rank
 
                     history = History.objects.create(
+                        delegate_fk=delegate,
                         voters=voters,
                         voting_power=voting_power,
                         uptime=delegate_data['productivity'],
@@ -62,6 +64,7 @@ class Command(BaseCommand):
                 else:
                     self.stderr.write(f'Was not able to get delegate data for {delegate.name}')
                     history = History.objects.create(
+                        delegate_fk=delegate,
                         voters=voters,
                         voting_power=voting_power,
                         payload={
@@ -73,7 +76,7 @@ class Command(BaseCommand):
 
             created_count += 1
 
-        self.stderr.write(f'Updated stats of {created_count} delegates')
+        self.stdout.write(f'Updated stats of {created_count} delegates')
 
 
 def get_voting_stats(accounts):

@@ -5,6 +5,7 @@ django-extensions
 django-redis
 django-rest-framework
 ecdsa
+factory_boy
 flake8
 flake8-debugger
 flake8-import-order
@@ -20,6 +21,7 @@ pytest-django
 pytz
 raven
 requests
+responses
 serpy
 uwsgi==2.0.15
 whitenoise

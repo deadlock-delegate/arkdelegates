@@ -9,6 +9,7 @@ attrs==18.1.0             # via pytest
 backcall==0.1.0           # via ipython
 certifi==2018.4.16        # via requests
 chardet==3.0.4            # via requests
+cookies==2.2.1            # via responses
 decorator==4.3.0          # via ipython, traitlets
 django-cors-headers==2.2.0
 django-environ==0.4.4
@@ -18,6 +19,8 @@ django-rest-framework==0.1.0
 django==2.0.5
 djangorestframework==3.8.2  # via django-rest-framework
 ecdsa==0.13
+factory-boy==2.11.1
+faker==0.8.15             # via factory-boy
 flake8-debugger==3.1.0
 flake8-import-order==0.17.1
 flake8-quotes==1.0.0
@@ -46,13 +49,16 @@ pyflakes==1.6.0           # via flake8
 pygments==2.2.0           # via ipython
 pytest-django==3.2.1
 pytest==3.6.0
+python-dateutil==2.7.3    # via faker
 pytz==2018.4
 raven==6.8.0
 redis==2.10.6             # via django-redis
 requests==2.18.4
+responses==0.9.0
 serpy==0.3.1
 simplegeneric==0.8.1      # via ipython
-six==1.11.0               # via django-environ, django-extensions, more-itertools, prompt-toolkit, pytest, serpy, traitlets
+six==1.11.0               # via django-environ, django-extensions, faker, more-itertools, prompt-toolkit, pytest, python-dateutil, responses, serpy, traitlets
+text-unidecode==1.2       # via faker
 traitlets==4.3.2          # via ipython
 urllib3==1.22             # via requests
 uwsgi==2.0.15

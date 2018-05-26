@@ -10,9 +10,7 @@ from app.utils import is_staff
 class DelegateView(TemplateView):
     template_name = 'delegate.html'
 
-    def get_context_data(self, delegate_slug, **kwargs):
-        context = super().get_context_data(**kwargs)
-
+    def _fetch_delegate_info(self, delegate_slug):
         delegate_query = Delegate.objects.raw(
             sql_delegate_all_info_via_slug, [delegate_slug, delegate_slug, delegate_slug]
         )
@@ -20,6 +18,13 @@ class DelegateView(TemplateView):
             delegate = delegate_query[0]
         except IndexError:
             raise Http404('Delegate %s does not exist', delegate_slug)
+
+        return delegate
+
+    def get_context_data(self, delegate_slug, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        delegate = self._fetch_delegate_info(delegate_slug)
 
         delegate_qs = Delegate.objects.get(slug=delegate_slug)
         nodes = delegate_qs.nodes.filter(is_active=True)
