@@ -17,3 +17,4 @@ requirements.txt.bak
 !.dockerignore
 docker-compose.prod.yml
 static
+__pycache__
