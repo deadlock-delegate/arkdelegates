@@ -5,7 +5,7 @@
 .*
 \#*#
 coverage.xml
-!.circle
+!.travis
 !.editorconfig
 !.gitignore
 !.coveragerc
@@ -18,3 +18,5 @@ requirements.txt.bak
 docker-compose.prod.yml
 static
 __pycache__
+node_modules/
+build/

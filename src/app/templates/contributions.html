@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load math %}
+{% load humanize %}
+{% load markdown %}
+
+{% block content %}
+    <div class="grid-container">
+        <div class="grid-x grid-padding-x align-middle">
+            <div class="cell small-12">
+                <h3>Latest contributions</h3>
+            </div>
+        </div>
+
+        {% for contribution in contributions %}
+            <div class="grid-x grid-padding-x align-middle">
+                <div class="cell small-4">
+                    {{ contribution.delegate.name }}
+                </div>
+                <div class="cell small-4">
+                    {{ contribution.title }}
+                </div>
+                <div class="cell small-4">
+                    {{ contribution.description }}
+                </div>
+                <hr>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

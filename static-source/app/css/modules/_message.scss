@@ -1,0 +1,22 @@
+.message {
+    position: relative;
+    padding: 1em 0;
+    margin: 1em 0;
+
+    &__content {
+        background: #ef1a2e;
+        padding: 1em 2em;
+        text-align: center;
+        color: #FFF;
+        border-radius: 5px;
+    }
+    &__content p {
+        margin: 0;
+        font-size: 0.85em;
+    }
+    &__content a {
+        color: #FFF;
+        font-weight: bold;
+        font-style: underline;
+    }
+}

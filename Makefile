@@ -1,5 +1,9 @@
+.PHONY: build
 build:
 	docker-compose build
+	make migrate
+	make setup-static
+	make build-static
 
 up:
 	docker-compose up
@@ -36,6 +40,15 @@ bash:
 
 lint:
 	docker-compose run web flake8 .
+
+setup-static:
+	npm install
+
+build-static:
+	npm run-script build
+
+watch:
+	npm run-script watch
 
 pip-compile:
 	docker-compose run web pip-compile requirements.in
