@@ -17,5 +17,6 @@ requirements.txt.bak
 !.dockerignore
 docker-compose.prod.yml
 static
+__pycache__
 node_modules/
 build/
