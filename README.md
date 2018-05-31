@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/deadlock-delegate/arkdelegates.svg?branch=master)](https://travis-ci.org/deadlock-delegate/arkdelegates)
+
 ## ARK delegates
 
 MVP for listing all ARK delegates. As soon as some of the basic functionality is proven to be useful
@@ -5,7 +7,6 @@ to both visitors and delegates I'll start working on a more proper version which
 change the frontend code.
 
 Visit project: https://arkdelegates.io
-
 
 ## How to run project locally?
 
