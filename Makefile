@@ -53,5 +53,8 @@ watch:
 pip-compile:
 	docker-compose run web pip-compile requirements.in
 
+pip-upgrade:
+	docker-compose run web pip-compile --upgrade requirements.in
+
 test:
 	docker-compose run web py.test --ds=app.test_settings -v -s $(ARGS)
