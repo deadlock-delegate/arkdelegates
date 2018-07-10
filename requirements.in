@@ -1,5 +1,6 @@
 django
 django-cors-headers
+django-debug-toolbar
 django-environ
 django-extensions
 django-redis

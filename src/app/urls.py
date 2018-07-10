@@ -3,6 +3,9 @@
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.0/topics/http/urls/
 """
+import debug_toolbar
+
+from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 
@@ -37,3 +40,8 @@ urlpatterns = [
     # api
     path('api/', include('app.views.api.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

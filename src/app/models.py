@@ -48,7 +48,7 @@ class Delegate(models.Model):
 class History(models.Model):
     # Transitioning from ManyToMany to FK
     delegate_fk = models.ForeignKey(
-        'Delegate', related_name='histories', on_delete=models.CASCADE, null=True, blank=True)
+        'Delegate', related_name='histories', on_delete=models.CASCADE)
     delegate = models.ManyToManyField('Delegate', related_name='history')
 
     voters = models.IntegerField(null=True, blank=True)

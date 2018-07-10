@@ -1,11 +1,7 @@
-from django.core.cache import cache
-from django.core.paginator import Paginator
-from django.db.models import Q
 from django.http import HttpResponse
 from django.views.generic.base import TemplateView
 
-from app.models import Delegate
-from app.sql import sql_delegates, sql_select_all_info_for_delegate_via_slug
+from app.delegate_utils import fetch_delegates
 from app.utils import is_staff
 
 
@@ -20,44 +16,12 @@ def health(request):
 class Homepage(TemplateView):
     template_name = 'homepage.html'
 
-    def _fetch_delegates_list(self, search_query):
-        delegates_list = []
-        if search_query:
-            delegates = Delegate.objects.filter(
-                Q(name__icontains=search_query) | Q(address=search_query)
-            )
-            for delegate in delegates:
-                delegate_list = cache.get('app.sql.get_delegate.{}'.format(delegate.slug))
-                if not delegate_list:
-                    delegate_data = Delegate.objects.raw(
-                        sql_select_all_info_for_delegate_via_slug,
-                        [delegate.slug, delegate.slug, delegate.slug]
-                    )
-                    delegate_list = list(delegate_data)
-                    cache.set(
-                        'app.sql.get_delegate.{}'.format(delegate.slug),
-                        delegate_list,
-                        5 * 60
-                    )
-                delegates_list += list(delegate_list)
-        else:
-            delegates_list = cache.get('app.sql.get_delegates')
-            if not delegates_list:
-                delegates = Delegate.objects.raw(sql_delegates)  # todo: optimize this raw sql yo
-                delegates_list = list(delegates)
-                cache.set('app.sql.get_delegates', delegates_list, 5 * 60)  # expire cache in 5min
-
-        return delegates_list
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         page = int(self.request.GET.get('page', 1))
         search_query = self.request.GET.get('search', '')
 
-        delegates_list = self._fetch_delegates_list(search_query)
-
-        paginator = Paginator(delegates_list, 60)
-        delegates_paginated = paginator.get_page(page)
+        delegates, paginator = fetch_delegates(page, search_query=search_query)
 
         if self.request.user.is_authenticated and hasattr(self.request.user, 'delegate'):
             logged_in_delegate = self.request.user.delegate
@@ -72,9 +36,9 @@ class Homepage(TemplateView):
                     'they done and follow their progress.'
                 )
             },
-            'delegates': delegates_paginated,
+            'delegates': delegates,
             'is_staff': is_staff(self.request.user),
-            'paginator': delegates_paginated,
+            'paginator': paginator,
             'logged_in_delegate': logged_in_delegate,
             'search': search_query,
         })

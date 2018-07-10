@@ -1,5 +1,3 @@
-from django.core.cache import cache
-from django.core.paginator import Paginator
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 
@@ -7,10 +5,10 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from app.delegate_utils import fetch_delegates
 from app.models import Delegate
 from app.permissions import IsOwnerOrReadOnly
-from app.serializers import DelegateSerializer
-from app.sql import sql_delegates, sql_select_all_info_for_delegate_via_slug
+from app.serializers import DelegateInfo
 from app.views.api.serializers import DelegateModelSerializer
 
 
@@ -22,7 +20,7 @@ class Delegates(APIView):
     def get(self, request, delegate_slug=None, wallet_address=None, *args, **kwargs):
         if wallet_address:
             # todo: support fetching delegate via wallet address
-            raise Http404
+            raise Http404()
         elif delegate_slug:
             data = self._get_delegate(delegate_slug)
         else:
@@ -56,22 +54,7 @@ class Delegates(APIView):
         Raises:
             Http404: if delegate with given delegate slug does not exist
         """
-        delegates_list = cache.get('app.sql.get_delegate.{}'.format(delegate_slug))
-        if not delegates_list:
-            delegates = Delegate.objects.raw(
-                sql_select_all_info_for_delegate_via_slug,
-                [delegate_slug, delegate_slug, delegate_slug]
-            )
-            delegates_list = list(delegates)
-            cache.set('app.sql.get_delegate.{}'.format(delegate_slug), delegates_list, 5 * 60)
-
-        try:
-            delegate = delegates_list[0]
-        except IndexError:
-            raise Http404('Delegate %s does not exist', delegate_slug)
-
-        delegate_result = DelegateSerializer(delegate).data
-
+        delegate_result = DelegateInfo.from_slug(delegate_slug).data
         return delegate_result
 
     def _get_delegates(self):
@@ -83,19 +66,10 @@ class Delegates(APIView):
         """
         page = int(self.request.GET.get('page', 1))
 
-        delegates_list = cache.get('app.sql.get_delegates')
-        if not delegates_list:
-            delegates = Delegate.objects.raw(sql_delegates)  # todo: optimize this raw sql yo
-            delegates_list = list(delegates)
-            cache.set('app.sql.get_delegates', delegates_list, 5 * 60)  # expire cache in 5min
-
-        paginator = Paginator(delegates_list, 60)
-        delegates_paginated = paginator.get_page(page)
-        delegates_results = DelegateSerializer(delegates_paginated, many=True).data
-
+        delegates, paginator = fetch_delegates(page)
         return {
-            'all_results': len(delegates_list),
-            'total_pages': paginator.num_pages,
+            'all_results': paginator.paginator.count,
+            'total_pages': paginator.paginator.num_pages,
             'current_page': page,
-            'delegates': delegates_results,
+            'delegates': delegates,
         }

@@ -1,35 +1,22 @@
-from django.http import Http404
 from django.views.generic.base import TemplateView
 
 from app.forms import ContributionForm, NodeForm, ProposalForm, StatusUpdateForm
-from app.models import Delegate
-from app.sql import sql_delegate_all_info_via_slug
+from app.models import Contribution, Delegate, Node, StatusUpdate
+from app.serializers import DelegateInfo
 from app.utils import is_staff
 
 
 class DelegateView(TemplateView):
     template_name = 'delegate.html'
 
-    def _fetch_delegate_info(self, delegate_slug):
-        delegate_query = Delegate.objects.raw(
-            sql_delegate_all_info_via_slug, [delegate_slug, delegate_slug, delegate_slug]
-        )
-        try:
-            delegate = delegate_query[0]
-        except IndexError:
-            raise Http404('Delegate %s does not exist', delegate_slug)
-
-        return delegate
-
     def get_context_data(self, delegate_slug, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        delegate = self._fetch_delegate_info(delegate_slug)
+        delegate_info = DelegateInfo.from_slug(delegate_slug).data
 
-        delegate_qs = Delegate.objects.get(slug=delegate_slug)
-        nodes = delegate_qs.nodes.filter(is_active=True)
-        contributions = delegate_qs.contributions.all()
-        updates = delegate_qs.status_updates.order_by('-created')
+        nodes = Node.objects.filter(delegate_id=delegate_info['id'], is_active=True)
+        contributions = Contribution.objects.filter(delegate_id=delegate_info['id'])
+        updates = StatusUpdate.objects.filter(delegate_id=delegate_info['id']).order_by('-created')
 
         if self.request.user.is_authenticated and hasattr(self.request.user, 'delegate'):
             logged_in_delegate = Delegate.objects.get(user_id=self.request.user.id)
@@ -51,13 +38,13 @@ class DelegateView(TemplateView):
 
         context.update({
             'seo': {
-                'title': '{} @ ARKdelegates.io'.format(delegate.name),
+                'title': '{} @ ARKdelegates.io'.format(delegate_info['name']),
                 'description': (
                     'Check what {} delegate has done for the ark community, how many nodes it runs '
-                    "and what's the proposal.".format(delegate.name)
+                    "and what's the proposal.".format(delegate_info['name'])
                 )
             },
-            'delegate': delegate,
+            'delegate': delegate_info,
             'nodes': nodes,
             'contributions': contributions,
             'updates': updates,
