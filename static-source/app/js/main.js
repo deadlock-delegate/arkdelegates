@@ -7,8 +7,8 @@ import './plugins.js';
 
 $(document).foundation();
 
-if (document.querySelector('input[name="csrfmiddlewaretoken"')) {
-    var csrfmiddlewaretoken = document.querySelector('input[name="csrfmiddlewaretoken"').value;
+if (document.querySelector('input[name="csrfmiddlewaretoken"]')) {
+    var csrfmiddlewaretoken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
 } else {
     var csrfmiddlewaretoken = '';
 }
