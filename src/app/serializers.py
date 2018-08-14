@@ -51,6 +51,7 @@ class DelegateSerializer(serpy.Serializer):
     uptime = FloatField()
     approval = FloatField()
     rank = IntegerField()
+    rank_changed = IntegerField()
     forged = IntegerField()
     missed = IntegerField()
     voters = IntegerField()
@@ -166,6 +167,7 @@ class DelegateInfo(serpy.DictSerializer):
             'uptime': None,
             'approval': None,
             'rank': None,
+            'rank_changed': None,
             'forged': None,
             'missed': None,
             'voters': None,
@@ -179,6 +181,7 @@ class DelegateInfo(serpy.DictSerializer):
             data['uptime'] = history.uptime
             data['approval'] = history.approval
             data['rank'] = history.rank
+            data['rank_changed'] = history.rank_changed
             data['forged'] = history.forged
             data['missed'] = history.missed
             data['voters'] = history.voters
