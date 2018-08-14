@@ -73,6 +73,7 @@ def fetch_delegates(page, search_query=None):
             'uptime': history.uptime,
             'approval': history.approval,
             'rank': history.rank,
+            'rank_changed': history.rank_changed,
             'forged': history.forged,
             'missed': history.missed,
             'voters': history.voters,

@@ -47,7 +47,8 @@
                         ({{ delegate.voters_not_zero_balance }} <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" tabindex="1" title="This number excludes all voters with 0 ARK in their wallet"><i class="fas fa-info-circle"></i></span>)
                     </li>
                     <li class="delegate-item__list-item">
-                        <i class="fas fa-bolt"></i> Voting power: {{delegate.voting_power|divide_by:"100000000"|floatformat:"1"|intcomma}}
+                        <i class="fas fa-bolt"></i>
+                        Voting power: {{delegate.voting_power|divide_by:"100000000"|floatformat:"1"|intcomma}}
                     </li>
                 </ul>
             </div>

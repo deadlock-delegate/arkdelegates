@@ -112,6 +112,7 @@ class DelegateInfo(serpy.DictSerializer):
     uptime = FloatField()
     approval = FloatField()
     rank = IntegerField()
+    rank_changed = IntegerField()
     forged = IntegerField()
     missed = IntegerField()
     voters = IntegerField()
