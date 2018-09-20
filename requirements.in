@@ -24,4 +24,4 @@ requests
 responses
 serpy
 uwsgi==2.0.15
-whitenoise
+whitenoise==3.3.1
