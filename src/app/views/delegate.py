@@ -26,7 +26,7 @@ class DelegateView(TemplateView):
             ).exists()
         else:
             logged_in_delegate = None
-            can_edit_delegate = None
+            can_edit_delegate = True
 
         if can_edit_delegate:
             context.update({
@@ -40,7 +40,7 @@ class DelegateView(TemplateView):
             'seo': {
                 'title': '{} @ ARKdelegates.io'.format(delegate_info['name']),
                 'description': (
-                    'Check what {} delegate has done for the ark community, how many nodes it runs '
+                    'Check what {} delegate has done for the Ark community, how many nodes it runs '
                     "and what's the proposal.".format(delegate_info['name'])
                 )
             },
@@ -50,7 +50,7 @@ class DelegateView(TemplateView):
             'updates': updates,
             'is_staff': is_staff(self.request.user),
             'can_edit_delegate': can_edit_delegate,
-            'logged_in_delegate': logged_in_delegate
+            'logged_in_delegate': logged_in_delegate,
         })
 
         return context

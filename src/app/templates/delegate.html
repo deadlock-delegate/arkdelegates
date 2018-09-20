@@ -140,7 +140,7 @@
                                     {% endif %}
                                 </b><br/>
                                 {% if contribution.description %}
-                                    <p>{{ contribution.description }}</p>
+                                    {{ contribution.description|markdown|limit_markdown|safe }}
                                 {% endif %}
                             </li>
                         {% endfor %}
@@ -180,9 +180,8 @@
                                     {{ update.created|date:"d. M. Y @ H:i" }} |
                                     <a href="{% url 'update' delegate.slug update.id %}">visit update page</a>
                                 </div>
-                                <p>
-                                    {{ update.message }}
-                                </p>
+
+                                {{ update.message|markdown|limit_markdown|safe }}
                             </li>
                         {% endfor %}
                     </ul>
@@ -296,6 +295,10 @@
                 <ul class="form">
                     {{ contributionForm.as_ul }}
                 </ul>
+                <small style="display: block">
+                    You can only use bold, italic and anchor markdown tags in the description. If
+                    an invalid markdown is used, that content will be removed.
+                </small>
                 <input type="submit" value="Save" />
             </form>
             <button class="close-button" data-close aria-label="Close reveal" type="button">
@@ -344,7 +347,11 @@
                 <ul class="form">
                     {{ updateForm.as_ul }}
                 </ul>
-                <input type="submit" value="Save" />
+                <small style="display: block">
+                    You can only use bold, italic and anchor markdown tags in the description. If
+                    an invalid markdown is used, that content will be removed.
+                </small>
+                <input type="submit" value="Save"/>
             </form>
             <button class="close-button" data-close aria-label="Close reveal" type="button">
                 <span aria-hidden="true">&times;</span>

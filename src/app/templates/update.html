@@ -22,7 +22,9 @@
                        data-action="delete"
                        data-id="{{ update.id }}"></i>
                 {% endif %}
-                <p class="status-update__message">{{ update.message }}</p>
+                <div class="status-update__message">
+                    {{ update.message|markdown|limit_markdown|safe }}
+                </div>
                 <a href="{% url 'delegate' delegate.slug %}">Go to {{delegate.name}}'s page</a>
             </div>
         </div>

@@ -7,6 +7,7 @@
 atomicwrites==1.2.1       # via pytest
 attrs==18.2.0             # via pytest
 backcall==0.1.0           # via ipython
+bleach==2.1.4
 certifi==2018.8.24        # via requests
 chardet==3.0.4            # via requests
 cookies==2.2.1            # via responses
@@ -26,6 +27,7 @@ flake8-debugger==3.1.0
 flake8-import-order==0.18
 flake8-quotes==1.0.0
 flake8==3.5.0
+html5lib==1.0.1           # via bleach
 idna==2.7                 # via requests
 ipython-genutils==0.2.0   # via traitlets
 ipython==6.5.0
@@ -56,11 +58,12 @@ requests==2.19.1
 responses==0.9.0
 serpy==0.3.1
 simplegeneric==0.8.1      # via ipython
-six==1.11.0               # via django-extensions, faker, more-itertools, prompt-toolkit, pytest, python-dateutil, responses, serpy, traitlets
+six==1.11.0               # via bleach, django-extensions, faker, html5lib, more-itertools, prompt-toolkit, pytest, python-dateutil, responses, serpy, traitlets
 sqlparse==0.2.4           # via django-debug-toolbar
 text-unidecode==1.2       # via faker
 traitlets==4.3.2          # via ipython
 urllib3==1.23             # via requests
 uwsgi==2.0.15
 wcwidth==0.1.7            # via prompt-toolkit
+webencodings==0.5.1       # via html5lib
 whitenoise==3.3.1

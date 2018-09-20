@@ -1,8 +1,11 @@
+import bleach
+
 from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateView
 
 from app.forms import StatusUpdateForm
 from app.models import Delegate, StatusUpdate
+from app.templatetags.markdown import markdown
 from app.utils import is_staff
 
 
@@ -33,7 +36,7 @@ class UpdateView(TemplateView):
         context.update({
             'seo': {
                 'title': 'Status update from {} @ ARKdelegates.io'.format(delegate.name),
-                'description': update.message
+                'description': bleach.clean(markdown(update.message), tags=[], strip=True),
             },
             'delegate': delegate,
             'update': update,

@@ -1,3 +1,4 @@
+bleach
 django
 django-cors-headers
 django-debug-toolbar
