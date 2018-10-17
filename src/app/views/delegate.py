@@ -26,7 +26,7 @@ class DelegateView(TemplateView):
             ).exists()
         else:
             logged_in_delegate = None
-            can_edit_delegate = True
+            can_edit_delegate = False
 
         if can_edit_delegate:
             context.update({
