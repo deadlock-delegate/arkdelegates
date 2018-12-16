@@ -40,8 +40,21 @@ class Delegate(models.Model):
     def __repr__(self):
         return '<Delegate "{}">'.format(self.name)
 
+    def generate_slug(self):
+        slug = slugify(self.name)
+        slug_exists = Delegate.objects.filter(slug=slug).exists()
+        counter = 1
+        while slug_exists:
+            proposed_slug = f'{slug}{counter}'
+            slug_exists = Delegate.objects.filter(slug=proposed_slug).exists()
+            if not slug_exists:
+                slug = proposed_slug
+                break
+            counter += 1
+        return slug
+
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        self.slug = self.generate_slug()
         super().save(*args, **kwargs)
 
 
