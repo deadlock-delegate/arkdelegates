@@ -54,7 +54,8 @@ class Delegate(models.Model):
         return slug
 
     def save(self, *args, **kwargs):
-        self.slug = self.generate_slug()
+        if not self.slug:
+            self.slug = self.generate_slug()
         super().save(*args, **kwargs)
 
 
