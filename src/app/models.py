@@ -92,6 +92,7 @@ class Contribution(models.Model):
     delegate = models.ForeignKey('Delegate', related_name='contributions', on_delete=models.CASCADE)
     title = models.CharField(max_length=256)
     description = models.TextField(null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
 
 class StatusUpdate(models.Model):

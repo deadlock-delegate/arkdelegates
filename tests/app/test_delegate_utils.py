@@ -95,6 +95,6 @@ def test_fetch_delegates_list_returns_delegate_with_correct_fields(search_query)
     assert delegates_list[0]['voting_power'] is None
     assert delegates_list[0]['voters_zero_balance'] is None
     assert delegates_list[0]['voters_not_zero_balance'] is None
-    assert delegates_list[0]['total_nodes_count'] is 2
-    assert delegates_list[0]['backup_nodes_count'] is 1
+    assert delegates_list[0]['total_nodes_count'] == 2
+    assert delegates_list[0]['backup_nodes_count'] == 1
     assert delegates_list[0]['contributions_count'] == 1

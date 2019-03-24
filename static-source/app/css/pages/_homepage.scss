@@ -1,0 +1,24 @@
+.homepage {
+    h2 {
+        font-size: 1.4em;
+    }
+
+    .note {
+        font-size: 0.9em;
+        color: #959595;
+    }
+
+    &__featured {
+        font-size: 0.85em;
+        line-height: 1.7;
+
+        a {
+            font-weight: 600;
+        }
+    }
+}
+
+.smaller {
+    font-size: 0.85em;
+    color: #959595;
+}

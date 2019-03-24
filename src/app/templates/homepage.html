@@ -5,23 +5,52 @@
 {% load text %}
 
 {% block content %}
-    <div class="grid-container delegates-list">
+    <div class="grid-container homepage">
         {% if search %}
             <p>Search results for: <b>{{search}}</b></p>
             <hr style="margin-top: 0em; border-color: #DDD;">
         {% endif %}
 
+        {% if new_delegate_propsals and new_contributions %}
+            <div class="grid-x grid-padding-x">
+                <div class="cell small-12 medium-6 large-5">
+                    <h2>New delegate proposal</h2>
+                    <ul class="homepage__featured">
+                        {% for new_delegate in new_delegate_propsals %}
+                            <li>
+                                <a href="{% url 'delegate' new_delegate.slug %}">{{ new_delegate.name }}</a>
+                                <span class="smaller">on {{ new_delegate.created|date:"d. M. Y" }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="cell small-12 medium-6 large-7">
+                    <h2>Latest contributions</h2>
+                    <ul  class="homepage__featured">
+                        {% for contribution in new_contributions %}
+                            <li>
+                                <b>{{ contribution.title }}</b>
+                                by <a href="{% url 'delegate' contribution.delegate.slug %}">{{ contribution.delegate.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+
+        <h2>All delegates</h2>
+        <p class="note">Ordered by vote weight. Only the top 51 delegates are able to forge.</p>
+
         {% for delegate in delegates %}
-            {% if forloop.counter|divisibleby:"30" or forloop.counter == 2 %}
+            {% if forloop.counter|divisibleby:"30" or forloop.counter == 5 %}
                 {% include 'modules/message_notice.html' %}
             {% endif %}
-            <div class="delegate-item
-                        {% if forloop.counter|divisibleby:"30" or forloop.counter == 2 or forloop.counter == 52  %}delegate-item--border-top{%endif%}
+            <a href="{% url 'delegate' delegate.slug %}"
+                class="delegate-item
+                        {% if forloop.counter|divisibleby:"30" or forloop.counter == 5 or forloop.counter == 52  or forloop.counter == 1 %}delegate-item--border-top{%endif%}
                         grid-x grid-padding-x align-middle">
-                {% if is_staff %}
-                    <a href="{% url 'admin:app_delegate_change' delegate.id %}" class="delegate-item__edit">edit delegate</a>
-                {% endif %}
-                <div class="cell small-12 medium-4 delegate-item__name">
+                <div class="cell small-12 medium-3 delegate-item__name">
                     <div class="rank-changer">
                         <span data-tooltip aria-haspopup="true" class="has-tip rank-changer__extra" data-disable-hover="false" tabindex="1" title="In the last 24h delegate
                                {% if delegate.rank_changed > 0 %}went up in rank for {{ delegate.rank_changed }}{% elif delegate.rank_changed < 0%}went down in rank for {{ delegate.rank_changed|replace:'-,' }}{% else %}didn't change rank{% endif %}
@@ -30,10 +59,10 @@
                         <i class="fa fa-chevron-up rank-changer__up {% if delegate.rank_changed > 0 %}text-green{% endif %}" aria-hidden="true"></i>
                         <i class="fa fa-chevron-down rank-changer__down {% if delegate.rank_changed < 0 %}text-red{% endif %}" aria-hidden="true"></i>
                     </div>
-                    <span style="font-size: 1.1em;">
+                    <span style="font-size: 0.85em;">
                         {{delegate.rank}}.
                     </span>
-                    <a href="{% url 'delegate' delegate.slug %}">{{delegate.name}}</a>
+                    {{delegate.name}}
                     {% if delegate.user_id %}
                         <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" tabindex="1" title="This account has been claimed">
                             <i class="fas fa-certificate delegate-verified"></i>
@@ -43,19 +72,16 @@
                 <div class="cell small-6 medium-3">
                     <ul class="delegate-item__list">
                         <li class="delegate-item__list-item">
-                            <i class="fas fa-stopwatch"></i> Uptime:
-                            {% if delegate.uptime %}
-                                {{delegate.uptime}}%
-                            {% else %}
-                                Not forging
-                            {% endif %}
-                        </li>
-                        <li class="delegate-item__list-item">
                             <i class="fas fa-users"></i> Voters: {{delegate.voters}}
+                            ({{ delegate.voters_not_zero_balance }} <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" tabindex="1" title="This number excludes all voters with 0 ARK in their wallet"><i class="fas fa-info-circle"></i></span>)
                         </li>
                         <li class="delegate-item__list-item">
                             <i class="fas fa-bolt"></i> Voting power: {{delegate.voting_power|divide_by:"100000000"|floatformat:"1"|intcomma}}
                         </li>
+                    </ul>
+                </div>
+                <div class="cell small-6 medium-3">
+                    <ul class="delegate-item__list">
                         <li class="delegate-item__list-item">
                             <i class="fas fa-percent"></i> Payout percent:
                             {% if delegate.payout_percent %}
@@ -63,19 +89,6 @@
                                 <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" tabindex="1" title="Make sure to check this delegates profile if there are any limitations for his/her payouts!"><i class="fas fa-info-circle"></i></span>
                             {% else %}
                                 <i class="fas fa-question"></i>
-                            {% endif %}
-                        </li>
-                    </ul>
-                </div>
-                <div class="cell small-6 medium-3">
-                    <ul class="delegate-item__list">
-                        <li class="delegate-item__list-item">
-                            Has backup node?
-                            {% if delegate.backup_nodes_count %}
-                                <i class="fas fa-check text-green"></i>
-                            {% else %}
-                                <i class="fas fa-question"></i>
-                                {# <i class="fas fa-times text-red"></i> #}
                             {% endif %}
                         </li>
                         <li class="delegate-item__list-item">
@@ -86,8 +99,12 @@
                                 <i class="fas fa-question"></i>
                             {% endif %}
                         </li>
+                    </ul>
+                </div>
+                <div class="cell small-6 medium-3">
+                    <ul class="delegate-item__list">
                         <li class="delegate-item__list-item">
-                            Contributes to ARK:
+                            Contributes?
                             {% if delegate.contributions_count %}
                                 <i class="fas fa-check text-green"></i>
                             {% else %}
@@ -95,7 +112,7 @@
                             {% endif %}
                         </li>
                         <li class="delegate-item__list-item">
-                            Is public delegate?
+                            Is public?
                             {% if delegate.is_private %}
                                 <i class="fas fa-times text-red"></i>
                             {% else %}
@@ -104,14 +121,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="cell small-12 medium-2">
-                    <ul class="delegate-item__list">
-                        <li class="delegate-item__list-item text-center">
-                            <a href="{% url 'delegate' delegate.slug %}">View Delegate</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            </a>
 
             {% if forloop.counter == 51 %}
                 <div class="grid-x grid-padding-x align-middle">

@@ -23,15 +23,15 @@ def limit_markdown(data):
 
 
 class NewTabExtensionMixin(object):
-        def handleMatch(self, m):
-            el = super(NewTabExtensionMixin, self).handleMatch(m)
-            if el is not None:
-                el.set('target', '_blank')
-            return el
+    def handleMatch(self, m):
+        el = super(NewTabExtensionMixin, self).handleMatch(m)
+        if el is not None:
+            el.set('target', '_blank')
+        return el
 
 
 class NewTabExtensionLinkPattern(NewTabExtensionMixin, LinkPattern):
-        pass
+    pass
 
 
 class NewTabExtensionReferencePattern(NewTabExtensionMixin, ReferencePattern):

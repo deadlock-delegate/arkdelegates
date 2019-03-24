@@ -7,6 +7,7 @@ ENV DJANGO_SETTINGS_MODULE=app.settings \
     DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
+    apt-get upgrade -y && \
     apt-get install -y postgresql && \
     apt-get install -y apt-transport-https && \
     apt-get install -y build-essential && \
