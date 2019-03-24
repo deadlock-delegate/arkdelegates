@@ -24,12 +24,12 @@ class Homepage(TemplateView):
 
         test = self.request.GET.get('test_on', False)
         if test:
-            new_delegate_propsals = Delegate.objects.exclude(
+            new_proposals = Delegate.objects.exclude(
                 proposal=None, user_id=None
             ).order_by('-created')[:6]
             new_contributions = Contribution.objects.order_by('-id')[:6]
         else:
-            new_delegate_propsals = []
+            new_proposals = []
             new_contributions = []
 
         delegates, paginator = fetch_delegates(page, search_query=search_query)
@@ -47,7 +47,7 @@ class Homepage(TemplateView):
                     'they done and follow their progress.'
                 )
             },
-            'new_proposals': new_delegate_propsals,
+            'new_proposals': new_proposals,
             'new_contributions': new_contributions,
             'delegates': delegates,
             'is_staff': is_staff(self.request.user),
