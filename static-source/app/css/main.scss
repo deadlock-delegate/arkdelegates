@@ -297,7 +297,7 @@ i:focus {outline:0;}
     }
 
     &__name-name {
-        max-width: 100px;
+        max-width: 67px;
         white-space: nowrap;
         overflow: hidden !important;
         text-overflow: ellipsis;
@@ -305,8 +305,16 @@ i:focus {outline:0;}
         position: relative;
         top: 4px;
 
-        @media screen and (min-width: 640px) {
-            max-width: 67px;
+        @media screen and (max-width: 639px) {
+            max-width: initial;
+        }
+
+        @media screen and (min-width: 735px) and (max-width: 915px) {
+            max-width: 90px;
+        }
+
+        @media screen and (min-width: 916px) {
+            max-width: initial
         }
     }
 

@@ -25,7 +25,7 @@ class Homepage(TemplateView):
         test = self.request.GET.get('test_on', False)
         if test:
             new_delegates = fetch_new_delegates()
-            new_contributions = Contribution.objects.order_by('-id')[:6]
+            new_contributions = Contribution.objects.order_by('-id')[:8]
         else:
             new_delegates = []
             new_contributions = []
