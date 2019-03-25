@@ -100,11 +100,20 @@ def fetch_new_delegates():
         .values_list('id', flat=True)
     )
 
+    total_node_count_query = Count(
+        'delegate_fk__nodes', filter=Q(delegate_fk__nodes__is_active=True), distinct=True)
+    backup_node_count_query = Count(
+        'delegate_fk__nodes',
+        filter=Q(delegate_fk__nodes__is_active=True, delegate_fk__nodes__is_backup=True),
+        distinct=True
+    )
     contributions_count_query = Count('delegate_fk__contributions', distinct=True)
 
     histories = (
         History.objects.all()
         .filter(id__in=history_ids)
+        .annotate(total_nodes_count=total_node_count_query)
+        .annotate(backup_nodes_count=backup_node_count_query)
         .annotate(contributions_count=contributions_count_query)
         .select_related('delegate_fk')
         .order_by('rank')
@@ -132,6 +141,8 @@ def fetch_new_delegates():
             'payout_maximum_vote_amount': history.delegate_fk.payout_maximum_vote_amount,
             'user_id': history.delegate_fk.user_id,
 
+            'total_nodes_count': history.total_nodes_count,
+            'backup_nodes_count': history.backup_nodes_count,
             'contributions_count': history.contributions_count,
 
             'uptime': history.uptime,
