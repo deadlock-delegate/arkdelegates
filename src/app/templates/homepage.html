@@ -71,15 +71,12 @@
 
                 {% for contribution in new_contributions %}
                     <div class="new-contribution grid-x grid-padding-x align-middle">
-                        <div class="cell small-12">
-                            <b>{{ contribution.title }}</b>
-                            <a class="new-contribution__author" href="{% url 'delegate' contribution.delegate.slug %}">
-                                by {{ contribution.delegate.name }}
-                            </a>
+                        <a class="cell small-12" href="{% url 'delegate' contribution.delegate.slug %}">
+                            <b>{{ contribution.title }}</b> by {{ contribution.delegate.name }}
                             {% if contribution.description %}
                                 <p>{{ contribution.description|striptags|slice:":70"}}</p>
                             {% endif %}
-                        </div>
+                        </a>
                     </div>
                 {% endfor %}
             </div>
