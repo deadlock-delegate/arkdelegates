@@ -248,7 +248,7 @@ i:focus {outline:0;}
 .rank-changer {
     display: inline-block;
     position: relative;
-    width: 15px;
+    width: 12px;
     font-size: 0.8em;
 
     &__up {
@@ -292,13 +292,26 @@ i:focus {outline:0;}
     }
 
     &__name {
-        margin-bottom: 0.5em;
+        position: relative;
+        top: -2px;
+    }
+
+    &__name-name {
+        max-width: 100px;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+        display: inline-block;
+        position: relative;
+        top: 4px;
+
         @media screen and (min-width: 640px) {
-            margin-bottom: 0
+            max-width: 67px;
         }
     }
 
     &__item {
         font-size: 0.85em;
+        text-align: center;
     }
 }
