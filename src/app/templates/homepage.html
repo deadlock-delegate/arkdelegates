@@ -71,7 +71,7 @@
 
                 {% for contribution in new_contributions %}
                     <div class="new-contribution grid-x grid-padding-x align-middle">
-                        <a class="cell small-12" href="{% url 'delegate' contribution.delegate.slug %}">
+                        <a class="cell small-12" href="{% url 'delegate' contribution.delegate.slug %}#contributions">
                             <b>{{ contribution.title }}</b> by {{ contribution.delegate.name }}
                             {% if contribution.description %}
                                 <p>{{ contribution.description|striptags|slice:":70"}}</p>
