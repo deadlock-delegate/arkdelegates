@@ -22,13 +22,8 @@ class Homepage(TemplateView):
         page = int(self.request.GET.get('page', 1))
         search_query = self.request.GET.get('search', '')
 
-        test = self.request.GET.get('test_on', False)
-        if test:
-            new_delegates = fetch_new_delegates()
-            new_contributions = Contribution.objects.order_by('-id')[:5]
-        else:
-            new_delegates = []
-            new_contributions = []
+        new_delegates = fetch_new_delegates()
+        new_contributions = Contribution.objects.order_by('-id')[:5]
 
         delegates, paginator = fetch_delegates(page, search_query=search_query)
 

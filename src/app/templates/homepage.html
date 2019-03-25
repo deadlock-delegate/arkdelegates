@@ -11,86 +11,84 @@
             <hr style="margin-top: 0em; border-color: #DDD;">
         {% endif %}
 
-        {% if new_delegates and new_contributions %}
-            <div class="grid-x grid-padding-x">
-                <div class="cell small-12 medium-7 large-6" style="margin-bottom: 1em;">
-                    <h2>Latest proposals</h2>
+        <div class="grid-x grid-padding-x">
+            <div class="cell small-12 medium-7 large-6" style="margin-bottom: 1em;">
+                <h2>Latest proposals</h2>
 
-                    {% for new_delegate in new_delegates %}
-                        <a href="{% url 'delegate' new_delegate.slug %}" class="new-delegate grid-x grid-padding-x align-middle">
-                            <div class="cell small-12 medium-5 new-delegate__name">
-                                <div class="rank-changer">
-                                    <span data-tooltip aria-haspopup="true" class="has-tip rank-changer__extra" data-disable-hover="false" tabindex="1" title="In the last 24h delegate
-                                           {% if new_delegate.rank_changed > 0 %}went up in rank for {{ new_delegate.rank_changed }}{% elif new_delegate.rank_changed < 0%}went down in rank for {{ new_delegate.rank_changed|replace:'-,' }}{% else %}didn't change rank{% endif %}
-                                           ">
-                                    </span>
-                                    <i class="fa fa-chevron-up rank-changer__up {% if new_delegate.rank_changed > 0 %}text-green{% endif %}" aria-hidden="true"></i>
-                                    <i class="fa fa-chevron-down rank-changer__down {% if new_delegate.rank_changed < 0 %}text-red{% endif %}" aria-hidden="true"></i>
-                                </div>
-                                <span style="font-size: 0.8em; position: relative; top: -1px;">
-                                    {{ new_delegate.rank }}.
+                {% for new_delegate in new_delegates %}
+                    <a href="{% url 'delegate' new_delegate.slug %}" class="new-delegate grid-x grid-padding-x align-middle">
+                        <div class="cell small-12 medium-5 new-delegate__name">
+                            <div class="rank-changer">
+                                <span data-tooltip aria-haspopup="true" class="has-tip rank-changer__extra" data-disable-hover="false" tabindex="1" title="In the last 24h delegate
+                                       {% if new_delegate.rank_changed > 0 %}went up in rank for {{ new_delegate.rank_changed }}{% elif new_delegate.rank_changed < 0%}went down in rank for {{ new_delegate.rank_changed|replace:'-,' }}{% else %}didn't change rank{% endif %}
+                                       ">
                                 </span>
-                                <span class="new-delegate__name-name">{{ new_delegate.name }}</span>
+                                <i class="fa fa-chevron-up rank-changer__up {% if new_delegate.rank_changed > 0 %}text-green{% endif %}" aria-hidden="true"></i>
+                                <i class="fa fa-chevron-down rank-changer__down {% if new_delegate.rank_changed < 0 %}text-red{% endif %}" aria-hidden="true"></i>
                             </div>
-                             <div class="cell small-12 medium-7">
-                                <div class="grid-x grid-padding-x align-middle">
-                                    <div class="cell small-4 medium-4 large-4 new-delegate__item">
-                                        Payout:<br/>
-                                        {% if new_delegate.payout_percent %}
-                                            {{ new_delegate.payout_percent|floatformat:"0" }}%
-                                            <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" tabindex="1" title="Make sure to check this delegates profile if there are any limitations for his/her payouts!"><i class="fas fa-info-circle"></i></span>
-                                        {% else %}
-                                            <i class="fas fa-question"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="cell small-4 medium-4 large-4 new-delegate__item">
-                                        Contributes?<br/>
-                                        {% if new_delegate.contributions_count %}
-                                            <i class="fas fa-check text-green"></i>
-                                        {% else %}
-                                            <i class="fas fa-question"></i>
-                                        {% endif %}
-                                    </div>
-                                    <div class="cell small-4 medium-4 large-4 new-delegate__item">
-                                        Public?<br/>
-                                        {% if new_delegate.is_private == True %}
-                                            <i class="fas fa-times text-red"></i>
-                                        {% elif new_delegate.is_private == False %}
-                                            <i class="fas fa-check text-green"></i>
-                                        {% else %}
-                                            <i class="fas fa-question"></i>
-                                        {% endif %}
-                                    </div>
+                            <span style="font-size: 0.8em; position: relative; top: -1px;">
+                                {{ new_delegate.rank }}.
+                            </span>
+                            <span class="new-delegate__name-name">{{ new_delegate.name }}</span>
+                        </div>
+                         <div class="cell small-12 medium-7">
+                            <div class="grid-x grid-padding-x align-middle">
+                                <div class="cell small-4 medium-4 large-4 new-delegate__item">
+                                    Payout:<br/>
+                                    {% if new_delegate.payout_percent %}
+                                        {{ new_delegate.payout_percent|floatformat:"0" }}%
+                                        <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" tabindex="1" title="Make sure to check this delegates profile if there are any limitations for his/her payouts!"><i class="fas fa-info-circle"></i></span>
+                                    {% else %}
+                                        <i class="fas fa-question"></i>
+                                    {% endif %}
                                 </div>
-                            </div>
-                        </a>
-                    {% endfor %}
-                </div>
-
-                <div class="cell small-12 medium-5 large-6" style="margin-bottom: 1em;">
-                    <h2>Latest contributions</h2>
-
-                    {% for contribution in new_contributions %}
-                        <div class="new-contribution grid-x grid-padding-x align-middle">
-                            <div class="cell small-12">
-                                <b>{{ contribution.title }}</b>
-                                <a class="new-contribution__author" href="{% url 'delegate' contribution.delegate.slug %}">
-                                    by {{ contribution.delegate.name }}
-                                </a>
-                                {% if contribution.description %}
-                                    <p>{{ contribution.description|striptags|slice:":70"}}</p>
-                                {% endif %}
+                                <div class="cell small-4 medium-4 large-4 new-delegate__item">
+                                    Contributes?<br/>
+                                    {% if new_delegate.contributions_count %}
+                                        <i class="fas fa-check text-green"></i>
+                                    {% else %}
+                                        <i class="fas fa-question"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="cell small-4 medium-4 large-4 new-delegate__item">
+                                    Public?<br/>
+                                    {% if new_delegate.is_private == True %}
+                                        <i class="fas fa-times text-red"></i>
+                                    {% elif new_delegate.is_private == False %}
+                                        <i class="fas fa-check text-green"></i>
+                                    {% else %}
+                                        <i class="fas fa-question"></i>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
+                    </a>
+                {% endfor %}
             </div>
 
-            <div class="note" style="text-align: center; margin: 1em auto;">
-                Do you wish to start a delegate and add your proposal to ARKdelegates.io?
-                <a href="{% url 'how_to_get_listed' %}" style="font-weight: 500;">Start here.</a>
+            <div class="cell small-12 medium-5 large-6" style="margin-bottom: 1em;">
+                <h2>Latest contributions</h2>
+
+                {% for contribution in new_contributions %}
+                    <div class="new-contribution grid-x grid-padding-x align-middle">
+                        <div class="cell small-12">
+                            <b>{{ contribution.title }}</b>
+                            <a class="new-contribution__author" href="{% url 'delegate' contribution.delegate.slug %}">
+                                by {{ contribution.delegate.name }}
+                            </a>
+                            {% if contribution.description %}
+                                <p>{{ contribution.description|striptags|slice:":70"}}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        {% endif %}
+        </div>
+
+        <div class="note" style="text-align: center; margin: 1em auto;">
+            Do you wish to start a delegate and add your proposal to ARKdelegates.io?
+            <a href="{% url 'how_to_get_listed' %}" style="font-weight: 500;">Start here.</a>
+        </div>
 
         <h2>All delegates</h2>
         <p class="note">Ordered by vote weight. Only the top 51 delegates are able to forge.</p>
