@@ -11,7 +11,9 @@ from django.urls import include, path
 
 from app.views.delegate import DelegateView
 from app.views.edit import EditContributionView, EditNodeView, EditProposalView, StatusUpdateView
+from app.views.faq import FAQ
 from app.views.home import Homepage, health
+from app.views.how_to_get_listed import HowToGetListed
 from app.views.update import UpdateView
 
 
@@ -27,6 +29,10 @@ urlpatterns = [
         UpdateView.as_view(),
         name='update'
     ),
+
+    # static pages
+    path('faq/', FAQ.as_view(), name='faq'),
+    path('how-to-get-listed/', HowToGetListed.as_view(), name='how_to_get_listed'),
 
     # auth
     path('auth/', include('app.views.auth.urls')),

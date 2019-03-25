@@ -218,6 +218,7 @@ i:focus {outline:0;}
 @import 'pages/homepage';
 @import 'pages/delegate';
 @import 'pages/faq';
+@import 'pages/static-page';
 
 
 // Modules
@@ -280,6 +281,19 @@ i:focus {outline:0;}
     color: #46b02e;
 }
 
+.new-contribution {
+    width: 100%;
+    font-size: 0.85em;
+    padding: 0.3em 0;
+    border-bottom: 1px solid #ddd;
+
+    p {
+        margin-bottom: 0;
+    }
+
+    &__author {
+    }
+}
 
 .new-delegate {
     width: 100%;
