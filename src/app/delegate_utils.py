@@ -89,6 +89,8 @@ def fetch_delegates(page, search_query=None):
 def fetch_new_delegates():
     delegates = Delegate.objects.exclude(
         proposal=None
+    ).exclude(
+        user_id=None
     ).order_by('-created')[:6]
     base_query = History.objects.filter(
         created__gt=timezone.now() - timedelta(days=3),
@@ -118,7 +120,7 @@ def fetch_new_delegates():
         .annotate(backup_nodes_count=backup_node_count_query)
         .annotate(contributions_count=contributions_count_query)
         .select_related('delegate_fk')
-        .order_by('rank')
+        .order_by('-delegate_fk__created')
     )
 
     delegates_data = []
