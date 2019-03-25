@@ -23,7 +23,7 @@ class Delegate(models.Model):
     updated = models.DateTimeField(blank=True, null=True, auto_now=True)
     website = models.URLField(max_length=200, blank=True, null=True)
     proposal = models.TextField(blank=True, null=True)
-    is_private = models.BooleanField(default=False)
+    is_private = models.NullBooleanField()
 
     payout_covering_fee = models.NullBooleanField(default=False)
     # Percent is represented as: 0.00 - 100.00

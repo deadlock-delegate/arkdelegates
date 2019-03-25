@@ -32,10 +32,12 @@
                     <li class="delegate-item__list-item">
                         <i class="fas fa-user-secret"></i>
                         Is public delegate?
-                        {% if delegate.is_private %}
+                        {% if delegate.is_private == True %}
                             <i class="fas fa-times text-red"></i>
-                        {% else %}
+                        {% elif delegate.is_private == False %}
                             <i class="fas fa-check text-green"></i>
+                        {% else %}
+                            <i class="fas fa-question"></i>
                         {% endif %}
                     </li>
                     <li class="delegate-item__list-item">
