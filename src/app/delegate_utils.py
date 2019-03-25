@@ -87,7 +87,11 @@ def fetch_delegates(page, search_query=None):
 
 
 def fetch_new_delegates():
-    delegates = Delegate.objects.exclude(proposal=None).order_by('-created')[:5]
+    delegates = Delegate.objects.exclude(
+        proposal=None
+    ).exclude(
+        user_id=None
+    ).order_by('-created')[:5]
     base_query = History.objects.filter(
         created__gt=timezone.now() - timedelta(days=3),
         delegate_fk__in=delegates.values_list('id')
