@@ -13,25 +13,26 @@ class Command(BaseCommand):
         self.stderr.write('Updating delegate stats')
 
         created_count = 0
-        offset = 0
-        limit = 51
-        url = 'https://explorer.ark.io:8443/api/delegates?orderBy=rate:asc&offset={}&limit={}'
+        api_url = 'http://159.89.109.90:4003'
+        endpoint = '/api/v2/delegates?page=1&limit=100'
 
-        while True:
-            self.stderr.write(f'... fetching 51 delegates from {url.format(offset, limit)}')
-            response = requests.get(url.format(offset, limit))
+        while endpoint:
+            url = f'{api_url}{endpoint}'
+            self.stderr.write(f'... fetching 51 delegates from {url}')
+            response = requests.get(url)
             if response.status_code != 200:
                 self.stderr.write(
                     f'Request returned in invalid status code {response.status_code}. Quiting.'
                 )
                 break
 
-            data = response.json()
-            if not data['delegates']:
+            json_dict = response.json()
+            data = json_dict['data']
+            if not data:
                 break
 
             with transaction.atomic():
-                for delegate_data in data['delegates']:
+                for delegate_data in data:
                     delegate, created = Delegate.objects.get_or_create(
                         name=delegate_data['username'],
                         address=delegate_data['address'],
@@ -40,6 +41,6 @@ class Command(BaseCommand):
                     if created:
                         created_count += 1
 
-            offset += limit
+            endpoint = json_dict['meta']['next']
 
         self.stderr.write(f'Created {created_count} new delegates')
