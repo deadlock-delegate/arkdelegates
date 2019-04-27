@@ -1,0 +1,36 @@
+version: 2
+
+jobs:
+  test:
+    working_directory: ~/app
+    environment:
+      IMAGE_NAME: arkdelegates
+      DJANGO_SETTINGS_MODULE: app.settings
+      PYTHONPATH: /home/circleci/app/src
+      DATABASE_URL: 'postgres://dbuser@localhost:5432/test_db'
+    docker:
+      - image: circleci/python:3.7-stretch
+      - image: circleci/postgres:9.6.9
+        environment:
+          POSTGRES_USER: dbuser
+          POSTGRES_DB: test_db
+    steps:
+      - checkout
+      - run:
+          name: Install requirements
+          command: sudo pip install -r requirements.txt
+      - run:
+          name: Run linting
+          command: flake8 .
+      - run:
+          name: Run black
+          command: black --check .
+      - run:
+          name: Run tests
+          command: py.test --ds=app.test_settings -vv -s
+
+workflows:
+  version: 2
+  build-master:
+    jobs:
+      - test

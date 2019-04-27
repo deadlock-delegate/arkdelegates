@@ -18,36 +18,27 @@ from app.views.update import UpdateView
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('health/', health, name='health'),
-
+    path("admin/", admin.site.urls),
+    path("health/", health, name="health"),
     # pages
-    path('', Homepage.as_view(), name='homepage'),
-    path('delegate/<slug:delegate_slug>/', DelegateView.as_view(), name='delegate'),
+    path("", Homepage.as_view(), name="homepage"),
+    path("delegate/<slug:delegate_slug>/", DelegateView.as_view(), name="delegate"),
     path(
-        'delegate/<slug:delegate_slug>/update/<int:update_id>',
-        UpdateView.as_view(),
-        name='update'
+        "delegate/<slug:delegate_slug>/update/<int:update_id>", UpdateView.as_view(), name="update"
     ),
-
     # static pages
-    path('faq/', FAQ.as_view(), name='faq'),
-    path('how-to-get-listed/', HowToGetListed.as_view(), name='how_to_get_listed'),
-
+    path("faq/", FAQ.as_view(), name="faq"),
+    path("how-to-get-listed/", HowToGetListed.as_view(), name="how_to_get_listed"),
     # auth
-    path('auth/', include('app.views.auth.urls')),
-
+    path("auth/", include("app.views.auth.urls")),
     # edit
-    path('edit/proposal/', EditProposalView.as_view(), name='proposal'),
-    path('edit/contribution/', EditContributionView.as_view(), name='contribution'),
-    path('edit/node/', EditNodeView.as_view(), name='node'),
-    path('edit/update/', StatusUpdateView.as_view(), name='status'),
-
+    path("edit/proposal/", EditProposalView.as_view(), name="proposal"),
+    path("edit/contribution/", EditContributionView.as_view(), name="contribution"),
+    path("edit/node/", EditNodeView.as_view(), name="node"),
+    path("edit/update/", StatusUpdateView.as_view(), name="status"),
     # api
-    path('api/', include('app.views.api.urls')),
+    path("api/", include("app.views.api.urls")),
 ]
 
 if settings.DEBUG:
-    urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
+    urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns

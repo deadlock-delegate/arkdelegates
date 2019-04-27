@@ -28,6 +28,7 @@ COPY package-lock.json /app/package-lock.json
 COPY static-source /app/static-source
 COPY webpack.config.js /app/webpack.config.js
 COPY .eslintrc.json /app/.eslintrc.json
+COPY pyproject.toml /app/pyproject.toml
 
 WORKDIR /app
 

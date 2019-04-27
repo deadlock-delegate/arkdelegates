@@ -5,12 +5,9 @@ from django.utils.text import slugify
 
 from app.constants import PIN_LENGTH
 
-MAINNET = 'mainnet'
-DEVNET = 'devnet'
-NETWORK_CHOICES = (
-    (MAINNET, 'mainnet'),
-    (DEVNET, 'devnet'),
-)
+MAINNET = "mainnet"
+DEVNET = "devnet"
+NETWORK_CHOICES = ((MAINNET, "mainnet"), (DEVNET, "devnet"))
 
 
 class Delegate(models.Model):
@@ -45,7 +42,7 @@ class Delegate(models.Model):
         slug_exists = Delegate.objects.filter(slug=slug).exists()
         counter = 1
         while slug_exists:
-            proposed_slug = f'{slug}{counter}'
+            proposed_slug = f"{slug}{counter}"
             slug_exists = Delegate.objects.filter(slug=proposed_slug).exists()
             if not slug_exists:
                 slug = proposed_slug
@@ -61,9 +58,8 @@ class Delegate(models.Model):
 
 class History(models.Model):
     # Transitioning from ManyToMany to FK
-    delegate_fk = models.ForeignKey(
-        'Delegate', related_name='histories', on_delete=models.CASCADE)
-    delegate = models.ManyToManyField('Delegate', related_name='history')
+    delegate_fk = models.ForeignKey("Delegate", related_name="histories", on_delete=models.CASCADE)
+    delegate = models.ManyToManyField("Delegate", related_name="history")
 
     voters = models.IntegerField(null=True, blank=True)
     uptime = models.FloatField(null=True, blank=True)
@@ -78,7 +74,7 @@ class History(models.Model):
 
 
 class Node(models.Model):
-    delegate = models.ForeignKey('Delegate', related_name='nodes', on_delete=models.CASCADE)
+    delegate = models.ForeignKey("Delegate", related_name="nodes", on_delete=models.CASCADE)
     network = models.CharField(max_length=10, default=MAINNET, choices=NETWORK_CHOICES)
     cpu = models.CharField(max_length=256, null=True, blank=True)
     memory = models.CharField(max_length=256, null=True, blank=True)
@@ -89,7 +85,7 @@ class Node(models.Model):
 
 
 class Contribution(models.Model):
-    delegate = models.ForeignKey('Delegate', related_name='contributions', on_delete=models.CASCADE)
+    delegate = models.ForeignKey("Delegate", related_name="contributions", on_delete=models.CASCADE)
     title = models.CharField(max_length=256)
     description = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
@@ -97,7 +93,7 @@ class Contribution(models.Model):
 
 class StatusUpdate(models.Model):
     delegate = models.ForeignKey(
-        'Delegate', related_name='status_updates', on_delete=models.CASCADE
+        "Delegate", related_name="status_updates", on_delete=models.CASCADE
     )
     message = models.TextField()
     updated = models.DateTimeField(auto_now=True)
@@ -105,7 +101,7 @@ class StatusUpdate(models.Model):
 
 
 class ClaimAccointPin(models.Model):
-    delegate = models.ForeignKey('Delegate', related_name='claim_account', on_delete=models.CASCADE)
+    delegate = models.ForeignKey("Delegate", related_name="claim_account", on_delete=models.CASCADE)
     pin = models.CharField(max_length=PIN_LENGTH)
     generated_at = models.DateTimeField(blank=True, null=True)
     updated = models.DateTimeField(auto_now=True)

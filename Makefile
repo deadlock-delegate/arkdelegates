@@ -58,3 +58,9 @@ pip-upgrade:
 
 test:
 	docker-compose run web py.test --ds=app.test_settings -v -s $(ARGS)
+
+black:
+	docker-compose run web black .
+
+black-check:
+	docker-compose run web black --check .

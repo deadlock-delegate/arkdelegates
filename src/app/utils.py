@@ -13,8 +13,8 @@ from app.constants import PIN_LENGTH
 
 
 def is_staff(user):
-    is_editor = user.groups.filter(name='editor').exists()
-    return (is_editor or user.is_superuser)
+    is_editor = user.groups.filter(name="editor").exists()
+    return is_editor or user.is_superuser
 
 
 def verify_signature(message, public_key, signature):
@@ -29,7 +29,7 @@ def verify_signature(message, public_key, signature):
 
 def unhexlify(data):
     if len(data) % 2:
-        data = '0' + data
+        data = "0" + data
     result = binascii.unhexlify(data)
     return result
 
@@ -38,14 +38,14 @@ def uncompress_ecdsa_public_key(pubkey):
     """
     https://bitcointalk.org/index.php?topic=644919.msg7205689#msg7205689
     """
-    p = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
+    p = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F
     y_parity = int(pubkey[:2]) - 2
     x = int(pubkey[2:], 16)
     a = (pow(x, 3, p) + 7) % p
     y = pow(a, (p + 1) // 4, p)
     if y % 2 != y_parity:
         y = -y % p
-    return '{:x}{:x}'.format(x, y)
+    return "{:x}{:x}".format(x, y)
 
 
 def generate_pin():
@@ -53,4 +53,4 @@ def generate_pin():
     for _ in range(PIN_LENGTH):
         rand = random.SystemRandom().choice(string.ascii_letters + string.digits)
         characters.append(rand)
-    return ''.join(characters)
+    return "".join(characters)

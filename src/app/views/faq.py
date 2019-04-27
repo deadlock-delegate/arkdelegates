@@ -33,19 +33,21 @@ Join [ARK's Slack](https://ark.io/slack){target="_blank"} and ask in **#delegate
 
 
 class FAQ(TemplateView):
-    template_name = 'faq.html'
+    template_name = "faq.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context.update({
-            'seo': {
-                'title': 'ARK FAQ @ ARKdelegates.io',
-                'description': (
-                    'Frequently asked questions about ARK delegates, DPO and ARK blockchain.'
-                )
-            },
-            'faq_content': faq_content.strip()
-        })
+        context.update(
+            {
+                "seo": {
+                    "title": "ARK FAQ @ ARKdelegates.io",
+                    "description": (
+                        "Frequently asked questions about ARK delegates, DPO and ARK blockchain."
+                    ),
+                },
+                "faq_content": faq_content.strip(),
+            }
+        )
 
         return context

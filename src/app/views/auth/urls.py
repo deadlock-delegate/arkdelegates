@@ -6,7 +6,7 @@ from app.views.auth.login import Login
 
 
 urlpatterns = [
-    path('claim-delegate/<slug:delegate_slug>/', ClaimAccount.as_view(), name='claim-delegate'),
-    path('login/', Login.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(next_page='/'), name='logout')
+    path("claim-delegate/<slug:delegate_slug>/", ClaimAccount.as_view(), name="claim-delegate"),
+    path("login/", Login.as_view(), name="login"),
+    path("logout/", LogoutView.as_view(next_page="/"), name="logout"),
 ]

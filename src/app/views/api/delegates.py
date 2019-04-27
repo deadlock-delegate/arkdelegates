@@ -64,12 +64,12 @@ class Delegates(APIView):
         Returns:
             json: JSON object containing all delegates
         """
-        page = int(self.request.GET.get('page', 1))
+        page = int(self.request.GET.get("page", 1))
 
         delegates, paginator = fetch_delegates(page)
         return {
-            'all_results': paginator.paginator.count,
-            'total_pages': paginator.paginator.num_pages,
-            'current_page': page,
-            'delegates': delegates,
+            "all_results": paginator.paginator.count,
+            "total_pages": paginator.paginator.num_pages,
+            "current_page": page,
+            "delegates": delegates,
         }

@@ -8,10 +8,10 @@ from app import models
 class UserFactory(factory.django.DjangoModelFactory):
     # Having random stuff in factories usually causes issues.Let's try it, but
     # if it'll cause problems, we should get rid of randomness in factories.
-    username = factory.Faker('slug')
-    first_name = factory.Faker('first_name')
-    last_name = factory.Faker('last_name')
-    email = factory.Faker('email')
+    username = factory.Faker("slug")
+    first_name = factory.Faker("first_name")
+    last_name = factory.Faker("last_name")
+    email = factory.Faker("email")
 
     class Meta:
         model = get_user_model()
@@ -19,9 +19,9 @@ class UserFactory(factory.django.DjangoModelFactory):
 
 class DelegateFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
-    name = factory.Faker('word')
-    address = factory.Faker('md5')
-    public_key = factory.Faker('sha256')
+    name = factory.Faker("word")
+    address = factory.Faker("md5")
+    public_key = factory.Faker("sha256")
 
     class Meta:
         model = models.Delegate
@@ -52,7 +52,7 @@ class NodeFactory(factory.django.DjangoModelFactory):
 
 class ContributionFactory(factory.django.DjangoModelFactory):
     delegate = factory.SubFactory(DelegateFactory)
-    title = factory.Faker('word')
+    title = factory.Faker("word")
 
     class Meta:
         model = models.Contribution

@@ -10,7 +10,7 @@ from app.utils import generate_pin, verify_signature
 
 
 class ClaimAccount(TemplateView):
-    template_name = 'auth/claim_account.html'
+    template_name = "auth/claim_account.html"
 
     def dispatch(self, request, delegate_slug, *args, **kwargs):
         self.form = None
@@ -29,44 +29,44 @@ class ClaimAccount(TemplateView):
     def post(self, request, *args, **kwargs):
         self.form = ClaimAccountForm(request.POST)
         if self.delegate.user_id:
-            self.form.add_error(None, 'This account has already been claimed!')
+            self.form.add_error(None, "This account has already been claimed!")
         elif self.form.is_valid():
-            data = self.form.cleaned_data['message_json']
+            data = self.form.cleaned_data["message_json"]
 
             claim_account_data = ClaimAccointPin.objects.get(delegate=self.delegate)
-            if not claim_account_data.pin == data['message']:
+            if not claim_account_data.pin == data["message"]:
                 self.form.add_error(
-                    'message_json',
-                    'Your signed pin code has expired. Please try again with a fresh pin code.'
+                    "message_json",
+                    "Your signed pin code has expired. Please try again with a fresh pin code.",
                 )
             else:
                 public_key = self.delegate.public_key
-                is_valid = verify_signature(claim_account_data.pin, public_key, data['signature'])
+                is_valid = verify_signature(claim_account_data.pin, public_key, data["signature"])
                 if is_valid:
-                    password = self.form.cleaned_data['password']
-                    email = self.form.cleaned_data['email']
+                    password = self.form.cleaned_data["password"]
+                    email = self.form.cleaned_data["email"]
                     user = get_user_model().objects.create_user(
-                        username=self.delegate.slug,
-                        email=email,
-                        password=password
+                        username=self.delegate.slug, email=email, password=password
                     )
                     self.delegate.user = user
                     self.delegate.save()
                     login(request, user)
-                    return redirect('delegate', delegate_slug=self.delegate.slug)
-                self.form.add_error('message_json', 'Invalid message and signature!')
+                    return redirect("delegate", delegate_slug=self.delegate.slug)
+                self.form.add_error("message_json", "Invalid message and signature!")
 
         return super().render_to_response(self.get_context_data())
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context.update({
-            'pin': self.pin,
-            'delegate': self.delegate,
-            'form': self.form,
-            'account_already_claimed': self.account_already_claimed
-        })
+        context.update(
+            {
+                "pin": self.pin,
+                "delegate": self.delegate,
+                "form": self.form,
+                "account_already_claimed": self.account_already_claimed,
+            }
+        )
 
         return context
 
