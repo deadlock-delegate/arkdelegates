@@ -50,7 +50,6 @@ class Command(BaseCommand):
                         rank=rank,
                         rank_changed=rank_changed,
                         forged=data['blocks']['produced'],
-                        missed=data['blocks']['missed'],
                         payload={
                             'voters_zero_balance': voters_zero_balance,
                             'voters_not_zero_balance': voters - voters_zero_balance,
@@ -83,7 +82,6 @@ def get_voting_stats_for_delegate(public_key):
     while endpoint:
         response = requests.get(f'{API_URL}{endpoint}')
         json_dict = response.json()
-
         for voter in json_dict['data']:
             if not voter['balance']:
                 voters_zero_balance += 1

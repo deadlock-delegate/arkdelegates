@@ -48,12 +48,10 @@ class DelegateSerializer(serpy.Serializer):
     updated = DateTimeField()
     proposal = StringField()
     website = StringField()
-    uptime = FloatField()
     approval = FloatField()
     rank = IntegerField()
     rank_changed = IntegerField()
     forged = IntegerField()
-    missed = IntegerField()
     voters = IntegerField()
     total_nodes_count = IntegerField()
     backup_nodes_count = IntegerField()
@@ -110,12 +108,10 @@ class DelegateInfo(serpy.DictSerializer):
     payout_maximum_vote_amount = StringField()
     user_id = IntegerField()
 
-    uptime = FloatField()
     approval = FloatField()
     rank = IntegerField()
     rank_changed = IntegerField()
     forged = IntegerField()
-    missed = IntegerField()
     voters = IntegerField()
     voting_power = StringField()
 
@@ -164,12 +160,10 @@ class DelegateInfo(serpy.DictSerializer):
             'backup_nodes_count': delegate.backup_nodes_count,
             'contributions_count': delegate.contributions_count,
 
-            'uptime': None,
             'approval': None,
             'rank': None,
             'rank_changed': None,
             'forged': None,
-            'missed': None,
             'voters': None,
             'voting_power': None,
             'voters_zero_balance': None,
@@ -178,12 +172,10 @@ class DelegateInfo(serpy.DictSerializer):
 
         history = delegate.histories.order_by('-created').first()
         if history:
-            data['uptime'] = history.uptime
             data['approval'] = history.approval
             data['rank'] = history.rank
             data['rank_changed'] = history.rank_changed
             data['forged'] = history.forged
-            data['missed'] = history.missed
             data['voters'] = history.voters
             data['voting_power'] = history.voting_power
             data['voters_zero_balance'] = history.payload.get('voters_zero_balance')

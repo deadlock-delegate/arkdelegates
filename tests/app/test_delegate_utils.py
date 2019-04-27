@@ -87,11 +87,9 @@ def test_fetch_delegates_list_returns_delegate_with_correct_fields(search_query)
     assert delegates_list[0]['name'] == delegate.name
     assert delegates_list[0]['address'] == delegate.address
     assert delegates_list[0]['voters'] == 456
-    assert delegates_list[0]['uptime'] is None
     assert delegates_list[0]['approval'] is None
     assert delegates_list[0]['rank'] == 3
     assert delegates_list[0]['forged'] is None
-    assert delegates_list[0]['missed'] is None
     assert delegates_list[0]['voting_power'] is None
     assert delegates_list[0]['voters_zero_balance'] is None
     assert delegates_list[0]['voters_not_zero_balance'] is None

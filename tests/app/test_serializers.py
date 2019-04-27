@@ -29,12 +29,10 @@ def test_delegate_info_returns_correct_data():
     factories.HistoryFactory(delegate_fk=delegate, created=datetime(2018, 5, 25))
     history = factories.HistoryFactory(
         delegate_fk=delegate,
-        uptime=99.94,
         voters=10,
         approval=1.07,
         rank=32,
         forged=3331.0,
-        missed=2.0,
         voting_power='143321527262092',
         payload={
             'voters_zero_balance': 3,
@@ -73,11 +71,9 @@ def test_delegate_info_returns_correct_data():
     assert 'created' in info
     assert 'updated' in info
 
-    assert info['uptime'] == history.uptime
     assert info['approval'] == history.approval
     assert info['rank'] == history.rank
     assert info['forged'] == history.forged
-    assert info['missed'] == history.missed
     assert info['voters'] == history.voters
     assert info['voting_power'] == history.voting_power
     assert info['voters_zero_balance'] == history.payload['voters_zero_balance']

@@ -17,7 +17,6 @@ delegates_get_response = {
         'publicKey': 'spongebob',
         'vote': '142697747126082',
         'producedblocks': 2030,
-        'missedblocks': 1,
         'rate': 34,
         'approval': 1.06,
     }
