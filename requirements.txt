@@ -17,50 +17,50 @@ django-environ==0.4.5
 django-extensions==2.1.6
 django-redis==4.10.0
 django-rest-framework==0.1.0
-django==2.1.7
+django==2.2
 djangorestframework==3.9.2  # via django-rest-framework
-ecdsa==0.13
+ecdsa==0.13.2
 entrypoints==0.3          # via flake8
 factory-boy==2.11.1
-faker==1.0.4              # via factory-boy
+faker==1.0.5              # via factory-boy
 flake8-debugger==3.1.0
 flake8-import-order==0.18.1
-flake8-quotes==1.0.0
+flake8-quotes==2.0.1
 flake8==3.7.7
 idna==2.8                 # via requests
 ipython-genutils==0.2.0   # via traitlets
-ipython==7.4.0
+ipython==7.5.0
 jedi==0.13.3              # via ipython
 markdown==2.6.11
 mccabe==0.6.1             # via flake8
-more-itertools==6.0.0     # via pytest
-newrelic==4.14.0.115
-parso==0.3.4              # via jedi
-pexpect==4.6.0            # via ipython
+more-itertools==7.0.0     # via pytest
+newrelic==4.18.0.118
+parso==0.4.0              # via jedi
+pexpect==4.7.0            # via ipython
 pickleshare==0.7.5        # via ipython
 pluggy==0.9.0             # via pytest
 prompt-toolkit==2.0.9     # via ipython
 psycogreen==1.0.1
-psycopg2-binary==2.7.7
+psycopg2-binary==2.8.2
 ptyprocess==0.6.0         # via pexpect
 py==1.8.0                 # via pytest
 pycodestyle==2.5.0        # via flake8, flake8-debugger, flake8-import-order
 pyflakes==2.1.1           # via flake8
 pygments==2.3.1           # via ipython
 pytest-django==3.4.8
-pytest==4.3.1
+pytest==4.4.1
 python-dateutil==2.8.0    # via faker
-pytz==2018.9
+pytz==2019.1
 raven==6.10.0
 redis==3.2.1              # via django-redis
 requests==2.21.0
 responses==0.10.6
 serpy==0.3.1
 six==1.12.0               # via bleach, django-extensions, faker, prompt-toolkit, pytest, python-dateutil, responses, serpy, traitlets
-sqlparse==0.3.0           # via django-debug-toolbar
+sqlparse==0.3.0           # via django, django-debug-toolbar
 text-unidecode==1.2       # via faker
 traitlets==4.3.2          # via ipython
-urllib3==1.24.1           # via requests
+urllib3==1.24.2           # via requests
 uwsgi==2.0.18
 wcwidth==0.1.7            # via prompt-toolkit
 webencodings==0.5.1       # via bleach
