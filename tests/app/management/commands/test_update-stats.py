@@ -20,7 +20,6 @@ delegates_get_response = {
         'missedblocks': 1,
         'rate': 34,
         'approval': 1.06,
-        'productivity': 99.95
     }
 }
 

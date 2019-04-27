@@ -46,7 +46,6 @@ class Command(BaseCommand):
                         delegate_fk=delegate,
                         voters=voters,
                         voting_power=voting_power,
-                        uptime=data['production']['productivity'],
                         approval=data['production']['approval'],
                         rank=rank,
                         rank_changed=rank_changed,
