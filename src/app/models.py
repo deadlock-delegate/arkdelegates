@@ -95,6 +95,7 @@ class StatusUpdate(models.Model):
     delegate = models.ForeignKey(
         "Delegate", related_name="status_updates", on_delete=models.CASCADE
     )
+    title = models.CharField(max_length=256, null=True, blank=True)
     message = models.TextField()
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
