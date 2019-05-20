@@ -5,7 +5,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from app.delegate_utils import fetch_delegates
+from app.delegate_utils import fetch_delegates, fetch_new_delegates
 from app.models import Delegate
 from app.permissions import IsOwnerOrReadOnly
 from app.serializers import DelegateInfo
@@ -65,8 +65,14 @@ class Delegates(APIView):
             json: JSON object containing all delegates
         """
         page = int(self.request.GET.get("page", 1))
+        limit = int(self.request.GET.get("limit", 60))
+        latest_proposals = bool(self.request.GET.get("latest", 0))
 
-        delegates, paginator = fetch_delegates(page)
+        if latest_proposals:
+            delegates, paginator = fetch_new_delegates(page, limit=limit)
+        else:
+            delegates, paginator = fetch_delegates(page, limit=limit)
+
         return {
             "all_results": paginator.paginator.count,
             "total_pages": paginator.paginator.num_pages,

@@ -8,7 +8,7 @@ from app.models import Delegate, History
 from app.serializers import DelegateInfo
 
 
-def fetch_delegates(page, search_query=None):
+def fetch_delegates(page, limit=60, search_query=None):
     total_node_count_query = Count(
         "delegate_fk__nodes", filter=Q(delegate_fk__nodes__is_active=True), distinct=True
     )
@@ -41,7 +41,7 @@ def fetch_delegates(page, search_query=None):
         .order_by("rank")
     )
 
-    paginator = Paginator(histories, 60)
+    paginator = Paginator(histories, limit)
     histories_paginated = paginator.get_page(page)
 
     delegates = []
@@ -82,7 +82,7 @@ def fetch_delegates(page, search_query=None):
     return DelegateInfo(instance=delegates, many=True).data, histories_paginated
 
 
-def fetch_new_delegates():
+def fetch_new_delegates(page, limit=60):
     delegates = (
         Delegate.objects.exclude(proposal=None).exclude(user_id=None).order_by("-created")[:6]
     )
@@ -116,8 +116,11 @@ def fetch_new_delegates():
         .order_by("-delegate_fk__created")
     )
 
+    paginator = Paginator(histories, limit)
+    histories_paginated = paginator.get_page(page)
+
     delegates_data = []
-    for history in histories:
+    for history in histories_paginated.object_list:
         data = {
             "id": history.delegate_fk.id,
             "name": history.delegate_fk.name,
@@ -151,4 +154,4 @@ def fetch_new_delegates():
         }
         delegates_data.append(data)
 
-    return DelegateInfo(instance=delegates_data, many=True).data
+    return DelegateInfo(instance=delegates_data, many=True).data, histories_paginated

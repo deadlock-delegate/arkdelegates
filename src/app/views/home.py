@@ -22,7 +22,7 @@ class Homepage(TemplateView):
         page = int(self.request.GET.get("page", 1))
         search_query = self.request.GET.get("search", "")
 
-        new_delegates = fetch_new_delegates()
+        new_delegates, _ = fetch_new_delegates(1, limit=5)
         new_contributions = Contribution.objects.order_by("-id")[:5]
 
         delegates, paginator = fetch_delegates(page, search_query=search_query)

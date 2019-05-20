@@ -26,6 +26,7 @@ class News(APIView):
             news.append(
                 {
                     "delegate_name": item.delegate.name,
+                    "title": item.title,
                     "message": item.message,
                     "created": item.created,
                 }

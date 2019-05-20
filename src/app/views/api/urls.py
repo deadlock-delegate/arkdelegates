@@ -8,9 +8,9 @@ from app.views.api.news import News
 urlpatterns = [
     path("delegates/", Delegates.as_view(), name="api-delegates"),
     re_path(
-        r"delegates/(?P<wallet_address>[0-9A-Za-z]{34})/$", Delegates.as_view(), name="api-delegate"
+        r"delegates/(?P<wallet_address>[0-9A-Za-z]{34})/$", Delegates.as_view(), name="api-delegate-a"
     ),
-    path("delegates/<slug:delegate_slug>/", Delegates.as_view(), name="api-delegate"),
+    path("delegates/<slug:delegate_slug>/", Delegates.as_view(), name="api-delegate-b"),
     path("contributions/", Contributions.as_view(), name="api-contributions"),
     path("news/", News.as_view(), name="api-news"),
 ]
