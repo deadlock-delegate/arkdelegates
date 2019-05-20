@@ -71,5 +71,5 @@ class Delegates(APIView):
             "all_results": paginator.paginator.count,
             "total_pages": paginator.paginator.num_pages,
             "current_page": page,
-            "delegates": delegates,
+            "data": delegates,
         }
