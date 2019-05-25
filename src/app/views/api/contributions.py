@@ -7,9 +7,10 @@ from app.models import Contribution
 
 
 class Contributions(APIView):
-    def get(self, request, delegate_slug=None, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         page = int(self.request.GET.get("page", 1))
         limit = int(self.request.GET.get("limit", 10))
+        delegate_slug = self.request.GET.get("delegate_slug")
         if limit > 50:
             limit = 50
 
