@@ -31,7 +31,6 @@ def test_fetch_delegates_list_returns_correct_delegates_for_no_search_query():
     assert delegates_list[0]["total_nodes_count"] == 2
     assert delegates_list[0]["backup_nodes_count"] == 1
     assert delegates_list[0]["contributions_count"] is None
-
     assert delegates_list[1]["contributions_count"] == 1
 
 
@@ -52,7 +51,7 @@ def test_fetch_delegates_list_returns_correct_delegates_for_search_query():
 
     factories.ContributionFactory(delegate=delegate_a)
 
-    delegates_list, _ = fetch_delegates(0, "spongebob")
+    delegates_list, _ = fetch_delegates(0, search_query="spongebob")
 
     assert [delegate_a.id] == [x["id"] for x in delegates_list]
 
@@ -76,7 +75,7 @@ def test_fetch_delegates_list_returns_delegate_with_correct_fields(search_query)
 
     factories.ContributionFactory(delegate=delegate)
 
-    delegates_list, _ = fetch_delegates(0, search_query)
+    delegates_list, _ = fetch_delegates(0, search_query=search_query)
 
     assert [delegate.id] == [x["id"] for x in delegates_list]
 
