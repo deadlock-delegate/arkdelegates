@@ -1,7 +1,6 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404
-
-from rest_framework.authentication import TokenAuthentication
+from knox.auth import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -39,7 +38,7 @@ class Delegates(APIView):
         serializer = DelegateModelSerializer(delegate, request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data, status=204)
+        return Response(serializer.data, status=201)
 
     def _get_delegate(self, delegate_slug):
         """

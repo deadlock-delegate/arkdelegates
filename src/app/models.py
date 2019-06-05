@@ -5,6 +5,7 @@ from django.utils.text import slugify
 
 from app.constants import PIN_LENGTH
 
+
 MAINNET = "mainnet"
 DEVNET = "devnet"
 NETWORK_CHOICES = ((MAINNET, "mainnet"), (DEVNET, "devnet"))

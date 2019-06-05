@@ -1,5 +1,6 @@
 from django.views.generic.base import TemplateView
 
+
 faq_content = """
 # ARK FAQ page
 

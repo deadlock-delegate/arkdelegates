@@ -2,10 +2,10 @@ from datetime import datetime, timedelta
 
 from django.core.management.base import BaseCommand
 from django.db import transaction
-
 import requests
 
 from app.models import Delegate, History
+
 
 API_URL = "http://159.89.109.90:4003"
 

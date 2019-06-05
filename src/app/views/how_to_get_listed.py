@@ -1,5 +1,6 @@
 from django.views.generic.base import TemplateView
 
+
 page_content = """
 # How to get listed on ARKdelegates.io
 

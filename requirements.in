@@ -11,9 +11,10 @@ ecdsa
 factory_boy
 flake8
 flake8-debugger
-flake8-import-order
+flake8-isort
 flake8-quotes
 ipython
+isort
 markdown==2.6.11
 newrelic
 psycogreen
@@ -27,3 +28,4 @@ responses
 serpy
 uwsgi
 whitenoise==4.1.2
+django-rest-knox

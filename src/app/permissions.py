@@ -17,4 +17,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
 
         # Instance must have an attribute named `owner`.
-        return obj.user == request.user
+        if getattr(obj, "user", None):
+            return obj.user == request.user
+        else:
+            return obj.delegate.user == request.user

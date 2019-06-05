@@ -10,14 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
+from datetime import timedelta
 import logging
 import os
 
 import environ
-
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.logging import LoggingIntegration
+
 
 root = environ.Path(__file__) - 3
 env = environ.Env()
@@ -52,7 +53,7 @@ INSTALLED_APPS += (
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "rest_framework",
-    "rest_framework.authtoken",
+    "knox",
     "corsheaders",
     "django_extensions",
     "debug_toolbar",
@@ -111,9 +112,19 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r"^/api/.*$"
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework.authentication.TokenAuthentication",),
+    "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
 }
+
+REST_KNOX = {
+    "SECURE_HASH_ALGORITHM": "cryptography.hazmat.primitives.hashes.SHA512",
+    "AUTH_TOKEN_CHARACTER_LENGTH": 64,
+    "TOKEN_TTL": timedelta(hours=10),
+    "USER_SERIALIZER": "knox.serializers.UserSerializer",
+    "TOKEN_LIMIT_PER_USER": None,
+    "AUTO_REFRESH": False,
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases

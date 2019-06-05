@@ -41,6 +41,9 @@ bash:
 lint:
 	docker-compose run web flake8 .
 
+isort:
+	docker-compose run web isort -rc src/ tests/
+
 setup-static:
 	npm install
 

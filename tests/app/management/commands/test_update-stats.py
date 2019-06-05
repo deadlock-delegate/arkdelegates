@@ -1,7 +1,6 @@
 import importlib
 
 import pytest
-
 import responses
 
 from app.models import Delegate

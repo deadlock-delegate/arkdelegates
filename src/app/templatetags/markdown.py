@@ -1,19 +1,18 @@
 import bleach
-
 from django import template
-
 from markdown import Extension, markdown as markdown_fn
 from markdown.inlinepatterns import (
     AUTOLINK_RE,
     AUTOMAIL_RE,
+    LINK_RE,
+    REFERENCE_RE,
+    SHORT_REF_RE,
     AutolinkPattern,
     AutomailPattern,
-    LINK_RE,
     LinkPattern,
-    REFERENCE_RE,
     ReferencePattern,
-    SHORT_REF_RE,
 )
+
 
 register = template.Library()
 

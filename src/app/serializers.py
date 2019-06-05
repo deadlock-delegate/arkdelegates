@@ -2,7 +2,6 @@ from datetime import datetime
 
 from django.core.exceptions import ValidationError
 from django.db.models import Count, Q
-
 import serpy
 
 from app.models import Delegate
