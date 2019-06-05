@@ -17,24 +17,25 @@ chardet==3.0.4            # via requests
 click==7.0                # via black
 cryptography==2.7         # via django-rest-knox
 decorator==4.4.0          # via ipython, traitlets
-django-cors-headers==2.5.2
+django-cors-headers==3.0.2
 django-debug-toolbar==1.11
 django-environ==0.4.5
-django-extensions==2.1.6
+django-extensions==2.1.7
 django-redis==4.10.0
 django-rest-framework==0.1.0
 django-rest-knox==4.1.0
-django==2.2
-djangorestframework==3.9.2  # via django-rest-framework, django-rest-knox
+django==2.2.2
+djangorestframework==3.9.4  # via django-rest-framework, django-rest-knox
 ecdsa==0.13.2
 entrypoints==0.3          # via flake8
-factory-boy==2.11.1
-faker==1.0.5              # via factory-boy
+factory-boy==2.12.0
+faker==1.0.7              # via factory-boy
 flake8-debugger==3.1.0
 flake8-isort==2.7.0
 flake8-quotes==2.0.1
 flake8==3.7.7
 idna==2.8                 # via requests
+importlib-metadata==0.17  # via pluggy, pytest
 ipython-genutils==0.2.0   # via traitlets
 ipython==7.5.0
 isort==4.3.20
@@ -42,11 +43,12 @@ jedi==0.13.3              # via ipython
 markdown==2.6.11
 mccabe==0.6.1             # via flake8
 more-itertools==7.0.0     # via pytest
-newrelic==4.18.0.118
+newrelic==4.20.0.120
+packaging==19.0           # via pytest
 parso==0.4.0              # via jedi
 pexpect==4.7.0            # via ipython
 pickleshare==0.7.5        # via ipython
-pluggy==0.9.0             # via pytest
+pluggy==0.12.0            # via pytest
 prompt-toolkit==2.0.9     # via ipython
 psycogreen==1.0.1
 psycopg2-binary==2.8.2
@@ -55,24 +57,26 @@ py==1.8.0                 # via pytest
 pycodestyle==2.5.0        # via flake8, flake8-debugger
 pycparser==2.19           # via cffi
 pyflakes==2.1.1           # via flake8
-pygments==2.3.1           # via ipython
-pytest-django==3.4.8
-pytest==4.4.1
+pygments==2.4.2           # via ipython
+pyparsing==2.4.0          # via packaging
+pytest-django==3.5.0
+pytest==4.6.2
 python-dateutil==2.8.0    # via faker
 pytz==2019.1
 redis==3.2.1              # via django-redis
-requests==2.21.0
+requests==2.22.0
 responses==0.10.6
-sentry-sdk==0.7.12
+sentry-sdk==0.9.0
 serpy==0.3.1
-six==1.12.0               # via bleach, cryptography, django-extensions, faker, prompt-toolkit, pytest, python-dateutil, responses, serpy, traitlets
+six==1.12.0               # via bleach, cryptography, django-extensions, faker, packaging, prompt-toolkit, pytest, python-dateutil, responses, serpy, traitlets
 sqlparse==0.3.0           # via django, django-debug-toolbar
 testfixtures==6.8.2       # via flake8-isort
 text-unidecode==1.2       # via faker
 toml==0.10.0              # via black
 traitlets==4.3.2          # via ipython
-urllib3==1.24.2           # via requests, sentry-sdk
+urllib3==1.25.3           # via requests, sentry-sdk
 uwsgi==2.0.18
-wcwidth==0.1.7            # via prompt-toolkit
+wcwidth==0.1.7            # via prompt-toolkit, pytest
 webencodings==0.5.1       # via bleach
 whitenoise==4.1.2
+zipp==0.5.1               # via importlib-metadata
