@@ -108,8 +108,8 @@ WSGI_APPLICATION = "app.wsgi.application"
 
 AUTHENTICATION_BACKENDS = ["app.backends.CustomModelBackend"]
 
-CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r"^/api/.*$"
+CORS_ORIGIN_WHITELIST = env.list("CORS_ORIGIN_WHITELIST", default=[])
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),

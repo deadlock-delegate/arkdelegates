@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 
 from django.contrib.auth import get_user_model, login
-from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from knox.views import LoginView as KnoxLoginView
 from rest_framework import permissions
@@ -15,6 +14,7 @@ from app.utils import generate_pin, verify_signature
 
 
 class LoginView(KnoxLoginView):
+    authentication_classes = ()
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
@@ -26,6 +26,9 @@ class LoginView(KnoxLoginView):
 
 
 class ClaimDelegate(APIView):
+    authentication_classes = ()
+    permission_classes = (permissions.AllowAny,)
+
     def dispatch(self, request, delegate_slug, *args, **kwargs):
         self.delegate = get_object_or_404(Delegate, slug=delegate_slug)
         self.pin = self._generated_and_store_pin()
@@ -33,13 +36,14 @@ class ClaimDelegate(APIView):
 
     def get(self, request, *args, **kwargs):
         if self.delegate.user_id:
-            return HttpResponseBadRequest("Delegate account already claimed")
+            return Response({"errors": {"__all__": "Delegate account already claimed"}}, status=400)
         return Response({"pin": self.pin})
 
     def post(self, request, *args, **kwargs):
         form = ClaimAccountForm(request.POST)
         if self.delegate.user_id:
-            form.add_error(None, "This account has already been claimed!")
+            return Response({"errors": {"__all__": "Delegate account already claimed"}}, status=400)
+
         elif form.is_valid():
             data = form.cleaned_data["message_json"]
 
@@ -63,7 +67,7 @@ class ClaimDelegate(APIView):
                     login(request, user)
                     return Response(status=201)
                 form.add_error("message_json", "Invalid message and signature!")
-        return Response(form.errors, status=400)
+        return Response({"errors": form.errors}, status=400)
 
     def _generated_and_store_pin(self):
         """
