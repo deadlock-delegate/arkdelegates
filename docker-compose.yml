@@ -17,6 +17,7 @@ services:
       DATABASE_URL: 'postgres://postgres:postgres@db:5432/postgres'
       NEW_RELIC_DEVELOPER_MODE: 1
       NEW_RELIC_LICENSE_KEY: '123456789'
+      CORS_ORIGIN_WHITELIST: 'localhost:3000'
     volumes:
       - .:/app
     expose:

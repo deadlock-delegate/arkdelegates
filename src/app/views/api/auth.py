@@ -6,7 +6,6 @@ from knox.views import LoginView as KnoxLoginView
 from rest_framework import permissions
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from app.forms import ClaimAccountForm
 from app.models import ClaimAccointPin, Delegate
@@ -25,7 +24,7 @@ class LoginView(KnoxLoginView):
         return super(LoginView, self).post(request, format=None)
 
 
-class ClaimDelegate(APIView):
+class ClaimDelegate(KnoxLoginView):
     authentication_classes = ()
     permission_classes = (permissions.AllowAny,)
 
@@ -40,7 +39,7 @@ class ClaimDelegate(APIView):
         return Response({"pin": self.pin})
 
     def post(self, request, *args, **kwargs):
-        form = ClaimAccountForm(request.POST)
+        form = ClaimAccountForm(request.data)
         if self.delegate.user_id:
             return Response({"errors": {"__all__": "Delegate account already claimed"}}, status=400)
 
@@ -65,8 +64,10 @@ class ClaimDelegate(APIView):
                     self.delegate.user = user
                     self.delegate.save()
                     login(request, user)
-                    return Response(status=201)
+                    return super().post(request, format=None)
+
                 form.add_error("message_json", "Invalid message and signature!")
+
         return Response({"errors": form.errors}, status=400)
 
     def _generated_and_store_pin(self):
