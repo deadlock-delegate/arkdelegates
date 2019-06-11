@@ -109,6 +109,7 @@ WSGI_APPLICATION = "app.wsgi.application"
 AUTHENTICATION_BACKENDS = ["app.backends.CustomModelBackend"]
 
 CORS_URLS_REGEX = r"^/api/.*$"
+CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = env.list("CORS_ORIGIN_WHITELIST", default=[])
 
 REST_FRAMEWORK = {
@@ -119,7 +120,7 @@ REST_FRAMEWORK = {
 REST_KNOX = {
     "SECURE_HASH_ALGORITHM": "cryptography.hazmat.primitives.hashes.SHA512",
     "AUTH_TOKEN_CHARACTER_LENGTH": 64,
-    "TOKEN_TTL": timedelta(hours=10),
+    "TOKEN_TTL": timedelta(hours=3),
     "USER_SERIALIZER": "knox.serializers.UserSerializer",
     "TOKEN_LIMIT_PER_USER": None,
     "AUTO_REFRESH": False,
