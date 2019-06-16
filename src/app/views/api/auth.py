@@ -4,11 +4,11 @@ from django.contrib.auth import get_user_model, login
 from django.shortcuts import get_object_or_404
 from knox.views import LoginView as KnoxLoginView
 from rest_framework import permissions
-from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
 
 from app.forms import ClaimAccountForm
 from app.models import ClaimAccointPin, Delegate
+from app.serializers import CustomAuthTokenSerializer
 from app.utils import generate_pin, verify_signature
 
 
@@ -17,7 +17,7 @@ class LoginView(KnoxLoginView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
-        serializer = AuthTokenSerializer(data=request.data)
+        serializer = CustomAuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
         login(request, user)

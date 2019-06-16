@@ -1,10 +1,37 @@
 from datetime import datetime
 
+from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
 from django.db.models import Count, Q
+from rest_framework import serializers
 import serpy
 
 from app.models import Delegate
+
+
+class CustomAuthTokenSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(style={"input_type": "password"}, trim_whitespace=False)
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        password = attrs.get("password")
+
+        if email and password:
+            user = authenticate(request=self.context.get("request"), email=email, password=password)
+
+            # The authenticate call simply returns None for is_active=False
+            # users. (Assuming the default ModelBackend authentication
+            # backend.)
+            if not user:
+                msg = "Unable to log in with provided credentials."
+                raise serializers.ValidationError(msg, code="authorization")
+        else:
+            msg = 'Must include "email" and "password".'
+            raise serializers.ValidationError(msg, code="authorization")
+
+        attrs["user"] = user
+        return attrs
 
 
 class DateTimeField(serpy.Field):
