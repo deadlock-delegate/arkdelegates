@@ -7,7 +7,16 @@ class DelegateModelSerializer(ModelSerializer):
     class Meta:
         model = Delegate
         fields = "__all__"
-        read_only_fields = ("id", "user", "name", "slug", "address", "public_key", "created", "updated")
+        read_only_fields = (
+            "id",
+            "user",
+            "name",
+            "slug",
+            "address",
+            "public_key",
+            "created",
+            "updated",
+        )
 
 
 class NewsModelSerializer(ModelSerializer):
