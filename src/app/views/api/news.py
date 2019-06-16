@@ -33,6 +33,7 @@ class News(APIView):
         for item in news_paginated.object_list:
             news.append(
                 {
+                    "id": item.id,
                     "delegate_name": item.delegate.name,
                     "title": item.title,
                     "message": item.message,
@@ -55,7 +56,9 @@ class News(APIView):
         serializer = NewsModelSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         instance = serializer.create(validated_data=serializer.validated_data)
-        return Response(model_to_dict(instance), status=201)
+        data = model_to_dict(instance)
+        data.update({"created": instance.created})
+        return Response(data, status=201)
 
     def put(self, request, news_id, *args, **kwargs):
         news = get_object_or_404(StatusUpdate, id=news_id)

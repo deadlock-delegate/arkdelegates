@@ -27,7 +27,9 @@ class Delegates(APIView):
         return Response(data)
 
     def put(self, request, delegate_slug=None, wallet_address=None, **kwargs):
-        if wallet_address:
+        if not delegate_slug and request.user.is_authenticated:
+            delegate = get_object_or_404(Delegate, slug=request.user.delegate.slug)
+        elif wallet_address:
             delegate = get_object_or_404(Delegate, address=wallet_address)
         else:
             delegate = get_object_or_404(Delegate, slug=delegate_slug)

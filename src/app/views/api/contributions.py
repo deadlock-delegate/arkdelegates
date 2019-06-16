@@ -33,6 +33,7 @@ class Contributions(APIView):
         for contribution in contributions_paginated.object_list:
             contributions.append(
                 {
+                    "id": contribution.id,
                     "delegate_name": contribution.delegate.name,
                     "title": contribution.title,
                     "description": contribution.description,
