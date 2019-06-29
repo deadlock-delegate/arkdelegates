@@ -24,6 +24,7 @@ django-extensions==2.1.7
 django-redis==4.10.0
 django-rest-framework==0.1.0
 django-rest-knox==4.1.0
+django-simple-history==2.7.2
 django==2.2.2
 djangorestframework==3.9.4  # via django-rest-framework, django-rest-knox
 ecdsa==0.13.2
@@ -68,7 +69,7 @@ requests==2.22.0
 responses==0.10.6
 sentry-sdk==0.9.0
 serpy==0.3.1
-six==1.12.0               # via bleach, cryptography, django-extensions, faker, packaging, prompt-toolkit, pytest, python-dateutil, responses, serpy, traitlets
+six==1.12.0               # via bleach, cryptography, django-extensions, django-simple-history, faker, packaging, prompt-toolkit, pytest, python-dateutil, responses, serpy, traitlets
 sqlparse==0.3.0           # via django, django-debug-toolbar
 testfixtures==6.8.2       # via flake8-isort
 text-unidecode==1.2       # via faker

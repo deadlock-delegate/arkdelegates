@@ -29,3 +29,4 @@ serpy
 uwsgi
 whitenoise==4.1.2
 django-rest-knox
+django-simple-history

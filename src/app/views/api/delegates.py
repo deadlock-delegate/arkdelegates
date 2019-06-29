@@ -21,6 +21,8 @@ class Delegates(APIView):
             # todo: support fetching delegate via wallet address
             raise Http404()
         elif delegate_slug:
+            if not Delegate.objects.filter(slug=delegate_slug).exists():
+                raise Http404()
             data = self._get_delegate(delegate_slug)
         else:
             data = self._get_delegates()
