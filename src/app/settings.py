@@ -57,6 +57,7 @@ INSTALLED_APPS += (
     "corsheaders",
     "django_extensions",
     "debug_toolbar",
+    "simple_history",
     "app",
 )
 
@@ -75,6 +76,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "simple_history.middleware.HistoryRequestMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
@@ -199,3 +201,5 @@ sentry_logging = LoggingIntegration(
 sentry_sdk.init(
     dsn=env.str("SENTRY_DSN", default=""), integrations=[sentry_logging, DjangoIntegration()]
 )
+
+SIMPLE_HISTORY_HISTORY_CHANGE_REASON_USE_TEXT_FIELD = True

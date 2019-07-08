@@ -33,7 +33,7 @@ class Command(BaseCommand):
                 rank = data["rank"]
                 if data:
                     rank_changed = 0
-                    rank_history = delegate.history.filter(
+                    rank_history = delegate.statshistory.filter(
                         created__gt=datetime.now() - timedelta(hours=25),
                         created__lt=datetime.now() - timedelta(hours=23),
                     ).last()
@@ -66,7 +66,7 @@ class Command(BaseCommand):
                             "voters_not_zero_balance": voters - voters_zero_balance,
                         },
                     )
-                delegate.history.add(history)
+                delegate.statshistory.add(history)
 
             created_count += 1
 

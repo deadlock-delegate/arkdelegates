@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.text import slugify
+from simple_history.models import HistoricalRecords
 
 from app.constants import PIN_LENGTH
 
@@ -32,6 +33,8 @@ class Delegate(models.Model):
     payout_minimum_vote_amount = models.CharField(max_length=20, null=True, blank=True)
     payout_maximum_vote_amount = models.CharField(max_length=20, null=True, blank=True)
 
+    history = HistoricalRecords()
+
     def __str__(self):
         return self.name
 
@@ -60,7 +63,7 @@ class Delegate(models.Model):
 class History(models.Model):
     # Transitioning from ManyToMany to FK
     delegate_fk = models.ForeignKey("Delegate", related_name="histories", on_delete=models.CASCADE)
-    delegate = models.ManyToManyField("Delegate", related_name="history")
+    delegate = models.ManyToManyField("Delegate", related_name="statshistory")
 
     voters = models.IntegerField(null=True, blank=True)
     uptime = models.FloatField(null=True, blank=True)
@@ -90,6 +93,7 @@ class Contribution(models.Model):
     title = models.CharField(max_length=256)
     description = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    history = HistoricalRecords()
 
 
 class StatusUpdate(models.Model):
@@ -100,6 +104,7 @@ class StatusUpdate(models.Model):
     message = models.TextField()
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+    history = HistoricalRecords()
 
 
 class ClaimAccointPin(models.Model):
