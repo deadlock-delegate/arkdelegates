@@ -35,6 +35,9 @@ class Delegate(models.Model):
 
     history = HistoricalRecords()
 
+    class Meta:
+        permissions = [("payout_change", "Can change payouts info of all delegates")]
+
     def __str__(self):
         return self.name
 

@@ -8,7 +8,7 @@ from app.delegate_utils import fetch_delegates, fetch_new_delegates
 from app.models import Delegate
 from app.permissions import IsOwnerOrReadOnly
 from app.serializers import DelegateInfo
-from app.views.api.serializers import DelegateModelSerializer
+from app.views.api.serializers import DelegateModelSerializer, DelegatePayoutModelSerializer
 
 
 class Delegates(APIView):
@@ -37,11 +37,16 @@ class Delegates(APIView):
             delegate = get_object_or_404(Delegate, slug=delegate_slug)
 
         # Check permissions, if user has permissions to change data for a delegate
-        self.check_object_permissions(self.request, delegate)
+        if request.user.has_perm("app.payout_change"):
+            serializer = DelegatePayoutModelSerializer(delegate, request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+        else:
+            self.check_object_permissions(request, delegate)
+            serializer = DelegateModelSerializer(delegate, request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
 
-        serializer = DelegateModelSerializer(delegate, request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
         return Response(serializer.data, status=201)
 
     def _get_delegate(self, delegate_slug):

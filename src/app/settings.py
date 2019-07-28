@@ -125,7 +125,7 @@ REST_KNOX = {
     "TOKEN_TTL": timedelta(hours=3),
     "USER_SERIALIZER": "knox.serializers.UserSerializer",
     "TOKEN_LIMIT_PER_USER": None,
-    "AUTO_REFRESH": False,
+    "AUTO_REFRESH": True,
 }
 
 

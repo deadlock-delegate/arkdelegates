@@ -31,3 +31,17 @@ class ContributionModelSerializer(ModelSerializer):
         model = Contribution
         fields = "__all__"
         read_only_fields = ("id", "created")
+
+
+class DelegatePayoutModelSerializer(ModelSerializer):
+    class Meta:
+        model = Delegate
+        fields = [
+            "payout_covering_fee",
+            "payout_percent",
+            "payout_interval",
+            "payout_minimum",
+            "payout_maximum",
+            "payout_minimum_vote_amount",
+            "payout_maximum_vote_amount",
+        ]
