@@ -8,6 +8,14 @@ change the frontend code.
 
 Visit project: https://arkdelegates.io
 
+#### ❤️ Support maintenance and development of plugins
+If you find this or other plugins useful please consider
+
+- voting for `deadlock` delegate
+- donating to `AWtgFYbvtLDYccJvC5MChk4dpiUy2Krt2U`
+
+to support development new plugins and tools for Ark's Ecosystem and maintenance of existing ones. Full list of contributions can be found on [https://arkdelegatesio/delegate/deadlock/](https://arkdelegates.io/delegate/deadlock/contributions/). 🖖
+
 ## How to run project locally?
 
 You'll need Docker, node and npm install locally. To build the whole project you'll have to:
